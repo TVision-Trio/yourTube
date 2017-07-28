@@ -14,6 +14,10 @@
   * Evening after Stand-Up
   * Positive Reinforcement time
     * Before leaving at the end of the day, have a positive reinforcement conversation
+* Communication Breakdown
+  * Conflict handling
+  * Direct Communication
+  * Talk about it with each other as a group
 
 ## Conflict Plan
 * Group snacks
@@ -25,6 +29,7 @@
 * GitHub Projects for project management
 * Agile style - sprints
 * Collaboration
+* Mob programming at first when deciding architecture 
 
 ## Git Process
 * Git Flow
@@ -40,7 +45,7 @@
 
 
 ## Timelines
-* Adhere to class timelines 
+* Adhere to class timelines
 * Stretch Goals
   * Multiple small stretch goals can be worked on simultaneously
   * Large arching stretch goals should be worked on individually until completion
