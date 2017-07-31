@@ -11,13 +11,11 @@ client.connect();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.static('./public'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.post('/newUser', function(request, response) {
-  console.log(request.name);
-  client.query(`INSERT INTO users (name) VALUES ($1);`, [request.name]),
-  function(err) {
-    if (err) console.error(err)
-  };
+  client.query(`INSERT INTO users (name) VALUES ($1);`, [request.body.name])
 });
 
 loadDB();

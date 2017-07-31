@@ -15,22 +15,23 @@ var testUser = {name: 'Alana', pref: {
     this.name = userData.name;
     this.preferences = userData.pref;
   }
-
   var test = new User(testUser);
 
+
   // TODO: CREATE user function (based on user input)
-  function createUser(userObject, callback){
+  function createUser(){
     $.ajax({
-      url: '/newUser',
+      url: 'http://localhost:3000/newUser',
       method: 'POST',
       data: {name: 'TestTest'}
     }).then(function(){
       console.info('User created');
-      callback();
+
+      // callback();
     });
   };
 
-  createUser(test);
+  createUser();
 
   // TODO: UPDATE user function
   // function updateUser(){
