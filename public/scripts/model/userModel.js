@@ -19,19 +19,21 @@ var testUser = {name: 'Alana', pref: {
 
 
   // TODO: CREATE user function (based on user input)
-  function createUser(){
+  function createUser(userObject, callback){
     $.ajax({
-      url: 'http://localhost:3000/newUser',
+      url: '/newUser',
       method: 'POST',
-      data: {name: 'TestTest'}
+      data: userObject
     }).then(function(){
       console.info('User created');
-
-      // callback();
+      callback();
     });
   };
 
-  createUser();
+  function callbackFunction(){
+    console.log('I\'m a callback!');
+  }
+  createUser(testUser, callbackFunction);
 
   // TODO: UPDATE user function
   // function updateUser(){
