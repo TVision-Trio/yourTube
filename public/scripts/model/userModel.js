@@ -50,7 +50,7 @@ var testUser = {name: 'Alana', user_id: 1, genres: ['comedy', 'horror'], days: [
       }, function(error){
         console.error(error);
       });
-    };
+    }
   };
 
   // TODO: GET data from database by user_id
