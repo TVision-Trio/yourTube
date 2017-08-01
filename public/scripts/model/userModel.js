@@ -1,48 +1,73 @@
 'use strict';
 
 var app = app || {};
-var testUser = {name: 'Alana', pref: {
-  genres: ['comedy', 'horror'],
-  days: ['monday', 'tuesday', 'friday'],
-  times: ['evening']
-}};
+var testUser = {name: 'Alana', user_id: 1, genres: ['comedy', 'horror'], days: ['monday', 'tuesday', 'friday'], times: ['evening']
+};
 
 (function(module){
 
-  console.log('inside userModel');
-
   function User(userData){
     this.name = userData.name;
-    this.preferences = userData.pref;
+    if (userData.user_id) {
+      this.user_id = userData.user_id;
+    }
+    if (userData.genres) {
+      this.genres = userData.genres;
+    }
+    if (userData.days) {
+      this.days = userData.days;
+    }
+    if (userData.times) {
+      this.times = userData.times;
+    }
   }
-  var test = new User(testUser);
 
+  var currentUser = new User(testUser);
 
-  // TODO: CREATE user function (based on user input)
-  function createUser(userObject, callback){
-    $.ajax({
-      url: '/newUser',
-      method: 'POST',
-      data: userObject
-    }).then(function(){
-      console.info('User created');
-      callback();
+  // CREATE user in database based on user input
+  // TODO: handle user input error
+  User.prototype.createUser = function() {
+    $.post('/newUser', {name: this.name}).then(function(results){
+      console.log(results);
+      this.user_id = results.user_id;
+    }, function(error){
+      console.error(error);
     });
   };
 
-  function callbackFunction(){
-    console.log('I\'m a callback!');
-  }
-  createUser(testUser, callbackFunction);
+  // UPDATE user in database based on updated preferences
+  // TODO: Would this ever be called on a user that has not been created in the database? If so, this function will throw an error because the user.id will not yet exisit
+  User.prototype.updateUser = function() {
+    if (!this.user_id){
+      console.error('Error: updateUser method can not be applied to a user that does not have an assigned user_id');
+    } else {
+      $.ajax({
+        url:'/updateUser',
+        method: 'PUT',
+        data: {name: this.name, user_id: this.user_id, genres: this.genres, days: this.days, times: this.times}
+      }).then(function(results){
+        console.log(results);
+      }, function(error){
+        console.error(error);
+      });
+    };
+  };
 
-  // TODO: UPDATE user function
-  // function updateUser(){
-  //
-  // }
-  // TODO: handle user input error
+  // TODO: GET data from database by user_id
+  User.prototype.getUser = function() {
+    $.ajax({
+      url:'/getUser',
+      method: 'GET',
+      data: {user_id: this.user_id}
+    }).then(function(results){
+      console.log(results);
+    }, function(error){
+      console.error(error);
+    });
+  };
 
-  // TODO: global user object
-  // app.user = user;
-
+  // TODO: How does this currentUser variable get updated?
+  // Save current user to global app
+  module.currentUser = currentUser;
 
 })(app);
