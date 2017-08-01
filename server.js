@@ -81,7 +81,7 @@ app.get('/getGenres', function(req, res) {
   )
   .then(function (result){
     console.log(result);
-    res.send(result);
+    res.send(result.rows);
   })
   .catch(function (err){
     res.send(err);
@@ -129,7 +129,7 @@ function loadDB(){
       });
   }
 
-  // TODO: complete this... 
+  // TODO: complete this...
   function createGenresPrefTable(){
     client.query(`CREATE TABLE IF NOT EXISTS genres_prefs (
       genres_prefs SERIAL PRIMARY KEY,

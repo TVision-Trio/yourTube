@@ -4,10 +4,18 @@ var app = app || {};
 
 (function(module){
   // Pass possible preference option data to the homeview to populate clouds
-  var showController = {}
-  showController.genres = [{genre: 'Comedy'}, {genre: 'Drama'}];
+  var showController = {};
+
+  // Function to pass homeview data
+  showController.genreDataToHomeView = function(results){
+    module.populateClouds(results);
+  }
+
+
+
   showController.days = [{day: 'Monday'}, {day: 'Tuesday'}, {day: 'Wednesday'}, {day: 'Thursday'}, {day: 'Friday'}, {day: 'Saturday'}, {day: 'Sunday'}];
   showController.times = [{time: 'Morning'}, {time: 'Afternoon'}, {time: 'Evening'}];
+
 
   // On Submit, query API and get filtered show list based on preferences
   $('#querySubmitButton').on(function(){
