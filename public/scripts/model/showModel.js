@@ -1,15 +1,30 @@
 'use strict';
 
 var app = app || {};
-var testQuery = 'http://api.tvmaze.com/schedule';
+var queryString = 'http://api.tvmaze.com/schedule';
 
 (function(module){
-// API ajax call on the query string.
-  function requestShows(){
-    $.get(testQuery)
+  // API ajax call on the query string.
+  var DataModel = {};
+  DataModel.all = [];
+
+  DataModel.requestShows = function(callback){
+    $.get(queryString)
     .then(function(data){
       var mappedData = data.map(function(showObject){
+
+        var time = parseInt(showObject.show.schedule.time.slice(0,2));
+        var timeframe;
+        if (time < 12) {
+          timeframe = 'Morning';
+        } else if (time > 18){
+          timeframe = 'Evening';
+        } else {
+          timeframe = 'Afternoon';
+        }
+
         return {
+          show_id: showObject.show.id,
           title: showObject.show.name,
           type: showObject.show.type,
           language: showObject.show.language,
@@ -18,17 +33,19 @@ var testQuery = 'http://api.tvmaze.com/schedule';
           times: showObject.show.schedule.time,
           rating: showObject.show.rating,
           network: showObject.show.network.name,
-          summary: showObject.show.summary
+          summary: showObject.show.summary,
+          timeframe: timeframe
         };
       });
+      DataModel.all = mappedData;
+      callback();
     }, function(error){
       console.error(error);
     });
   };
 
-
-  // TODO: Get genres from JSON to include in passed data.
-  function getGenres(shows){
+  // Get genres from JSON to include in passed data.
+  DataModel.getGenres = function(shows){
     var genreArray = shows.map(function(show){
       var genres = show.genres;
       genres.push(show.type);
@@ -44,5 +61,40 @@ var testQuery = 'http://api.tvmaze.com/schedule';
     return genreArray;
   };
 
-  requestShows();
+
+  DataModel.filterShows = function(genres, days, times){
+    var filteredData = [];
+    // Filter to only shows that are on prefered days
+    filteredData = DataModel.all.filter(function(show){
+      var flag = false;
+      days.forEach(function(day){
+        if(show.days.includes(day)){
+          flag = true;
+        }
+      });
+      return flag;
+    });
+    filteredData = filteredData.filter(function(show){
+      var flag = false;
+      genres.forEach(function(genre){
+        if(show.genres.includes(genre)){
+          flag = true;
+        }
+      });
+      return flag;
+    });
+
+    filteredData = filteredData.filter(function(show){
+      var flag = false;
+      times.forEach(function(time){
+        if(show.timeframe.includes(time)){
+          flag = true;
+        }
+      });
+      return flag;
+    });
+    return filteredData;
+  };
+
+  module.DataModel = DataModel;
 })(app);
