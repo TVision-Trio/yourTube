@@ -1,7 +1,7 @@
 'use strict';
 
 var app = app || {};
-var testUser = {name: 'Alana', pref: {
+var testUser = {name: 'Alana2', pref: {
   genres: ['comedy', 'horror'],
   days: ['monday', 'tuesday', 'friday'],
   times: ['evening']
@@ -15,27 +15,20 @@ var testUser = {name: 'Alana', pref: {
     this.name = userData.name;
     this.preferences = userData.pref;
   }
+
   var test = new User(testUser);
 
-
   // TODO: CREATE user function (based on user input)
-  function createUser(userObject, callback){
-    $.ajax({
-      url: '/newUser',
-      method: 'POST',
-      data: userObject
-    }).then(function(data){
-      console.info('User created');
+  User.prototype.createUser = function(callback) {
+    $.post('/newUser', {name: this.name}).then(function(results){
+      console.log(results);
       callback();
     }, function(error){
-        console.log(error);
+      console.error(error);
     });
   };
+  test.createUser();
 
-  function callbackFunction(){
-    console.log('I\'m a callback!');
-  }
-  createUser(testUser, callbackFunction);
 
   // TODO: UPDATE user function
   // function updateUser(){
@@ -44,7 +37,5 @@ var testUser = {name: 'Alana', pref: {
   // TODO: handle user input error
 
   // TODO: global user object
-  // app.user = user;
-
 
 })(app);
