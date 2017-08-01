@@ -38,7 +38,7 @@ var queryString = 'http://api.tvmaze.com/schedule';
         };
       });
       DataModel.all = mappedData;
-      callback();
+      callback(DataModel.all);
     }, function(error){
       console.error(error);
     });
@@ -107,7 +107,6 @@ var queryString = 'http://api.tvmaze.com/schedule';
   }
 
   DataModel.getGenresData(function(results){
-    console.log(results);
     module.showController.genreDataToHomeView(results);
   });
 

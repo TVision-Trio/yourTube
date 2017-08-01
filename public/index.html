@@ -20,6 +20,10 @@
       <!-- for each thing from the database, create a cloud tag thing -->
       <li value="{{genre_id}}">{{genre}}</li>
     </script>
+    <script id="results-template" type="text/x-handlebars-template">
+      <!-- for each thing from the database, create a cloud tag thing -->
+      <li>{{title}}</li>
+    </script>
   </head>
   <body>
     <header>
@@ -38,6 +42,11 @@
         <input type="text" placeholder="New User">
         <button type="button">Submit</button>
       </section>
+      <section id="results">
+        <ul>
+          <!-- Search results go here -->
+        </ul>
+      </section>
       <section id="home">
         <section id="search">
           <ul id="genreCloud">
@@ -50,11 +59,6 @@
             <!-- Days cloud tags go here -->
           </ul>
           <button id="querySubmitButton" type="button">Submit</button>
-        </section>
-        <section id="results">
-          <ul>
-            <!-- Search results go here -->
-          </ul>
         </section>
       </section>
       <section id="about">
