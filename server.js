@@ -14,9 +14,12 @@ app.use(express.static('./public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+
+// User
+
 app.post('/newUser', function (req, res) {
   client.query(
-    `INSERT INTO users (username, name) VALUES ($1, $2) RETURNING *`,
+    `INSERT INTO users (username, name) VALUES ($1, $2) RETURNING *;`,
     [
       req.body.username,
       req.body.name
@@ -33,7 +36,7 @@ app.post('/newUser', function (req, res) {
 
 app.put('/updateUser', function (req, res) {
   client.query(
-    `UPDATE users SET name=$1, genres=$2, days=$3, times=$4 WHERE user_id=$5 RETURNING *`,
+    `UPDATE users SET name=$1, genres=$2, days=$3, times=$4 WHERE user_id=$5 RETURNING *;`,
     [
       req.body.name,
       req.body.genres,
@@ -55,7 +58,7 @@ app.put('/updateUser', function (req, res) {
 app.get('/getUser', function (req, res) {
   console.log(req.query.user_id);
   client.query(
-    `SELECT * FROM users WHERE user_id=$1`, [req.query.user_id]
+    `SELECT * FROM users WHERE user_id=$1;`, [req.query.user_id]
   )
   .then(function (result) {
     console.log('Inside server GET success: ')
@@ -65,6 +68,22 @@ app.get('/getUser', function (req, res) {
   .catch(function (err) {
     console.log('Inside server GET error: ')
     console.error(err);
+    res.send(err);
+  });
+});
+
+// TODO: get for all tables
+
+// genres
+app.get('/getGenres', function(req, res) {
+  client.query(
+    `SELECT genre FROM genres;`
+  )
+  .then(function (result){
+    console.log(result);
+    res.send(result);
+  })
+  .catch(function (err){
     res.send(err);
   });
 });
@@ -104,15 +123,13 @@ function loadDB(){
   }
 
   function insertGenresData(thisGenre) {
-    console.log('this has been called')
-    client.query(`INSERT INTO genres (genre) VALUES ($1) ON CONFLICT DO NOTHING RETURNING *;`,
+    client.query(`INSERT INTO genres (genre) VALUES ($1) ON CONFLICT DO NOTHING;`,
       [ thisGenre ]).then(function(){
-        console.log(thisGenre);
         console.info('Insert genres into table');
       });
   }
 
-  // TODO: Complete
+  // TODO: complete this... 
   function createGenresPrefTable(){
     client.query(`CREATE TABLE IF NOT EXISTS genres_prefs (
       genres_prefs SERIAL PRIMARY KEY,
@@ -134,10 +151,8 @@ function loadDB(){
   }
 
   function insertDaysData(thisDay) {
-    console.log('this has been called');
     client.query(`INSERT INTO days (day) VALUES ($1) ON CONFLICT DO NOTHING RETURNING *;`,
       [ thisDay ]).then(function(){
-        console.log(thisDay);
         console.info('Insert days into table');
       });
   }
@@ -155,10 +170,8 @@ function loadDB(){
   }
 
   function insertTimesData(thisTime) {
-    console.log('this has been called');
     client.query(`INSERT INTO times (time) VALUES ($1) ON CONFLICT DO NOTHING RETURNING *;`,
       [ thisTime ]).then(function(){
-        console.log(thisTime);
         console.info('Insert times into table');
       });
   }
