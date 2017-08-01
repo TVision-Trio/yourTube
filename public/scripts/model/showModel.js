@@ -38,7 +38,7 @@ var queryString = 'http://api.tvmaze.com/schedule';
         };
       });
       DataModel.all = mappedData;
-      callback();
+      callback(DataModel.all);
     }, function(error){
       console.error(error);
     });
@@ -106,6 +106,10 @@ var queryString = 'http://api.tvmaze.com/schedule';
     }), (err) => console.error(err);
   }
 
+  DataModel.getGenresData(function(results){
+    module.showController.genreDataToHomeView(results);
+  });
+
   // // TODO: Get preferences data from genres, days, and times databasee
   // DataModel.getPreferencesData = function(callback){
   //   $.ajax({
@@ -118,8 +122,6 @@ var queryString = 'http://api.tvmaze.com/schedule';
   //     console.log(error);
   //   });
   // }
-
-  DataModel.getGenresData((results) => console.log(results));
 
   module.DataModel = DataModel;
 })(app);
