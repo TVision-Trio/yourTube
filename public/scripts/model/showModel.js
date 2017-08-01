@@ -61,7 +61,6 @@ var queryString = 'http://api.tvmaze.com/schedule';
     return genreArray;
   };
 
-
   DataModel.filterShows = function(genres, days, times){
     var filteredData = [];
     // Filter to only shows that are on prefered days

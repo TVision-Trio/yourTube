@@ -3,6 +3,11 @@
 var app = app || {};
 
 (function(module){
+  // Pass possible preference option data to the homeview to populate clouds
+  var showController = {}
+  showController.genres = [{genre: 'Comedy'}, {genre: 'Drama'}];
+  showController.days = [{day: 'Monday'}, {day: 'Tuesday'}, {day: 'Wednesday'}, {day: 'Thursday'}, {day: 'Friday'}, {day: 'Saturday'}, {day: 'Sunday'}];
+  showController.times = [{time: 'Morning'}, {time: 'Afternoon'}, {time: 'Evening'}];
 
   // On Submit, query API and get filtered show list based on preferences
   $('#querySubmitButton').on(function(){
@@ -17,5 +22,7 @@ var app = app || {};
     var show_id = $(this).attr('value');
     // TODO: call view function to show all show data;
   });
+
+  module.showController = showController;
 
 })(app);
