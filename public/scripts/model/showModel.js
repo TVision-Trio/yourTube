@@ -1,7 +1,6 @@
 'use strict';
 
 var app = app || {};
-var queryString = 'http://api.tvmaze.com/schedule';
 
 (function(module){
   // API ajax call on the query string.
@@ -9,7 +8,10 @@ var queryString = 'http://api.tvmaze.com/schedule';
   DataModel.all = [];
 
   DataModel.requestShows = function(callback){
-    $.get(queryString)
+    $.ajax({
+      url: '/getData',
+      method: 'GET'
+    })
     .then(function(data){
       var mappedData = data.map(function(showObject){
 
@@ -38,7 +40,7 @@ var queryString = 'http://api.tvmaze.com/schedule';
         };
       });
       DataModel.all = mappedData;
-      callback(DataModel.all);
+      callback(mappedData);
     }, function(error){
       console.error(error);
     });
@@ -123,5 +125,8 @@ var queryString = 'http://api.tvmaze.com/schedule';
   //   });
   // }
 
+  DataModel.requestShows((data) => console.log(data));
+  DataModel.getGenresData((results) => console.log(results));
+  
   module.DataModel = DataModel;
 })(app);
