@@ -108,6 +108,10 @@ var app = app || {};
     }), (err) => console.error(err);
   }
 
+  DataModel.getGenresData(function(results){
+    module.showController.genreDataToHomeView(results);
+  });
+
   // // TODO: Get preferences data from genres, days, and times databasee
   // DataModel.getPreferencesData = function(callback){
   //   $.ajax({
@@ -123,6 +127,6 @@ var app = app || {};
 
   DataModel.requestShows((data) => console.log(data));
   DataModel.getGenresData((results) => console.log(results));
-
+  
   module.DataModel = DataModel;
 })(app);

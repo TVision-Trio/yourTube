@@ -87,7 +87,7 @@ app.get('/getGenres', function(req, res) {
   )
   .then(function (result){
     console.log(result);
-    res.send(result);
+    res.send(result.rows);
   })
   .catch(function (err){
     res.send(err);
