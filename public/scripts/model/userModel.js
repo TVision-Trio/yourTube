@@ -1,7 +1,7 @@
 'use strict';
 
 var app = app || {};
-var testUser = {name: 'Alana2', pref: {
+var testUser = {name: 'Alana', user_id: 66, preferences: {
   genres: ['comedy', 'horror'],
   days: ['monday', 'tuesday', 'friday'],
   times: ['evening']
@@ -9,31 +9,45 @@ var testUser = {name: 'Alana2', pref: {
 
 (function(module){
 
-  console.log('inside userModel');
-
   function User(userData){
     this.name = userData.name;
     this.preferences = userData.pref;
+    if (userData.user_id) {
+      this.user_id = userData.user_id;
+    }
   }
 
   var test = new User(testUser);
 
-  // TODO: CREATE user function (based on user input)
-  User.prototype.createUser = function(callback) {
-    $.post('/newUser', {name: this.name}).then(function(results){
+  // CREATE user in database based on user input
+  User.prototype.createUser = function() {
+    $.post('/newUser', {name: this.name, preferences: this.preferences}).then(function(results){
       console.log(results);
-      callback();
+      this.user_id = results.user_id;
     }, function(error){
       console.error(error);
     });
   };
-  test.createUser();
-
 
   // TODO: UPDATE user function
-  // function updateUser(){
-  //
-  // }
+  // TODO: Would this ever be called on a user that has not been created in the database? If so, this function will throw an error because the user.id will not yet exisit
+  User.prototype.updateUser = function() {
+    if (!this.user_id){
+      console.error('Error: updateUser method can not be applied to a user that does not have an assigned user_id');
+    } else {
+      $.ajax({
+        url:'/updateUser',
+        method: 'PUT',
+        data: {name: this.name, user_id: this.user_id, preferences: this.preferences}
+      }).then(function(results){
+        console.log(results);
+      }, function(error){
+        console.error(error);
+      });
+    };
+  };
+  test.updateUser();
+
   // TODO: handle user input error
 
   // TODO: global user object

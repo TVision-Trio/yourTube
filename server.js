@@ -28,6 +28,23 @@ app.post('/newUser', function (req, res) {
   })
 })
 
+app.put('/updateUser', function (req, res) {
+  client.query(
+    `UPDATE users SET name=$1 WHERE user_id=$2 RETURNING *`,
+    [req.body.name, req.body.user_id]
+  )
+  .then(function (result) {
+    console.log('Inside server put success: ');
+    console.log(result);
+    res.send(result.rows[0]);
+  })
+  .catch(function (err) {
+    console.log('Inside server put error: ');
+    console.error(err);
+    res.send(err);
+  })
+})
+
 loadDB();
 function loadDB(){
   client.query(`CREATE TABLE IF NOT EXISTS users (user_id SERIAL PRIMARY KEY, name VARCHAR NOT NULL, preferences VARCHAR);`)
