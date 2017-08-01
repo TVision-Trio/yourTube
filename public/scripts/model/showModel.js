@@ -61,7 +61,6 @@ var queryString = 'http://api.tvmaze.com/schedule';
     return genreArray;
   };
 
-
   DataModel.filterShows = function(genres, days, times){
     var filteredData = [];
     // Filter to only shows that are on prefered days
@@ -95,6 +94,32 @@ var queryString = 'http://api.tvmaze.com/schedule';
     });
     return filteredData;
   };
+
+  // get table data from database
+  DataModel.getGenresData = (callback) => {
+    $.ajax({
+      url: '/getGenres',
+      method: 'GET'
+    })
+    .then((results) => {
+      callback(results);
+    }), (err) => console.error(err);
+  }
+
+  // // TODO: Get preferences data from genres, days, and times databasee
+  // DataModel.getPreferencesData = function(callback){
+  //   $.ajax({
+  //     url: '/getPreferences',
+  //     method: 'GET',
+  //   }).then(function(results){
+  //     console.log(results);
+  //     callback(results);
+  //   }, function(error){
+  //     console.log(error);
+  //   });
+  // }
+
+  DataModel.getGenresData((results) => console.log(results));
 
   module.DataModel = DataModel;
 })(app);
