@@ -66,32 +66,32 @@ var queryString = 'http://api.tvmaze.com/schedule';
     var filteredData = [];
     // Filter to only shows that are on prefered days
     filteredData = DataModel.all.filter(function(show){
-      var counter = false;
+      var flag = false;
       days.forEach(function(day){
         if(show.days.includes(day)){
-          counter = true;
+          flag = true;
         }
       });
-      return counter;
+      return flag;
     });
     filteredData = filteredData.filter(function(show){
-      var counter = false;
+      var flag = false;
       genres.forEach(function(genre){
         if(show.genres.includes(genre)){
-          counter = true;
+          flag = true;
         }
       });
-      return counter;
+      return flag;
     });
 
     filteredData = filteredData.filter(function(show){
-      var counter = false;
+      var flag = false;
       times.forEach(function(time){
         if(show.timeframe.includes(time)){
-          counter = true;
+          flag = true;
         }
       });
-      return counter;
+      return flag;
     });
     return filteredData;
   };

@@ -2,12 +2,12 @@
 
 var app = app || {};
 
-(function(){
+(function(module){
 
   // On Submit, query API and get filtered show list based on preferences
   $('#querySubmitButton').on(function(){
-    app.DataModel.requestShows(function(){
-      var filteredShows = app.DataModel.filterShows(['Comedy','Drama'],['Monday', 'Tuesday'], ['Evening']);
+    module.DataModel.requestShows(function(){
+      var filteredShows = module.DataModel.filterShows(['Comedy','Drama'],['Monday', 'Tuesday'], ['Evening']);
       // TODO: Pass filtered shows to view function to display
     });
   });
@@ -18,4 +18,4 @@ var app = app || {};
     // TODO: call view function to show all show data;
   });
 
-})();
+})(app);
