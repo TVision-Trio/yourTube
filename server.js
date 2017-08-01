@@ -16,8 +16,11 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.post('/newUser', function (req, res) {
   client.query(
-    `INSERT INTO users (name) VALUES ($1) RETURNING *`,
-    [req.body.name]
+    `INSERT INTO users (username, name) VALUES ($1, $2) RETURNING *`,
+    [
+      req.body.username,
+      req.body.name
+    ]
   )
   .then(function (result) {
     res.send(result.rows[0]);
@@ -31,7 +34,13 @@ app.post('/newUser', function (req, res) {
 app.put('/updateUser', function (req, res) {
   client.query(
     `UPDATE users SET name=$1, genres=$2, days=$3, times=$4 WHERE user_id=$5 RETURNING *`,
-    [req.body.name, req.body.genres, req.body.days, req.body.times, req.body.user_id]
+    [
+      req.body.name,
+      req.body.genres,
+      req.body.days,
+      req.body.times,
+      req.body.user_id
+    ]
   )
   .then(function (result) {
     res.send(result.rows[0]);
@@ -63,23 +72,53 @@ app.get('/getUser', function (req, res) {
 loadDB();
 
 function loadDB(){
-  let dayArray = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-  let timeArray = ['morning', 'afternoon', 'evening'];
-  // create main table
-  client.query(`CREATE TABLE IF NOT EXISTS users (user_id SERIAL PRIMARY KEY, name VARCHAR NOT NULL);`)
-  createGenreTable();
+  const DAY_ARRAY = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+  const TIME_ARRAY = ['morning', 'afternoon', 'evening'];
+  let genreArray = ['horror', 'drama', 'comedy'];
+
+  createUsersTable();
+  createGenresTable();
   createDaysTable();
   createTimesTable();
 
-  // create tables for genre + days + times static data
-  function createGenreTable() {
+  // TODO: DRY refactor needed
+
+  function createUsersTable(){
+    client.query(`CREATE TABLE IF NOT EXISTS users (
+      user_id SERIAL PRIMARY KEY,
+      username VARCHAR NOT NULL,
+      name VARCHAR);`
+    )
+  }
+
+  // create tables for genre
+  function createGenresTable() {
     client.query(`CREATE TABLE IF NOT EXISTS genres (
       genre_id SERIAL PRIMARY KEY,
       genre VARCHAR
     );`
   ).then(function (){
     console.info('Created genres table');
+    genreArray.forEach(function(genre){insertGenresData(genre);});
   });
+  }
+
+  function insertGenresData(thisGenre) {
+    console.log('this has been called')
+    client.query(`INSERT INTO genres (genre) VALUES ($1) ON CONFLICT DO NOTHING RETURNING *;`,
+      [ thisGenre ]).then(function(){
+        console.log(thisGenre);
+        console.info('Insert genres into table');
+      });
+  }
+
+  // TODO: Complete
+  function createGenresPrefTable(){
+    client.query(`CREATE TABLE IF NOT EXISTS genres_prefs (
+      genres_prefs SERIAL PRIMARY KEY,
+      FOREIGN KEY (user_id) REFERENCES users(user_id),
+      genres_pref INT,
+    )`)
   }
 
   // create days table
@@ -90,7 +129,7 @@ function loadDB(){
     );`
   ).then(function (){
     console.info('Created days table');
-    dayArray.forEach(function(day){insertDaysData(day);});
+    DAY_ARRAY.forEach(function(day){insertDaysData(day);});
   });
   }
 
@@ -111,7 +150,7 @@ function loadDB(){
     );`
   ).then(function (){
     console.info('Created times table');
-    timeArray.forEach(function(time){insertTimesData(time);});
+    TIME_ARRAY.forEach(function(time){insertTimesData(time);});
   });
   }
 
@@ -125,6 +164,7 @@ function loadDB(){
   }
 }
 
+// user to times relation
 app.listen(PORT, function(){
   console.info('Listening on port: ' + PORT);
 })
