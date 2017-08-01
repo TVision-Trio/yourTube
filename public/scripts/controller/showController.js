@@ -2,20 +2,20 @@
 
 var app = app || {};
 
-(function(module){
-  const showController = {};
+(function(){
 
-  // $('#querySubmitButton').on(function(){
-  //
-  // })
-  app.DataModel.requestShows(function(){
-    app.DataModel.filterShows(['Comedy','Drama'],['Monday', 'Tuesday'], ['Evening']);
-  })
+  // On Submit, query API and get filtered show list based on preferences
+  $('#querySubmitButton').on(function(){
+    app.DataModel.requestShows(function(){
+      var filteredShows = app.DataModel.filterShows(['Comedy','Drama'],['Monday', 'Tuesday'], ['Evening']);
+      // TODO: Pass filtered shows to view function to display
+    });
+  });
 
-  // on submit -
-  // Build query string, pass it to show model
-  // Get show data back, pass to home view.
-  //
   // On 'detail' click, pass show id to home view to display.
+  $('.show-more').on(function(){
+    var show_id = $(this).attr('value');
+    // TODO: call view function to show all show data;
+  });
 
-})(app);
+})();

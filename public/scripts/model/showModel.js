@@ -24,6 +24,7 @@ var queryString = 'http://api.tvmaze.com/schedule';
         }
 
         return {
+          show_id: showObject.show.id,
           title: showObject.show.name,
           type: showObject.show.type,
           language: showObject.show.language,
@@ -74,12 +75,9 @@ var queryString = 'http://api.tvmaze.com/schedule';
       return counter;
     });
     filteredData = filteredData.filter(function(show){
-      console.log(show);
       var counter = false;
       genres.forEach(function(genre){
-        console.log(genre);
         if(show.genres.includes(genre)){
-          console.log(show.genres);
           counter = true;
         }
       });
@@ -87,19 +85,15 @@ var queryString = 'http://api.tvmaze.com/schedule';
     });
 
     filteredData = filteredData.filter(function(show){
-      // console.log(show);
       var counter = false;
       times.forEach(function(time){
-        console.log(time);
         if(show.timeframe.includes(time)){
-          console.log(show.times);
           counter = true;
         }
       });
       return counter;
     });
-
-    console.log(filteredData);
+    return filteredData;
   };
 
   module.DataModel = DataModel;
