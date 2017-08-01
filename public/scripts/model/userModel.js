@@ -24,9 +24,11 @@ var testUser = {name: 'Alana', pref: {
       url: '/newUser',
       method: 'POST',
       data: userObject
-    }).then(function(){
+    }).then(function(data){
       console.info('User created');
       callback();
+    }, function(error){
+        console.log(error);
     });
   };
 
