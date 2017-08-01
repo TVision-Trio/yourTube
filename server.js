@@ -14,6 +14,12 @@ app.use(express.static('./public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+// API
+app.get('/getData', (req, res) => {
+  $.get('http://api.tvmaze.com/schedule').then((data) => {
+    res.send(data);
+  })
+});
 
 // User
 
@@ -93,7 +99,7 @@ loadDB();
 function loadDB(){
   const DAY_ARRAY = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
   const TIME_ARRAY = ['morning', 'afternoon', 'evening'];
-  let genreArray = ['horror', 'drama', 'comedy'];
+  let genreArray = ['horror', 'drama', 'action'];
 
   createUsersTable();
   createGenresTable();
@@ -129,7 +135,7 @@ function loadDB(){
       });
   }
 
-  // TODO: complete this... 
+  // TODO: complete this...
   function createGenresPrefTable(){
     client.query(`CREATE TABLE IF NOT EXISTS genres_prefs (
       genres_prefs SERIAL PRIMARY KEY,
