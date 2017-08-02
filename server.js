@@ -37,9 +37,9 @@ app.post('/newUser', function(req, res) {
       ]
     )
     .then(function(result) {
-      console.log('In server success');
-      console.log(result.rows[0].user_id);
       client.query(`INSERT INTO genre_preferences (user_id) VALUES ($1) RETURNING *;`,[result.rows[0].user_id]);
+      client.query(`INSERT INTO time_preferences (user_id) VALUES ($1) RETURNING *;`,[result.rows[0].user_id]);
+      client.query(`INSERT INTO day_preferences (user_id) VALUES ($1) RETURNING *;`,[result.rows[0].user_id]);
       res.send(result.rows[0]);
     })
     .catch(function(err) {
@@ -143,7 +143,7 @@ app.get('/getTimes', (req, res) => {
 function loadDB() {
 
   //TODO: do this as a check
-  client.query('DROP TABLE IF EXISTS users, genres, days, times, times_preference, days_preference, genres_preference');
+  client.query('DROP TABLE IF EXISTS users, genres, days, times, time_preference, day_preference, genre_preference');
 
   const DAY_ARRAY = ['M', 'T', 'W', 'Th', 'F', 'Sa', 'Su'];
   const TIME_ARRAY = ['Morning', 'Afternoon', 'Evening'];
@@ -153,9 +153,9 @@ function loadDB() {
   createGenresTable();
   createDaysTable();
   createTimesTable();
-  createTimesPrefTable();
-  createDaysPrefTable();
-  createGenresPrefTable()
+  createTimePrefTable();
+  createDayPrefTable();
+  createGenrePrefTable()
 
   // TODO: DRY refactor needed
   function createUsersTable() {
@@ -209,7 +209,7 @@ function loadDB() {
     client.query(`INSERT INTO times (time) VALUES ($1) ON CONFLICT DO NOTHING RETURNING *;`, [thisTime]);
   }
 
-  function createTimesPrefTable(){
+  function createTimePrefTable(){
     client.query(`CREATE TABLE IF NOT EXISTS time_preferences (
     id SERIAL PRIMARY KEY,
     time_id VARCHAR,
@@ -222,7 +222,7 @@ function loadDB() {
   });
   }
 
-  function createDaysPrefTable(){
+  function createDayPrefTable(){
     client.query(`CREATE TABLE IF NOT EXISTS day_preferences (
     id SERIAL PRIMARY KEY,
     day_id VARCHAR,
@@ -235,7 +235,7 @@ function loadDB() {
   });
   }
 
-  function createGenresPrefTable(){
+  function createGenrePrefTable(){
     client.query(`CREATE TABLE IF NOT EXISTS genre_preferences (
     id SERIAL PRIMARY KEY,
     genre_id VARCHAR,
