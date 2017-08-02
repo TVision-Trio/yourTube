@@ -36,28 +36,12 @@ var app = app || {};
         };
       });
       DataModel.all = mappedData;
-      callback(mappedData);
+      callback();
     }, function(err){
       console.error(err);
     });
   };
 
-  // Get genres from JSON to include in passed data.
-  DataModel.getGenres = function(shows){
-    var genreArray = shows.map(function(show){
-      var genres = show.genres;
-      genres.push(show.type);
-      return genres;
-    }).reduce(function(accu, array){
-      return accu.concat(array);
-    },[]).reduce(function(accu, genre){
-      if (!accu.includes(genre)){
-        accu.push(genre);
-      }
-      return accu;
-    },[]);
-    return genreArray;
-  };
 
   DataModel.filterShows = function(genres, days, times){
     var filteredData = [];
@@ -93,6 +77,53 @@ var app = app || {};
     return filteredData;
   };
 
+  // Get genres from JSON to include in passed data.
+  DataModel.getGenres = function(shows){
+    var genreArray = shows.map(function(show){
+      var genres = show.genres;
+      genres.push(show.type);
+      return genres;
+    }).reduce(function(accu, array){
+      return accu.concat(array);
+    },[]).reduce(function(accu, genre){
+      if (!accu.includes(genre)){
+        accu.push(genre);
+      }
+      return accu;
+    },[]);
+    console.log('genre array' + genreArray);
+    return genreArray;
+  };
+
+  // this should be getting a list of all genres from the API
+  DataModel.getAllGenres = function(){
+    $.get('http://api.tvmaze.com/schedule')
+    .then((data) => {
+      return data.map((show) => {
+        return {
+          genres: show.genres,
+          types: show.type
+        };
+      })
+    });
+  };
+
+  console.log(DataModel.getAllGenres());
+  // DataModel.getGenres(shows);
+
+  DataModel.setGenresData = (genre) => {
+    $.ajax({
+      url: '/setGenres',
+      method: 'PUT',
+      data: {
+        genre: genre,
+      }
+    })
+    .then((data) => {
+      console.log(data);
+    });
+  };
+
   // get table data from database
   DataModel.getGenresData = (callback) => {
     $.ajax({
@@ -104,22 +135,56 @@ var app = app || {};
     }), (err) => console.error(err);
   }
 
-  DataModel.getGenresData(function(results){
+  DataModel.getTimesData = (callback) => {
+    $.ajax({
+      url: '/getTimes',
+      method: 'GET'
+    })
+    .then((results) => {
+      callback(results);
+    }), (err) => console.error(err);
+  }
+
+  DataModel.getDaysData = (callback) => {
+    $.ajax({
+      url: '/getDays',
+      method: 'GET'
+    })
+    .then((results) => {
+      callback(results);
+    }), (err) => console.error(err);
+  }
+
+  DataModel.getPreferencesData = function(callback){
+    $.ajax({
+      url: '/getPreferences',
+      method: 'GET',
+    }).then(function(results){
+      console.log(results);
+      callback(results);
+    }, function(error){
+      console.log(error);
+    });
+  }
+
+  // var genreArray = DataModel.getGenres(shows);
+  // genreArray.forEach((genre) => {
+  //   console.log('getGenres happening');
+  //   DataModel.setGenresData(genre);
+  // });
+
+  DataModel.getGenresData((results) => {
     module.showController.genreDataToHomeView(results);
   });
 
-  // // TODO: Get preferences data from genres, days, and times databasee
-  // DataModel.getPreferencesData = function(callback){
-  //   $.ajax({
-  //     url: '/getPreferences',
-  //     method: 'GET',
-  //   }).then(function(results){
-  //     console.log(results);
-  //     callback(results);
-  //   }, function(error){
-  //     console.log(error);
-  //   });
-  // }
+  DataModel.getDaysData((results) => {
+    module.showController.daysDataToHomeView(results);
+  });
+
+  DataModel.getTimesData((results) => {
+    module.showController.timesDataToHomeView(results);
+  });
+
 
   module.DataModel = DataModel;
 })(app);
