@@ -1,0 +1,40 @@
+'use strict';
+
+var app = app || {};
+
+(function(module){
+  // Pass possible preference option data to the homeview to populate clouds
+  var showController = {};
+
+
+  showController.genreDataToHomeView = (genres) => {
+    module.populateGenres(genres);
+  };
+
+  showController.daysDataToHomeView = (days) => {
+    module.populateDays(days);
+  };
+
+  showController.timesDataToHomeView = (times) => {
+    module.populateTimes(times);
+  };
+
+  // On Submit, query API and get filtered show list based on preferences
+  $('#querySubmitButton').on(function(){
+    module.DataModel.requestShows( (filteredShows) => {
+      filteredShows = module.DataModel.filterShows(['Comedy','Drama'],['Monday', 'Tuesday'], ['Evening']);
+      module.populateResults(filteredShows);
+    })
+    // TODO: Pass filtered shows to view function to display
+  });
+
+
+  // On 'detail' click, pass show id to home view to display.
+  $('.show-more').on(function(){
+    var show_id = $(this).attr('value');
+    // TODO: call view function to show all show data;
+  });
+
+  module.showController = showController;
+
+})(app);
