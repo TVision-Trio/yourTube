@@ -15,13 +15,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 // API
-app.get('/getData', (req, res) => {
-  $.get('http://api.tvmaze.com/schedule').then((data) => {
-    res.send(data);
-  })
-});
-
-// User
+// put from model
+app.post('/')
 
 app.post('/newUser', function (req, res) {
   client.query(
