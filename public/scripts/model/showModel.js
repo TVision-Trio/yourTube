@@ -78,7 +78,6 @@ var app = app || {};
   };
 
   // Get genres from JSON to include in passed data.
-  // this is getting shows specifically from the controller
   DataModel.getGenres = function(shows){
     var genreArray = shows.map(function(show){
       var genres = show.genres;
@@ -96,18 +95,18 @@ var app = app || {};
     return genreArray;
   };
 
-  // this should be getting a list of all genres from the API
-  DataModel.getAllGenres = function(){
-    $.get('http://api.tvmaze.com/schedule')
-    .then((data) => {
-      return data.map((show) => {
-        return {
-          genres: show.genres,
-          types: show.type
-        };
-      })
-    });
-  };
+  // // this should be getting a list of all genres from the API
+  // DataModel.getAllGenres = function(){
+  //   $.get('http://api.tvmaze.com/schedule')
+  //   .then((data) => {
+  //     return data.map((show) => {
+  //       return {
+  //         genres: show.genres,
+  //         types: show.type
+  //       };
+  //     })
+  //   });
+  // };
 
   console.log(DataModel.getAllGenres());
   // DataModel.getGenres(shows);
