@@ -22,6 +22,8 @@ var app = app ||{};
       var user = new module.User(userData);
       console.log(user);
       user.setTimePreferences(userPreferences.times);
+      user.setDayPreferences(userPreferences.days);
+      user.setGenrePreferences(userPreferences.genres);
       console.log(user);
     });
     // TODO: update each preference table with these preferences

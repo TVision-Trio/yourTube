@@ -90,6 +90,45 @@ var app = app || {};
     });
   };
 
+  User.prototype.setTimePreferences = function(timePrefArray) {
+    $.ajax({
+      url:'/setTimePreferences',
+      method: 'PUT',
+      data: {times: JSON.stringify(timePrefArray), user_id: this.user_id}
+    }).then(function(results){
+      console.info('Successfully set time preferences');
+    }, function(error){
+      console.error(error);
+    });
+  };
+
+  User.prototype.setDayPreferences = function(dayPrefArray) {
+    $.ajax({
+      url:'/setDayPreferences',
+      method: 'PUT',
+      data: {days: JSON.stringify(dayPrefArray), user_id: this.user_id}
+    }).then(function(results){
+      console.info('Successfully set day preferences');
+    }, function(error){
+      console.error(error);
+    });
+  };
+
+  User.prototype.setGenrePreferences = function(genrePrefArray) {
+    $.ajax({
+      url:'/setGenrePreferences',
+      method: 'PUT',
+      data: {genres: JSON.stringify(genrePrefArray), user_id: this.user_id}
+    }).then(function(results){
+      console.log('Inside model success');
+      console.info('Successfully set genre preferences');
+      console.log(results);
+    }, function(error){
+      console.log('Inside model error');
+      console.error(error);
+    });
+  };
+
   // TODO: How does this currentUser variable get updated? Does this even need to be in this file?
   // Save current user to global app
   module.User = User;

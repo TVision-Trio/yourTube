@@ -248,12 +248,41 @@ app.put('/setTimePreferences', function(req, res) {
       ]
     )
     .then(function(result) {
-      console.log('Inside server success');
-      console.log(result.rows[0]);
       res.send(result.rows[0]);
     })
     .catch(function(err) {
-      console.log('Inside server error');
+      console.error(err)
+      res.send(err);
+    });
+});
+
+app.put('/setDayPreferences', function(req, res) {
+  client.query(
+      `UPDATE day_preferences SET day_id=$2 WHERE day_preferences.user_id=$1 RETURNING *;`, [
+        req.body.user_id,
+        req.body.days
+      ]
+    )
+    .then(function(result) {
+      res.send(result.rows[0]);
+    })
+    .catch(function(err) {
+      console.error(err)
+      res.send(err);
+    });
+});
+
+app.put('/setGenrePreferences', function(req, res) {
+  client.query(
+      `UPDATE genre_preferences SET genre_id=$2 WHERE genre_preferences.user_id=$1 RETURNING *;`, [
+        req.body.user_id,
+        req.body.genres
+      ]
+    )
+    .then(function(result) {
+      res.send(result.rows[0]);
+    })
+    .catch(function(err) {
       console.error(err)
       res.send(err);
     });
