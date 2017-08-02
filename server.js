@@ -5,7 +5,6 @@ const app = express();
 const bodyParser = require('body-parser');
 const pg = require('pg');
 const PORT = process.env.PORT || 3000;
-// const connString = 'postgres://localhost:5432/yourtube';
 let connString = process.env.DATABASE_URL;
 if(!connString){
   connString = process.env.PG_PASSWORD;
@@ -41,6 +40,9 @@ app.post('/newUser', function(req, res) {
       ]
     )
     .then(function(result) {
+      client.query(`INSERT INTO genre_preferences (user_id) VALUES ($1) RETURNING *;`,[result.rows[0].user_id]);
+      client.query(`INSERT INTO time_preferences (user_id) VALUES ($1) RETURNING *;`,[result.rows[0].user_id]);
+      client.query(`INSERT INTO day_preferences (user_id) VALUES ($1) RETURNING *;`,[result.rows[0].user_id]);
       res.send(result.rows[0]);
     })
     .catch(function(err) {
@@ -63,24 +65,19 @@ app.put('/updateUser', function(req, res) {
       res.send(result.rows[0]);
     })
     .catch(function(err) {
-      console.log(req.body)
       console.error(err)
       res.send(err);
     });
 });
 
 app.get('/getUser', function(req, res) {
-  console.log(req.query.user_id);
   client.query(
       `SELECT * FROM users WHERE user_id=$1;`, [req.query.user_id]
     )
     .then(function(result) {
-      console.log('Inside server GET success: ')
-      console.log(result)
       res.send(result.rows[0]);
     })
     .catch(function(err) {
-      console.log('Inside server GET error: ')
       console.error(err);
       res.send(err);
     });
@@ -91,12 +88,9 @@ app.get('/getUsers', function(req, res) {
       `SELECT * FROM users;`
     )
     .then(function(result) {
-      console.log('Inside server GET success: ')
-      console.log(result)
       res.send(result.rows[0]);
     })
     .catch(function(err) {
-      console.log('Inside server GET error: ')
       console.error(err);
       res.send(err);
     });
@@ -142,6 +136,9 @@ app.get('/getTimes', (req, res) => {
 
 function loadDB() {
 
+  //TODO: do this as a check
+  // client.query('DROP TABLE IF EXISTS users, genres, days, times, time_preferences, day_preferences, genre_preferences');
+
   const DAY_ARRAY = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
   const TIME_ARRAY = ['morning', 'afternoon', 'evening'];
 
@@ -149,9 +146,9 @@ function loadDB() {
   createGenresTable();
   createDaysTable();
   createTimesTable();
-  createTimesPrefTable();
-  createDaysPrefTable();
-  createGenresPrefTable()
+  createTimePrefTable();
+  createDayPrefTable();
+  createGenrePrefTable()
 
   // TODO: DRY refactor needed
   function createUsersTable() {
@@ -205,7 +202,7 @@ function loadDB() {
     client.query(`INSERT INTO times (time) VALUES ($1) ON CONFLICT DO NOTHING RETURNING *;`, [thisTime]);
   }
 
-  function createTimesPrefTable(){
+  function createTimePrefTable(){
     client.query(`CREATE TABLE IF NOT EXISTS time_preferences (
     id SERIAL PRIMARY KEY,
     time_id VARCHAR,
@@ -218,7 +215,7 @@ function loadDB() {
   });
   }
 
-  function createDaysPrefTable(){
+  function createDayPrefTable(){
     client.query(`CREATE TABLE IF NOT EXISTS day_preferences (
     id SERIAL PRIMARY KEY,
     day_id VARCHAR,
@@ -231,7 +228,7 @@ function loadDB() {
   });
   }
 
-  function createGenresPrefTable(){
+  function createGenrePrefTable(){
     client.query(`CREATE TABLE IF NOT EXISTS genre_preferences (
     id SERIAL PRIMARY KEY,
     genre_id VARCHAR,
@@ -244,6 +241,55 @@ function loadDB() {
   });
   }
 }
+
+app.put('/setTimePreferences', function(req, res) {
+  client.query(
+      `UPDATE time_preferences SET time_id=$2 WHERE time_preferences.user_id=$1 RETURNING *;`, [
+        req.body.user_id,
+        req.body.times
+      ]
+    )
+    .then(function(result) {
+      res.send(result.rows[0]);
+    })
+    .catch(function(err) {
+      console.error(err)
+      res.send(err);
+    });
+});
+
+app.put('/setDayPreferences', function(req, res) {
+  client.query(
+      `UPDATE day_preferences SET day_id=$2 WHERE day_preferences.user_id=$1 RETURNING *;`, [
+        req.body.user_id,
+        req.body.days
+      ]
+    )
+    .then(function(result) {
+      res.send(result.rows[0]);
+    })
+    .catch(function(err) {
+      console.error(err)
+      res.send(err);
+    });
+});
+
+app.put('/setGenrePreferences', function(req, res) {
+  client.query(
+      `UPDATE genre_preferences SET genre_id=$2 WHERE genre_preferences.user_id=$1 RETURNING *;`, [
+        req.body.user_id,
+        req.body.genres
+      ]
+    )
+    .then(function(result) {
+      res.send(result.rows[0]);
+    })
+    .catch(function(err) {
+      console.error(err)
+      res.send(err);
+    });
+});
+
 app.listen(PORT, function() {
   console.info('Listening on port: ' + PORT);
 })

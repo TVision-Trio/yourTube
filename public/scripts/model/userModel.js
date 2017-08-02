@@ -6,6 +6,7 @@ var app = app || {};
 
   function User(userData){
     this.name = userData.name;
+    this.username = userData.username;
     if (userData.user_id) {
       this.user_id = userData.user_id;
     }
@@ -23,16 +24,16 @@ var app = app || {};
   // CREATE user in database based on user input
   // TODO: handle user input error
   User.prototype.createUser = function() {
-    $.post('/newUser', {name: this.name}).then(function(results){
-      console.log(results);
+    $.post('/newUser', {name: this.name, username: this.username}).then(function(results){
       this.user_id = results.user_id;
     }, function(error){
+      // TODO: Handle error duplicate usernames
       console.error(error);
     });
   };
 
   // UPDATE user in database based on updated preferences
-  // TODO: Would this ever be called on a user that has not been created in the database? If so, this function will throw an error because the user.id will not yet exisit
+  // TODO: Do we need this function anymore? I don't think there is any reason we would be updating the specific user in our MVP.
   User.prototype.updateUser = function() {
     if (!this.user_id){
       console.error('Error: updateUser method can not be applied to a user that does not have an assigned user_id');
@@ -50,13 +51,13 @@ var app = app || {};
   };
 
   // TODO: GET data from database by user_id
-  User.prototype.getUser = function() {
+  module.getUser = function(user_id, callback) {
     $.ajax({
       url:'/getUser',
       method: 'GET',
-      data: {user_id: this.user_id}
+      data: {user_id: user_id}
     }).then(function(results){
-      console.log(results);
+      callback(results);
     }, function(error){
       console.error(error);
     });
@@ -74,9 +75,60 @@ var app = app || {};
     });
   };
 
-  // TODO: How does this currentUser variable get updated? Does this even need to be in this file?
-  // Save current user to global app
+  // TODO: GET ALL users from database
+  User.prototype.setTimePreferences = function(timePrefArray) {
+    $.ajax({
+      url:'/setTimePreferences',
+      method: 'PUT',
+      data: {times: JSON.stringify(timePrefArray), user_id: this.user_id}
+    }).then(function(results){
+      console.log('Inside model success');
+      console.log(results);
+    }, function(error){
+      console.log('Inside model error');
+      console.error(error);
+    });
+  };
 
-  module.user = user;
+  User.prototype.setTimePreferences = function(timePrefArray) {
+    $.ajax({
+      url:'/setTimePreferences',
+      method: 'PUT',
+      data: {times: JSON.stringify(timePrefArray), user_id: this.user_id}
+    }).then(function(results){
+      console.info('Successfully set time preferences');
+    }, function(error){
+      console.error(error);
+    });
+  };
+
+  User.prototype.setDayPreferences = function(dayPrefArray) {
+    $.ajax({
+      url:'/setDayPreferences',
+      method: 'PUT',
+      data: {days: JSON.stringify(dayPrefArray), user_id: this.user_id}
+    }).then(function(results){
+      console.info('Successfully set day preferences');
+    }, function(error){
+      console.error(error);
+    });
+  };
+
+  User.prototype.setGenrePreferences = function(genrePrefArray) {
+    $.ajax({
+      url:'/setGenrePreferences',
+      method: 'PUT',
+      data: {genres: JSON.stringify(genrePrefArray), user_id: this.user_id}
+    }).then(function(results){
+      console.log('Inside model success');
+      console.info('Successfully set genre preferences');
+      console.log(results);
+    }, function(error){
+      console.log('Inside model error');
+      console.error(error);
+    });
+  };
+
+  module.User = User;
 
 })(app);
