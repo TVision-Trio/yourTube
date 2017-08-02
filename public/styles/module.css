@@ -6,7 +6,7 @@
   text-align: center;
 }
 
-#landing input, #landing select  {
+#landing input, #landing select, #landing option {
   display: block;
   margin: 0px auto 30px auto;
   width: 200px;
@@ -17,10 +17,6 @@
   color: rgba(0,0,0,.60);
 }
 
-#landing input {
-  border: 2px solid lightgray;
-}
-
 #landing select {
   -webkit-appearance: none;
   -moz-appearance: none;*/
@@ -28,32 +24,44 @@
 }
 
 #landing button {
-  padding: 10px 20px;
   background-color: rgba(255, 0, 0, 0.79);
-  border: none;
 }
 
-/* Cloud Tags */
+/* Cloud Tags Search */
+#search {
+  padding: 20px;
+  text-align: center;
+}
+
 .cloud {
-  border-radius: 25px;
-  border: 5px solid black;
+  border-radius: 10px;
   background: rgba(255, 0, 0, 0.79);
   text-align: center;
   list-style: none;
-}
-
-#search li {
-  display: inline;
+  margin: 5px;
+  padding: 8px;
+  display: inline-block;
 }
 
 .time {
   background-color: rgba(0, 113, 188, 0.79);
+  width: 100px;
+  text-align: center;
 }
 
 .day {
   background-color: rgba(0, 146, 69, 0.79);
+  width: 25px;
+  text-align: center;
 }
 
 .genre {
-  background-color: rgba(0, 146, 69, 0.79);
+  background-color: rgba(255, 0, 0, 0.79);
 }
+
+#search button {
+  background-color: rgba(0, 113, 188, 0.79);
+}
+
+
+/* About */
