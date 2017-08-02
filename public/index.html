@@ -8,6 +8,22 @@
     <link rel="stylesheet" href="styles/layout.css">
     <link rel="stylesheet" href="styles/module.css">
     <link rel="stylesheet" href="styles/state.css">
+    <script id="time-cloud-template" type="text/x-handlebars-template">
+      <!-- for each thing from the database, create a cloud tag thing -->
+      <li value="{{time_id}}">{{time}}</li>
+    </script>
+    <script id="day-cloud-template" type="text/x-handlebars-template">
+      <!-- for each thing from the database, create a cloud tag thing -->
+      <li value="{{day_id}}">{{day}}</li>
+    </script>
+    <script id="genre-cloud-template" type="text/x-handlebars-template">
+      <!-- for each thing from the database, create a cloud tag thing -->
+      <li value="{{genre_id}}">{{genre}}</li>
+    </script>
+    <script id="results-template" type="text/x-handlebars-template">
+      <!-- for each thing from the database, create a cloud tag thing -->
+      <li>{{title}}</li>
+    </script>
   </head>
   <body>
     <header>
@@ -28,14 +44,22 @@
       </section>
       <section id="home">
         <section id="search">
-          <!-- Cloud tags go here -->
+          <ul id="genreCloud">
+            <!-- Genre cloud tags go here -->
+          </ul>
+          <ul id="timeCloud">
+            <!-- Time cloud tags go here -->
+          </ul>
+          <ul id="dayCloud">
+            <!-- Days cloud tags go here -->
+          </ul>
           <button id="querySubmitButton" type="button">Submit</button>
         </section>
-        <section id="results">
-          <ul>
-            <!-- Search results go here -->
-          </ul>
-        </section>
+      </section>
+      <section id="results">
+        <ul>
+          <!-- Search results go here -->
+        </ul>
       </section>
       <section id="about">
         <article class="Aeone">
@@ -56,10 +80,10 @@
     <script type="text/javascript" src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
     <script type="text/javascript" src="scripts/model/showModel.js"></script>
     <script type="text/javascript" src="scripts/model/userModel.js"></script>
-    <script type="text/javascript" src="scripts/controller/showController.js"></script>
-    <script type="text/javascript" src="scripts/controller/userController.js"></script>
     <script type="text/javascript" src="scripts/view/homeView.js"></script>
     <script type="text/javascript" src="scripts/view/landingView.js"></script>
+    <script type="text/javascript" src="scripts/controller/showController.js"></script>
+    <script type="text/javascript" src="scripts/controller/userController.js"></script>
 
   </body>
 </html>
