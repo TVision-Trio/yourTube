@@ -1,0 +1,59 @@
+/******* MODULE *******/
+
+/* Landing Page */
+
+#landing {
+  text-align: center;
+}
+
+#landing input, #landing select  {
+  display: block;
+  margin: 0px auto 30px auto;
+  width: 200px;
+  text-align: center;
+  padding: 10px 20px;
+  background-color: white;
+  border: 2px solid lightgray;
+  color: rgba(0,0,0,.60);
+}
+
+#landing input {
+  border: 2px solid lightgray;
+}
+
+#landing select {
+  -webkit-appearance: none;
+  -moz-appearance: none;*/
+  appearance: none;
+}
+
+#landing button {
+  padding: 10px 20px;
+  background-color: rgba(255, 0, 0, 0.79);
+  border: none;
+}
+
+/* Cloud Tags */
+.cloud {
+  border-radius: 25px;
+  border: 5px solid black;
+  background: rgba(255, 0, 0, 0.79);
+  text-align: center;
+  list-style: none;
+}
+
+#search li {
+  display: inline;
+}
+
+.time {
+  background-color: rgba(0, 113, 188, 0.79);
+}
+
+.day {
+  background-color: rgba(0, 146, 69, 0.79);
+}
+
+.genre {
+  background-color: rgba(0, 146, 69, 0.79);
+}
