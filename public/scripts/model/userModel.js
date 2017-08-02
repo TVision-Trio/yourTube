@@ -129,8 +129,6 @@ var app = app || {};
     });
   };
 
-  // TODO: How does this currentUser variable get updated? Does this even need to be in this file?
-  // Save current user to global app
   module.User = User;
 
 })(app);

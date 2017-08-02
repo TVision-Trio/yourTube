@@ -5,7 +5,10 @@ const app = express();
 const bodyParser = require('body-parser');
 const pg = require('pg');
 const PORT = process.env.PORT || 3000;
-const connString = process.env.PG_PASSWORD;
+let connString = process.env.DATABASE_URL;
+if(!connString){
+  connString = process.env.PG_PASSWORD;
+}
 const client = new pg.Client(connString);
 client.connect();
 
@@ -134,11 +137,10 @@ app.get('/getTimes', (req, res) => {
 function loadDB() {
 
   //TODO: do this as a check
-  client.query('DROP TABLE IF EXISTS users, genres, days, times, time_preferences, day_preferences, genre_preferences');
+  // client.query('DROP TABLE IF EXISTS users, genres, days, times, time_preferences, day_preferences, genre_preferences');
 
-  const DAY_ARRAY = ['M', 'T', 'W', 'Th', 'F', 'Sa', 'Su'];
-  const TIME_ARRAY = ['Morning', 'Afternoon', 'Evening'];
-  // const GENRE_ARRAY = [];
+  const DAY_ARRAY = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+  const TIME_ARRAY = ['morning', 'afternoon', 'evening'];
 
   createUsersTable();
   createGenresTable();

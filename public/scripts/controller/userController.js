@@ -20,11 +20,9 @@ var app = app ||{};
     // Get the user that coresponds to the user_id
     var currentUser = module.getUser(1, function(userData){
       var user = new module.User(userData);
-      console.log(user);
       user.setTimePreferences(userPreferences.times);
       user.setDayPreferences(userPreferences.days);
       user.setGenrePreferences(userPreferences.genres);
-      console.log(user);
     });
     // TODO: update each preference table with these preferences
 
