@@ -3,6 +3,27 @@
   <head>
     <meta charset="utf-8">
     <title>YourTube</title>
+    <link rel="stylesheet" href="vendor/normalize.css">
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="styles/module.css">
+    <link rel="stylesheet" href="styles/state.css">
+    <script id="time-cloud-template" type="text/x-handlebars-template">
+      <!-- for each thing from the database, create a cloud tag thing -->
+      <li value="{{time_id}}">{{time}}</li>
+    </script>
+    <script id="day-cloud-template" type="text/x-handlebars-template">
+      <!-- for each thing from the database, create a cloud tag thing -->
+      <li value="{{day_id}}">{{day}}</li>
+    </script>
+    <script id="genre-cloud-template" type="text/x-handlebars-template">
+      <!-- for each thing from the database, create a cloud tag thing -->
+      <li value="{{genre_id}}">{{genre}}</li>
+    </script>
+    <script id="results-template" type="text/x-handlebars-template">
+      <!-- for each thing from the database, create a cloud tag thing -->
+      <li>{{title}}</li>
+    </script>
   </head>
   <body>
     <header>
@@ -19,16 +40,26 @@
           <!-- Populated option tags go here -->
         </select>
         <input type="text" placeholder="New User">
+        <button type="button">Submit</button>
       </section>
       <section id="home">
         <section id="search">
-          <!-- Cloud tags go here -->
-        </section>
-        <section id="results">
-          <ul>
-            <!-- Search results go here -->
+          <ul id="genreCloud">
+            <!-- Genre cloud tags go here -->
           </ul>
+          <ul id="timeCloud">
+            <!-- Time cloud tags go here -->
+          </ul>
+          <ul id="dayCloud">
+            <!-- Days cloud tags go here -->
+          </ul>
+          <button id="querySubmitButton" type="button">Submit</button>
         </section>
+      </section>
+      <section id="results">
+        <ul>
+          <!-- Search results go here -->
+        </ul>
       </section>
       <section id="about">
         <article class="Aeone">
@@ -44,5 +75,15 @@
     </main>
     <footer>
     </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
+    <script type="text/javascript" src="scripts/model/showModel.js"></script>
+    <script type="text/javascript" src="scripts/model/userModel.js"></script>
+    <script type="text/javascript" src="scripts/view/homeView.js"></script>
+    <script type="text/javascript" src="scripts/view/landingView.js"></script>
+    <script type="text/javascript" src="scripts/controller/showController.js"></script>
+    <script type="text/javascript" src="scripts/controller/userController.js"></script>
+
   </body>
 </html>
