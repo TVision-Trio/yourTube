@@ -16,17 +16,17 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-// API
 // put from model
-app.put('/setGenres', (req, res) => {
-  client.query(`INSERT INTO genres (genre) VALUES ($1) RETURNING *;`, [
-    req.body.genre
-  ])
-  .then((result) => {
-    res.send(result.rows)
+app.post('/setGenres', (req, res) => {
+  client.query(`INSERT INTO genres (genre) VALUES ($1) ON CONFLICT DO NOTHING;`,
+  [req.body.genre])
+  .then(() => {
+    res.send('insert genres complete')
   })
+  .catch((err) => {
+    console.error(err);
+  });
 });
-
 
 app.post('/newUser', function(req, res) {
   client.query(
@@ -81,7 +81,7 @@ app.get('/getUser', function(req, res) {
     });
 });
 
-// TODO: get for all tables
+// get data from tables
 
 app.get('/getGenres', (req, res) => {
   client.query(
@@ -128,7 +128,7 @@ function loadDB() {
 
   const DAY_ARRAY = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
   const TIME_ARRAY = ['morning', 'afternoon', 'evening'];
-  const GENRE_ARRAY = ['horror', 'drama', 'action'];
+  const GENRE_ARRAY = [];
 
   createUsersTable();
   createGenresTable();
@@ -159,15 +159,6 @@ function loadDB() {
   function insertGenresData(thisGenre) {
     client.query(`INSERT INTO genres (genre) VALUES ($1) ON CONFLICT DO NOTHING RETURNING *;`, [thisGenre]);
   }
-
-  // // TODO: complete this...
-  // function createGenresPrefTable(){
-  //   client.query(`CREATE TABLE IF NOT EXISTS genres_prefs (
-  //     genres_prefs SERIAL PRIMARY KEY,
-  //     FOREIGN KEY (user_id) REFERENCES users(user_id),
-  //     genres_pref INT,
-  //   )`)
-  // }
 
   // create days table
   function createDaysTable() {

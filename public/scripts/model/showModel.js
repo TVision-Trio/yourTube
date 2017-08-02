@@ -36,28 +36,14 @@ var app = app || {};
         };
       });
       DataModel.all = mappedData;
-      callback(mappedData);
+      callback();
+      return mappedData;
     }, function(err){
       console.error(err);
     });
   };
 
-  // Get genres from JSON to include in passed data.
-  DataModel.getGenres = function(shows){
-    var genreArray = shows.map(function(show){
-      var genres = show.genres;
-      genres.push(show.type);
-      return genres;
-    }).reduce(function(accu, array){
-      return accu.concat(array);
-    },[]).reduce(function(accu, genre){
-      if (!accu.includes(genre)){
-        accu.push(genre);
-      }
-      return accu;
-    },[]);
-    return genreArray;
-  };
+  var shows = DataModel.requestShows(console.log(shows));
 
   DataModel.filterShows = function(genres, days, times){
     var filteredData = [];
@@ -91,6 +77,36 @@ var app = app || {};
       return flag;
     });
     return filteredData;
+  };
+
+  // Get genres from JSON to include in passed data.
+  DataModel.getGenres = function(shows){
+    var genreArray = shows.map(function(show){
+      var genres = show.genres;
+      genres.push(show.type);
+      return genres;
+    }).reduce(function(accu, array){
+      return accu.concat(array);
+    },[]).reduce(function(accu, genre){
+      if (!accu.includes(genre)){
+        accu.push(genre);
+      }
+      return accu;
+    },[]);
+    return genreArray;
+  };
+
+  DataModel.setGenresData = (genre) => {
+    $.ajax({
+      url: '/setGenres',
+      method: 'PUT',
+      data: {
+        genre: genre,
+      }
+    })
+    .then((data) => {
+      console.log(data);
+    });
   };
 
   // get table data from database
@@ -135,16 +151,22 @@ var app = app || {};
       console.log(error);
     });
   }
-  
-  DataModel.getGenresData(function(results){
+
+  var genreArray = DataModel.getGenres(shows);
+  genreArray.forEach((genre) => {
+    console.log('getGenres happening');
+    DataModel.setGenresData(genre);
+  });
+
+  DataModel.getGenresData((results) => {
     module.showController.genreDataToHomeView(results);
   });
 
-  DataModel.getDaysData(function(results){
+  DataModel.getDaysData((results) => {
     module.showController.daysDataToHomeView(results);
   });
 
-  DataModel.getTimesData(function(results){
+  DataModel.getTimesData((results) => {
     module.showController.timesDataToHomeView(results);
   });
 
