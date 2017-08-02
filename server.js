@@ -16,9 +16,17 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-// API
 // put from model
-app.post('/')
+app.post('/setGenres', (req, res) => {
+  client.query(`INSERT INTO genres (genre) VALUES ($1) ON CONFLICT DO NOTHING;`,
+  [req.body.genre])
+  .then(() => {
+    res.send('insert genres complete')
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+});
 
 app.post('/newUser', function(req, res) {
   client.query(
@@ -73,18 +81,40 @@ app.get('/getUser', function(req, res) {
     });
 });
 
-// TODO: get for all tables
+// get data from tables
 
-// genres
-app.get('/getGenres', function(req, res) {
+app.get('/getGenres', (req, res) => {
   client.query(
       `SELECT genre FROM genres;`
     )
-    .then(function(result) {
-      console.log(result);
+    .then( (result) => {
       res.send(result.rows);
     })
-    .catch(function(err) {
+    .catch( (err) => {
+      res.send(err);
+    });
+});
+
+app.get('/getDays', (req, res) => {
+  client.query(
+      `SELECT day FROM days;`
+    )
+    .then( (result) => {
+      res.send(result.rows);
+    })
+    .catch( (err) => {
+      res.send(err);
+    });
+});
+
+app.get('/getTimes', (req, res) => {
+  client.query(
+      `SELECT time FROM times;`
+    )
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((err) => {
       res.send(err);
     });
 });
@@ -92,13 +122,13 @@ app.get('/getGenres', function(req, res) {
 loadDB();
 
 function loadDB() {
-  
+
   //TODO: do this as a check
   client.query('DROP TABLE days, times, genres, users');
 
   const DAY_ARRAY = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
   const TIME_ARRAY = ['morning', 'afternoon', 'evening'];
-  const GENRE_ARRAY = ['horror', 'drama', 'action'];
+  const GENRE_ARRAY = [];
 
   createUsersTable();
   createGenresTable();
@@ -127,19 +157,8 @@ function loadDB() {
   }
 
   function insertGenresData(thisGenre) {
-    client.query(`INSERT INTO genres (genre) VALUES ($1) ON CONFLICT DO NOTHING RETURNING *;`, [thisGenre]).then(function() {
-      console.info('Insert genres into table');
-    });
+    client.query(`INSERT INTO genres (genre) VALUES ($1) ON CONFLICT DO NOTHING RETURNING *;`, [thisGenre]);
   }
-
-  // // TODO: complete this...
-  // function createGenresPrefTable(){
-  //   client.query(`CREATE TABLE IF NOT EXISTS genres_prefs (
-  //     genres_prefs SERIAL PRIMARY KEY,
-  //     FOREIGN KEY (user_id) REFERENCES users(user_id),
-  //     genres_pref INT,
-  //   )`)
-  // }
 
   // create days table
   function createDaysTable() {
@@ -155,9 +174,7 @@ function loadDB() {
   }
 
   function insertDaysData(thisDay) {
-    client.query(`INSERT INTO days (day) VALUES ($1) ON CONFLICT DO NOTHING RETURNING *;`, [thisDay]).then(function() {
-      console.info('Insert days into table');
-    });
+    client.query(`INSERT INTO days (day) VALUES ($1) ON CONFLICT DO NOTHING RETURNING *;`, [thisDay]);
   }
 
   // create times table
@@ -174,13 +191,10 @@ function loadDB() {
   }
 
   function insertTimesData(thisTime) {
-    client.query(`INSERT INTO times (time) VALUES ($1) ON CONFLICT DO NOTHING RETURNING *;`, [thisTime]).then(function() {
-      console.info('Insert times into table');
-    });
+    client.query(`INSERT INTO times (time) VALUES ($1) ON CONFLICT DO NOTHING RETURNING *;`, [thisTime]);
   }
 }
 
-// user to times relation
 app.listen(PORT, function() {
   console.info('Listening on port: ' + PORT);
 })
