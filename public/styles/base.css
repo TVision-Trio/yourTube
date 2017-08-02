@@ -24,3 +24,8 @@ section {
   /*display: block;*/
   padding: 30px;
 }
+
+button {
+  padding: 10px 20px;
+  border: none;
+}

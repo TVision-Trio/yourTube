@@ -142,8 +142,8 @@ function loadDB() {
   //TODO: do this as a check
   client.query('DROP TABLE days, times, genres, users');
 
-  const DAY_ARRAY = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-  const TIME_ARRAY = ['morning', 'afternoon', 'evening'];
+  const DAY_ARRAY = ['M', 'T', 'W', 'Th', 'F', 'Sa', 'Su'];
+  const TIME_ARRAY = ['Morning', 'Afternoon', 'Evening'];
   // const GENRE_ARRAY = [];
 
   createUsersTable();
