@@ -21,7 +21,6 @@
   -webkit-appearance: none;
   -moz-appearance: none;*/
   appearance: none;
-  
 }
 
 #landing button {
@@ -30,13 +29,21 @@
   border: none;
 }
 
-/* Cloud Tags */
+/* Cloud Tags Search */
+#search {
+  padding: 20px;
+  border: 2px solid black;
+  background-color: pink;
+}
+
 .cloud {
-  border-radius: 25px;
+  border-radius: 15px;
   border: 5px solid black;
   background: rgba(255, 0, 0, 0.79);
   text-align: center;
   list-style: none;
+  margin: 100px;
+  padding: 8px;
 }
 
 #search li {
