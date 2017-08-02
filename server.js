@@ -139,9 +139,6 @@ app.get('/getTimes', (req, res) => {
 
 function loadDB() {
 
-  //TODO: do this as a check
-  client.query('DROP TABLE days, times, genres, users');
-
   const DAY_ARRAY = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
   const TIME_ARRAY = ['morning', 'afternoon', 'evening'];
   // const GENRE_ARRAY = [];
