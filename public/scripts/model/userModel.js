@@ -81,5 +81,6 @@ var testUser = {name: 'Alana', user_id: 1, genres: ['comedy', 'horror'], days: [
   // TODO: How does this currentUser variable get updated?
   // Save current user to global app
   module.currentUser = currentUser;
+  module.user = user;
 
 })(app);
