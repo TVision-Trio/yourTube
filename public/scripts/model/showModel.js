@@ -7,7 +7,7 @@ var app = app || {};
   DataModel.all = [];
 
   DataModel.requestShows = (callback) => {
-    $.get('http://api.tvmaze.com/schedule')
+    $.get('https://api.tvmaze.com/schedule')
     .then(function(data){
       var mappedData = data.map(function(showObject){
 
