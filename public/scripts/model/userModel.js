@@ -6,6 +6,7 @@ var app = app || {};
 
   function User(userData){
     this.name = userData.name;
+    this.username = userData.username;
     if (userData.user_id) {
       this.user_id = userData.user_id;
     }
@@ -23,16 +24,17 @@ var app = app || {};
   // CREATE user in database based on user input
   // TODO: handle user input error
   User.prototype.createUser = function() {
-    $.post('/newUser', {name: this.name}).then(function(results){
+    $.post('/newUser', {name: this.name, username: this.username}).then(function(results){
       console.log(results);
       this.user_id = results.user_id;
     }, function(error){
+      // TODO: Handle error duplicate usernames
       console.error(error);
     });
   };
 
   // UPDATE user in database based on updated preferences
-  // TODO: Would this ever be called on a user that has not been created in the database? If so, this function will throw an error because the user.id will not yet exisit
+  // TODO: Do we need this function anymore? I don't think there is any reason we would be updating the specific user in our MVP.
   User.prototype.updateUser = function() {
     if (!this.user_id){
       console.error('Error: updateUser method can not be applied to a user that does not have an assigned user_id');
@@ -74,8 +76,20 @@ var app = app || {};
     });
   };
 
+  // TODO: GET ALL users from database
+  User.prototype.setTimesPreferences = function() {
+    $.ajax({
+      url:'/setTimesPreferences',
+      method: 'POST'
+    }).then(function(results){
+      console.log(results);
+    }, function(error){
+      console.error(error);
+    });
+  };
+
   // TODO: How does this currentUser variable get updated? Does this even need to be in this file?
   // Save current user to global app
-  // module.currentUser = currentUser;
+  module.User = User;
 
 })(app);

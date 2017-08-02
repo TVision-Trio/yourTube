@@ -5,8 +5,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const pg = require('pg');
 const PORT = process.env.PORT || 3000;
-const connString = 'postgres://localhost:5432/yourtube';
-// const connString = process.env.PG_PASSWORD;
+const connString = process.env.PG_PASSWORD;
 const client = new pg.Client(connString);
 client.connect();
 
@@ -38,9 +37,13 @@ app.post('/newUser', function(req, res) {
       ]
     )
     .then(function(result) {
+      console.log('In server success');
+      console.log(result.rows[0].user_id);
+      client.query(`INSERT INTO genre_preferences (user_id) VALUES ($1) RETURNING *;`,[result.rows[0].user_id]);
       res.send(result.rows[0]);
     })
     .catch(function(err) {
+      console.log('In server error');
       console.error(err);
       res.send(err);
     });
@@ -140,7 +143,7 @@ app.get('/getTimes', (req, res) => {
 function loadDB() {
 
   //TODO: do this as a check
-  client.query('DROP TABLE users, genres, days, times, times_preference, days_preference, genres_preference');
+  client.query('DROP TABLE IF EXISTS users, genres, days, times, times_preference, days_preference, genres_preference');
 
   const DAY_ARRAY = ['M', 'T', 'W', 'Th', 'F', 'Sa', 'Su'];
   const TIME_ARRAY = ['Morning', 'Afternoon', 'Evening'];
