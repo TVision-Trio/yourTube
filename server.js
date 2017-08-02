@@ -140,7 +140,7 @@ app.get('/getTimes', (req, res) => {
 function loadDB() {
 
   //TODO: do this as a check
-  // client.query('DROP TABLE days, times, genres, users');
+  client.query('DROP TABLE users, genres, days, times, times_preference, days_preference, genres_preference');
 
   const DAY_ARRAY = ['M', 'T', 'W', 'Th', 'F', 'Sa', 'Su'];
   const TIME_ARRAY = ['Morning', 'Afternoon', 'Evening'];
@@ -207,12 +207,12 @@ function loadDB() {
   }
 
   function createTimesPrefTable(){
-    client.query(`CREATE TABLE IF NOT EXISTS timePreferences (
+    client.query(`CREATE TABLE IF NOT EXISTS time_preferences (
     id SERIAL PRIMARY KEY,
     time_id VARCHAR,
     user_id VARCHAR UNIQUE
   );`).then(function() {
-    console.info('Created times table');
+    console.info('Created Times Pref table');
     TIME_ARRAY.forEach(function(time) {
       insertTimesData(time);
     });
@@ -220,12 +220,12 @@ function loadDB() {
   }
 
   function createDaysPrefTable(){
-    client.query(`CREATE TABLE IF NOT EXISTS dayPreferences (
+    client.query(`CREATE TABLE IF NOT EXISTS day_preferences (
     id SERIAL PRIMARY KEY,
     day_id VARCHAR,
     user_id VARCHAR UNIQUE
   );`).then(function() {
-    console.info('Created times table');
+    console.info('Created Days Pref table');
     TIME_ARRAY.forEach(function(time) {
       insertTimesData(time);
     });
@@ -233,12 +233,12 @@ function loadDB() {
   }
 
   function createGenresPrefTable(){
-    client.query(`CREATE TABLE IF NOT EXISTS genrePreferences (
+    client.query(`CREATE TABLE IF NOT EXISTS genre_preferences (
     id SERIAL PRIMARY KEY,
     genre_id VARCHAR,
     user_id VARCHAR UNIQUE
   );`).then(function() {
-    console.info('Created times table');
+    console.info('Created Genre Pref table');
     TIME_ARRAY.forEach(function(time) {
       insertTimesData(time);
     });
