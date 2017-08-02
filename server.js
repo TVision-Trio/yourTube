@@ -16,6 +16,8 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+loadDB();
+
 // put from model
 app.put('/setGenres', (req, res) => {
   client.query(`INSERT INTO genres (genre) VALUES ($1) ON CONFLICT DO NOTHING;`,
@@ -135,8 +137,6 @@ app.get('/getTimes', (req, res) => {
     });
 });
 
-loadDB();
-
 function loadDB() {
 
   //TODO: do this as a check
@@ -155,7 +155,7 @@ function loadDB() {
   function createUsersTable() {
     client.query(`CREATE TABLE IF NOT EXISTS users (
       user_id SERIAL PRIMARY KEY,
-      username VARCHAR NOT NULL,
+      username VARCHAR NOT NULL UNIQUE,
       name VARCHAR);`)
   }
 
@@ -163,7 +163,7 @@ function loadDB() {
   function createGenresTable() {
     client.query(`CREATE TABLE IF NOT EXISTS genres (
       genre_id SERIAL PRIMARY KEY,
-      genre VARCHAR
+      genre VARCHAR UNIQUE
     );`).then(function() {
       console.info('Created genres table');
     });
@@ -178,7 +178,7 @@ function loadDB() {
   function createDaysTable() {
     client.query(`CREATE TABLE IF NOT EXISTS days (
     day_id SERIAL PRIMARY KEY,
-    day VARCHAR
+    day VARCHAR UNIQUE
   );`).then(function() {
     console.info('Created days table');
     DAY_ARRAY.forEach(function(day) {
@@ -189,13 +189,13 @@ function loadDB() {
 
   function insertDaysData(thisDay) {
     client.query(`INSERT INTO days (day) VALUES ($1) ON CONFLICT DO NOTHING RETURNING *;`, [thisDay]);
-  };
+  }
 
   // create times table
   function createTimesTable() {
     client.query(`CREATE TABLE IF NOT EXISTS times (
     time_id SERIAL PRIMARY KEY,
-    time VARCHAR
+    time VARCHAR UNIQUE
   );`).then(function() {
     console.info('Created times table');
     TIME_ARRAY.forEach(function(time) {
