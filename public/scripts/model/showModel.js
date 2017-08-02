@@ -6,7 +6,7 @@ var app = app || {};
   var DataModel = {};
   DataModel.all = [];
 
-  DataModel.requestShows = function(callback){
+  DataModel.requestShows = (callback) => {
     $.get('http://api.tvmaze.com/schedule')
     .then(function(data){
       var mappedData = data.map(function(showObject){
@@ -36,7 +36,7 @@ var app = app || {};
         };
       });
       DataModel.all = mappedData;
-      callback();
+      callback(mappedData);
     }, function(err){
       console.error(err);
     });
@@ -91,25 +91,8 @@ var app = app || {};
       }
       return accu;
     },[]);
-    console.log('genre array' + genreArray);
     return genreArray;
   };
-
-  // this should be getting a list of all genres from the API
-  DataModel.getAllGenres = function(){
-    $.get('http://api.tvmaze.com/schedule')
-    .then((data) => {
-      return data.map((show) => {
-        return {
-          genres: show.genres,
-          types: show.type
-        };
-      })
-    });
-  };
-
-  console.log(DataModel.getAllGenres());
-  // DataModel.getGenres(shows);
 
   DataModel.setGenresData = (genre) => {
     $.ajax({
@@ -167,11 +150,12 @@ var app = app || {};
     });
   }
 
-  // var genreArray = DataModel.getGenres(shows);
-  // genreArray.forEach((genre) => {
-  //   console.log('getGenres happening');
-  //   DataModel.setGenresData(genre);
-  // });
+  DataModel.requestShows((shows) => {
+    return DataModel.getGenres(shows).forEach((genre) => {
+      console.log(genre);
+      DataModel.setGenresData(genre);
+    })
+  });
 
   DataModel.getGenresData((results) => {
     module.showController.genreDataToHomeView(results);
@@ -184,7 +168,6 @@ var app = app || {};
   DataModel.getTimesData((results) => {
     module.showController.timesDataToHomeView(results);
   });
-
 
   module.DataModel = DataModel;
 })(app);
