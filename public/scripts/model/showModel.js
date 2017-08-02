@@ -36,7 +36,7 @@ var app = app || {};
         };
       });
       DataModel.all = mappedData;
-      callback(mappedData);
+      if(callback) callback(mappedData);
     }, function(err){
       console.error(err);
     });
