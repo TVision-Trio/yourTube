@@ -81,6 +81,22 @@ app.get('/getUser', function(req, res) {
     });
 });
 
+app.get('/getUsers', function(req, res) {
+  client.query(
+      `SELECT * FROM users;`
+    )
+    .then(function(result) {
+      console.log('Inside server GET success: ')
+      console.log(result)
+      res.send(result.rows[0]);
+    })
+    .catch(function(err) {
+      console.log('Inside server GET error: ')
+      console.error(err);
+      res.send(err);
+    });
+});
+
 // get data from tables
 
 app.get('/getGenres', (req, res) => {
