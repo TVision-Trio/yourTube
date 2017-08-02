@@ -36,6 +36,4 @@ var app = app || {};
     });
   }
 
-  // clicked class
-
 })(app);

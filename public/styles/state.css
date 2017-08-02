@@ -12,16 +12,18 @@
 
 .time {
   background-color: rgba(0, 113, 188, 0.79);
-  width: 100px;
+  width: 200px;
   text-align: center;
 }
 
 .day {
   background-color: rgba(0, 146, 69, 0.79);
-  width: 100px;
+  width: 200px;
   text-align: center;
 }
 
 .genre {
   background-color: rgba(255, 0, 0, 0.79);
+  width: 200px;
+  text-align: center;
 }
