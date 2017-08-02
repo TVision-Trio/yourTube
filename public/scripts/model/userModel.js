@@ -25,7 +25,6 @@ var app = app || {};
   // TODO: handle user input error
   User.prototype.createUser = function() {
     $.post('/newUser', {name: this.name, username: this.username}).then(function(results){
-      console.log(results);
       this.user_id = results.user_id;
     }, function(error){
       // TODO: Handle error duplicate usernames
@@ -52,13 +51,13 @@ var app = app || {};
   };
 
   // TODO: GET data from database by user_id
-  User.prototype.getUser = function() {
+  module.getUser = function(user_id, callback) {
     $.ajax({
       url:'/getUser',
       method: 'GET',
-      data: {user_id: this.user_id}
+      data: {user_id: user_id}
     }).then(function(results){
-      console.log(results);
+      callback(results);
     }, function(error){
       console.error(error);
     });
@@ -77,13 +76,16 @@ var app = app || {};
   };
 
   // TODO: GET ALL users from database
-  User.prototype.setTimesPreferences = function() {
+  User.prototype.setTimePreferences = function(timePrefArray) {
     $.ajax({
-      url:'/setTimesPreferences',
-      method: 'POST'
+      url:'/setTimePreferences',
+      method: 'PUT',
+      data: {times: JSON.stringify(timePrefArray), user_id: this.user_id}
     }).then(function(results){
+      console.log('Inside model success');
       console.log(results);
     }, function(error){
+      console.log('Inside model error');
       console.error(error);
     });
   };

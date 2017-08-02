@@ -43,7 +43,6 @@ app.post('/newUser', function(req, res) {
       res.send(result.rows[0]);
     })
     .catch(function(err) {
-      console.log('In server error');
       console.error(err);
       res.send(err);
     });
@@ -63,24 +62,19 @@ app.put('/updateUser', function(req, res) {
       res.send(result.rows[0]);
     })
     .catch(function(err) {
-      console.log(req.body)
       console.error(err)
       res.send(err);
     });
 });
 
 app.get('/getUser', function(req, res) {
-  console.log(req.query.user_id);
   client.query(
       `SELECT * FROM users WHERE user_id=$1;`, [req.query.user_id]
     )
     .then(function(result) {
-      console.log('Inside server GET success: ')
-      console.log(result)
       res.send(result.rows[0]);
     })
     .catch(function(err) {
-      console.log('Inside server GET error: ')
       console.error(err);
       res.send(err);
     });
@@ -91,12 +85,9 @@ app.get('/getUsers', function(req, res) {
       `SELECT * FROM users;`
     )
     .then(function(result) {
-      console.log('Inside server GET success: ')
-      console.log(result)
       res.send(result.rows[0]);
     })
     .catch(function(err) {
-      console.log('Inside server GET error: ')
       console.error(err);
       res.send(err);
     });
@@ -143,7 +134,7 @@ app.get('/getTimes', (req, res) => {
 function loadDB() {
 
   //TODO: do this as a check
-  client.query('DROP TABLE IF EXISTS users, genres, days, times, time_preference, day_preference, genre_preference');
+  client.query('DROP TABLE IF EXISTS users, genres, days, times, time_preferences, day_preferences, genre_preferences');
 
   const DAY_ARRAY = ['M', 'T', 'W', 'Th', 'F', 'Sa', 'Su'];
   const TIME_ARRAY = ['Morning', 'Afternoon', 'Evening'];
@@ -247,11 +238,27 @@ function loadDB() {
     });
   });
   }
-
-
-
-
 }
+
+app.put('/setTimePreferences', function(req, res) {
+  client.query(
+      `UPDATE time_preferences SET time_id=$2 WHERE time_preferences.user_id=$1 RETURNING *;`, [
+        req.body.user_id,
+        req.body.times
+      ]
+    )
+    .then(function(result) {
+      console.log('Inside server success');
+      console.log(result.rows[0]);
+      res.send(result.rows[0]);
+    })
+    .catch(function(err) {
+      console.log('Inside server error');
+      console.error(err)
+      res.send(err);
+    });
+});
+
 app.listen(PORT, function() {
   console.info('Listening on port: ' + PORT);
 })

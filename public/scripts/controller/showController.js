@@ -22,9 +22,7 @@ var app = app || {};
   // On Submit, query API and get filtered show list based on preferences
   $('#querySubmitButton').on('click', function(){
     module.DataModel.requestShows( (mappedData) => {
-      console.log(mappedData);
       var filteredShows = module.DataModel.filterShows(['Comedy','Drama'],['Monday', 'Tuesday'], ['Evening']);
-      console.log(filteredShows);
       module.populateResults(filteredShows);
     })
   });
