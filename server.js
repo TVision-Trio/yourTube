@@ -6,7 +6,10 @@ const bodyParser = require('body-parser');
 const pg = require('pg');
 const PORT = process.env.PORT || 3000;
 // const connString = 'postgres://localhost:5432/yourtube';
-const connString = process.env.PG_PASSWORD;
+let connString = process.env.DATABASE_URL;
+if(!connString){
+  connString = process.env.PG_PASSWORD;
+}
 const client = new pg.Client(connString);
 client.connect();
 
@@ -141,12 +144,14 @@ function loadDB() {
 
   const DAY_ARRAY = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
   const TIME_ARRAY = ['morning', 'afternoon', 'evening'];
-  // const GENRE_ARRAY = [];
 
   createUsersTable();
   createGenresTable();
   createDaysTable();
   createTimesTable();
+  createTimesPrefTable();
+  createDaysPrefTable();
+  createGenresPrefTable()
 
   // TODO: DRY refactor needed
   function createUsersTable() {
@@ -165,11 +170,6 @@ function loadDB() {
       console.info('Created genres table');
     });
   }
-
-
-  // function insertGenresData(thisGenre) {
-  //   client.query(`INSERT INTO genres (genre) VALUES ($1) ON CONFLICT DO NOTHING RETURNING *;`, [thisGenre]);
-  // }
 
   // create days table
   function createDaysTable() {
@@ -204,8 +204,46 @@ function loadDB() {
   function insertTimesData(thisTime) {
     client.query(`INSERT INTO times (time) VALUES ($1) ON CONFLICT DO NOTHING RETURNING *;`, [thisTime]);
   }
-}
 
+  function createTimesPrefTable(){
+    client.query(`CREATE TABLE IF NOT EXISTS time_preferences (
+    id SERIAL PRIMARY KEY,
+    time_id VARCHAR,
+    user_id VARCHAR UNIQUE
+  );`).then(function() {
+    console.info('Created Times Pref table');
+    TIME_ARRAY.forEach(function(time) {
+      insertTimesData(time);
+    });
+  });
+  }
+
+  function createDaysPrefTable(){
+    client.query(`CREATE TABLE IF NOT EXISTS day_preferences (
+    id SERIAL PRIMARY KEY,
+    day_id VARCHAR,
+    user_id VARCHAR UNIQUE
+  );`).then(function() {
+    console.info('Created Days Pref table');
+    TIME_ARRAY.forEach(function(time) {
+      insertTimesData(time);
+    });
+  });
+  }
+
+  function createGenresPrefTable(){
+    client.query(`CREATE TABLE IF NOT EXISTS genre_preferences (
+    id SERIAL PRIMARY KEY,
+    genre_id VARCHAR,
+    user_id VARCHAR UNIQUE
+  );`).then(function() {
+    console.info('Created Genre Pref table');
+    TIME_ARRAY.forEach(function(time) {
+      insertTimesData(time);
+    });
+  });
+  }
+}
 app.listen(PORT, function() {
   console.info('Listening on port: ' + PORT);
 })
