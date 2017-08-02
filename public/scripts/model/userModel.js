@@ -1,8 +1,6 @@
 'use strict';
 
 var app = app || {};
-var testUser = {name: 'Alana', user_id: 1, genres: ['comedy', 'horror'], days: ['monday', 'tuesday', 'friday'], times: ['evening']
-};
 
 (function(module){
 
@@ -21,8 +19,6 @@ var testUser = {name: 'Alana', user_id: 1, genres: ['comedy', 'horror'], days: [
       this.times = userData.times;
     }
   }
-
-  var currentUser = new User(testUser);
 
   // CREATE user in database based on user input
   // TODO: handle user input error
@@ -78,8 +74,8 @@ var testUser = {name: 'Alana', user_id: 1, genres: ['comedy', 'horror'], days: [
     });
   };
 
-  // TODO: How does this currentUser variable get updated?
+  // TODO: How does this currentUser variable get updated? Does this even need to be in this file?
   // Save current user to global app
-  module.currentUser = currentUser;
+  // module.currentUser = currentUser;
 
 })(app);

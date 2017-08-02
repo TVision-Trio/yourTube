@@ -3,24 +3,15 @@
 //add handler for landing page
 var app = app ||{};
 
-(function(){
+(function(module){
+
   var userController = {};
 
-  userController.index = function(){
-    $ajax({
-      url:'/getUsers',
-      method: GET,
-    }).then(function(results){
-      console.log(results);
-    }), function(error){
-      console.log('error');
-    }
-  }
+  $('#newUserButton').on('click', function(){
+    // TODO: Call landingView function that packages up input into an object. For now, using test
+    var newUser = new module.User({name: 'Alana');
+    console.log(newUser);
+    newUser.createUser();
+  });
 
-  // $('#input').on('submit', (e) => {
-  //  e.preventDefault();
-  // })
-  //  console.log(newUser);
-
-
-})(app)
+})(app);
