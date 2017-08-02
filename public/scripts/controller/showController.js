@@ -21,9 +21,11 @@ var app = app || {};
 
   // On Submit, query API and get filtered show list based on preferences
   $('#querySubmitButton').on(function(){
-    var filteredShows = module.DataModel.filterShows(['Comedy','Drama'],['Monday', 'Tuesday'], ['Evening']);
+    module.DataModel.requestShows( (filteredShows) => {
+      filteredShows = module.DataModel.filterShows(['Comedy','Drama'],['Monday', 'Tuesday'], ['Evening']);
+      module.populateResults(filteredShows);
+    })
     // TODO: Pass filtered shows to view function to display
-    module.populateResults(filteredShows);
   });
 
 
