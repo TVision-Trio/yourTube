@@ -153,7 +153,7 @@ var app = app || {};
   DataModel.requestShows((shows) => {
     return DataModel.getGenres(shows).forEach((genre) => {
       console.log(genre);
-      // DataModel.setGenresData(genre);
+      DataModel.setGenresData(genre);
     })
   });
 
@@ -168,7 +168,6 @@ var app = app || {};
   DataModel.getTimesData((results) => {
     module.showController.timesDataToHomeView(results);
   });
-
 
   module.DataModel = DataModel;
 })(app);
