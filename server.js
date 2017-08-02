@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 // put from model
-app.post('/setGenres', (req, res) => {
+app.put('/setGenres', (req, res) => {
   client.query(`INSERT INTO genres (genre) VALUES ($1) ON CONFLICT DO NOTHING;`,
   [req.body.genre])
   .then(() => {
@@ -144,7 +144,7 @@ function loadDB() {
 
   const DAY_ARRAY = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
   const TIME_ARRAY = ['morning', 'afternoon', 'evening'];
-  const GENRE_ARRAY = [];
+  // const GENRE_ARRAY = [];
 
   createUsersTable();
   createGenresTable();
@@ -166,15 +166,13 @@ function loadDB() {
       genre VARCHAR
     );`).then(function() {
       console.info('Created genres table');
-      GENRE_ARRAY.forEach(function(genre) {
-        insertGenresData(genre);
-      });
     });
   }
 
-  function insertGenresData(thisGenre) {
-    client.query(`INSERT INTO genres (genre) VALUES ($1) ON CONFLICT DO NOTHING RETURNING *;`, [thisGenre]);
-  }
+
+  // function insertGenresData(thisGenre) {
+  //   client.query(`INSERT INTO genres (genre) VALUES ($1) ON CONFLICT DO NOTHING RETURNING *;`, [thisGenre]);
+  // }
 
   // create days table
   function createDaysTable() {
@@ -191,7 +189,7 @@ function loadDB() {
 
   function insertDaysData(thisDay) {
     client.query(`INSERT INTO days (day) VALUES ($1) ON CONFLICT DO NOTHING RETURNING *;`, [thisDay]);
-  }
+  };
 
   // create times table
   function createTimesTable() {

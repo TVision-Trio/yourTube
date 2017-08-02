@@ -7,7 +7,6 @@ var app = app || {};
   // Populate cloud tags from database.
 
   module.populateGenres = (genres) => {
-    console.log('populateGenres called');
     genres.forEach((genre) => {
       var genreTemplate = Handlebars.compile($('#genre-cloud-template').html());
       $('#genreCloud').append(genreTemplate(genre));
