@@ -16,6 +16,8 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+loadDB();
+
 // put from model
 app.put('/setGenres', (req, res) => {
   client.query(`INSERT INTO genres (genre) VALUES ($1) ON CONFLICT DO NOTHING;`,
@@ -134,8 +136,6 @@ app.get('/getTimes', (req, res) => {
       res.send(err);
     });
 });
-
-loadDB();
 
 function loadDB() {
 
