@@ -1,0 +1,41 @@
+/******* LAYOUT *******/
+
+
+/* Header */
+header {
+  background: rgba(255, 0, 0, 0.79);
+
+}
+
+header h1 {
+  text-align: center;
+  color: white;
+}
+
+header li {
+  display: inline;
+  margin: 30px;
+}
+
+header h1 {
+  text-align: center;
+  margin: 0px;
+  padding: 50px;
+}
+
+header li {
+  display: inline;
+  margin: 30px;
+}
+
+/* nav */
+nav {
+  background-color: white;
+  margin: 0px;
+  padding: 30px;
+  text-align: center;
+}
+
+nav a {
+  color: rgba(255, 0, 0, 0.79);
+}

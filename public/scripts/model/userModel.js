@@ -66,6 +66,18 @@ var testUser = {name: 'Alana', user_id: 1, genres: ['comedy', 'horror'], days: [
     });
   };
 
+  // TODO: GET ALL users from database
+  User.prototype.getUsers = function() {
+    $.ajax({
+      url:'/getUsers',
+      method: 'GET'
+    }).then(function(results){
+      console.log(results);
+    }, function(error){
+      console.error(error);
+    });
+  };
+
   // TODO: How does this currentUser variable get updated?
   // Save current user to global app
   module.currentUser = currentUser;

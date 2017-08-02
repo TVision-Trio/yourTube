@@ -1,0 +1,26 @@
+/******* BASE *******/
+
+* {
+  /*font-size: 1.15em;*/
+}
+
+html, body {
+  background-color: white;
+  padding: 0px;
+  margin: 0px;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  border: 0px;
+  margin: 0px;
+  padding: 0px;
+}
+
+section {
+  display: block;
+  padding: 30px;
+}
