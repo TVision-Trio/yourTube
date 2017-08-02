@@ -140,7 +140,7 @@ app.get('/getTimes', (req, res) => {
 function loadDB() {
 
   //TODO: do this as a check
-  client.query('DROP TABLE days, times, genres, users');
+  // client.query('DROP TABLE days, times, genres, users');
 
   const DAY_ARRAY = ['M', 'T', 'W', 'Th', 'F', 'Sa', 'Su'];
   const TIME_ARRAY = ['Morning', 'Afternoon', 'Evening'];
@@ -150,6 +150,9 @@ function loadDB() {
   createGenresTable();
   createDaysTable();
   createTimesTable();
+  createTimesPrefTable();
+  createDaysPrefTable();
+  createGenresPrefTable()
 
   // TODO: DRY refactor needed
   function createUsersTable() {
@@ -168,11 +171,6 @@ function loadDB() {
       console.info('Created genres table');
     });
   }
-
-
-  // function insertGenresData(thisGenre) {
-  //   client.query(`INSERT INTO genres (genre) VALUES ($1) ON CONFLICT DO NOTHING RETURNING *;`, [thisGenre]);
-  // }
 
   // create days table
   function createDaysTable() {
@@ -207,8 +205,50 @@ function loadDB() {
   function insertTimesData(thisTime) {
     client.query(`INSERT INTO times (time) VALUES ($1) ON CONFLICT DO NOTHING RETURNING *;`, [thisTime]);
   }
-}
 
+  function createTimesPrefTable(){
+    client.query(`CREATE TABLE IF NOT EXISTS timePreferences (
+    id SERIAL PRIMARY KEY,
+    time_id VARCHAR,
+    user_id VARCHAR UNIQUE
+  );`).then(function() {
+    console.info('Created times table');
+    TIME_ARRAY.forEach(function(time) {
+      insertTimesData(time);
+    });
+  });
+  }
+
+  function createDaysPrefTable(){
+    client.query(`CREATE TABLE IF NOT EXISTS dayPreferences (
+    id SERIAL PRIMARY KEY,
+    day_id VARCHAR,
+    user_id VARCHAR UNIQUE
+  );`).then(function() {
+    console.info('Created times table');
+    TIME_ARRAY.forEach(function(time) {
+      insertTimesData(time);
+    });
+  });
+  }
+
+  function createGenresPrefTable(){
+    client.query(`CREATE TABLE IF NOT EXISTS genrePreferences (
+    id SERIAL PRIMARY KEY,
+    genre_id VARCHAR,
+    user_id VARCHAR UNIQUE
+  );`).then(function() {
+    console.info('Created times table');
+    TIME_ARRAY.forEach(function(time) {
+      insertTimesData(time);
+    });
+  });
+  }
+
+
+
+
+}
 app.listen(PORT, function() {
   console.info('Listening on port: ' + PORT);
 })

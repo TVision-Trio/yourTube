@@ -31,7 +31,7 @@ var app = app || {};
 
 
   // On 'detail' click, pass show id to home view to display.
-  $('.show-more').on(function(){
+  $('.show-more').on('click', function(){
     var show_id = $(this).attr('value');
     // TODO: call view function to show all show data;
   });

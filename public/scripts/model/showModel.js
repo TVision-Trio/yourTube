@@ -103,7 +103,6 @@ var app = app || {};
       }
     })
     .then((data) => {
-      console.log(data);
     });
   };
 
@@ -152,7 +151,6 @@ var app = app || {};
 
   DataModel.requestShows((shows) => {
     return DataModel.getGenres(shows).forEach((genre) => {
-      console.log(genre);
       DataModel.setGenresData(genre);
     })
   });
