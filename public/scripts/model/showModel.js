@@ -104,8 +104,36 @@ var app = app || {};
     }), (err) => console.error(err);
   }
 
+  DataModel.getTimesData = (callback) => {
+    $.ajax({
+      url: '/getTimes',
+      method: 'GET'
+    })
+    .then((results) => {
+      callback(results);
+    }), (err) => console.error(err);
+  }
+
+  DataModel.getDaysData = (callback) => {
+    $.ajax({
+      url: '/getDays',
+      method: 'GET'
+    })
+    .then((results) => {
+      callback(results);
+    }), (err) => console.error(err);
+  }
+
   DataModel.getGenresData(function(results){
     module.showController.genreDataToHomeView(results);
+  });
+
+  DataModel.getDaysData(function(results){
+    module.showController.daysDataToHomeView(results);
+  });
+
+  DataModel.getTimesData(function(results){
+    module.showController.timesDataToHomeView(results);
   });
 
   // // TODO: Get preferences data from genres, days, and times databasee

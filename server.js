@@ -75,7 +75,6 @@ app.get('/getUser', function(req, res) {
 
 // TODO: get for all tables
 
-// genres
 app.get('/getGenres', function(req, res) {
   client.query(
       `SELECT genre FROM genres;`
@@ -89,10 +88,36 @@ app.get('/getGenres', function(req, res) {
     });
 });
 
+app.get('/getDays', function(req, res) {
+  client.query(
+      `SELECT day FROM days;`
+    )
+    .then(function(result) {
+      console.log(result);
+      res.send(result.rows);
+    })
+    .catch(function(err) {
+      res.send(err);
+    });
+});
+
+app.get('/getTimes', function(req, res) {
+  client.query(
+      `SELECT time FROM times;`
+    )
+    .then(function(result) {
+      console.log(result);
+      res.send(result.rows);
+    })
+    .catch(function(err) {
+      res.send(err);
+    });
+});
+
 loadDB();
 
 function loadDB() {
-  
+
   //TODO: do this as a check
   client.query('DROP TABLE days, times, genres, users');
 
