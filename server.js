@@ -5,8 +5,8 @@ const app = express();
 const bodyParser = require('body-parser');
 const pg = require('pg');
 const PORT = process.env.PORT || 3000;
-// const connString = 'postgres://localhost:5432/yourtube';
-const connString = process.env.PG_PASSWORD;
+const connString = 'postgres://localhost:5432/yourtube';
+// const connString = process.env.PG_PASSWORD;
 const client = new pg.Client(connString);
 client.connect();
 

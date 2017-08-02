@@ -6,7 +6,7 @@
   text-align: center;
 }
 
-#landing input, #landing select  {
+#landing input, #landing select, #landing option {
   display: block;
   margin: 0px auto 30px auto;
   width: 200px;
@@ -17,14 +17,11 @@
   color: rgba(0,0,0,.60);
 }
 
-#landing input {
-  border: 2px solid lightgray;
-}
-
 #landing select {
   -webkit-appearance: none;
   -moz-appearance: none;*/
   appearance: none;
+  
 }
 
 #landing button {
@@ -55,5 +52,5 @@
 }
 
 .genre {
-  background-color: rgba(0, 146, 69, 0.79);
+  background-color: rgba(255, 0, 0, 0.79);
 }
