@@ -18,7 +18,15 @@ app.use(bodyParser.urlencoded({
 
 // API
 // put from model
-app.post('/')
+app.put('/setGenres', (req, res) => {
+  client.query(`INSERT INTO genres (genre) VALUES ($1) RETURNING *;`, [
+    req.body.genre
+  ])
+  .then((result) => {
+    res.send(result.rows)
+  })
+});
+
 
 app.post('/newUser', function(req, res) {
   client.query(
@@ -75,41 +83,38 @@ app.get('/getUser', function(req, res) {
 
 // TODO: get for all tables
 
-app.get('/getGenres', function(req, res) {
+app.get('/getGenres', (req, res) => {
   client.query(
       `SELECT genre FROM genres;`
     )
-    .then(function(result) {
-      console.log(result);
+    .then( (result) => {
       res.send(result.rows);
     })
-    .catch(function(err) {
+    .catch( (err) => {
       res.send(err);
     });
 });
 
-app.get('/getDays', function(req, res) {
+app.get('/getDays', (req, res) => {
   client.query(
       `SELECT day FROM days;`
     )
-    .then(function(result) {
-      console.log(result);
+    .then( (result) => {
       res.send(result.rows);
     })
-    .catch(function(err) {
+    .catch( (err) => {
       res.send(err);
     });
 });
 
-app.get('/getTimes', function(req, res) {
+app.get('/getTimes', (req, res) => {
   client.query(
       `SELECT time FROM times;`
     )
-    .then(function(result) {
-      console.log(result);
+    .then((result) => {
       res.send(result.rows);
     })
-    .catch(function(err) {
+    .catch((err) => {
       res.send(err);
     });
 });
@@ -152,9 +157,7 @@ function loadDB() {
   }
 
   function insertGenresData(thisGenre) {
-    client.query(`INSERT INTO genres (genre) VALUES ($1) ON CONFLICT DO NOTHING RETURNING *;`, [thisGenre]).then(function() {
-      console.info('Insert genres into table');
-    });
+    client.query(`INSERT INTO genres (genre) VALUES ($1) ON CONFLICT DO NOTHING RETURNING *;`, [thisGenre]);
   }
 
   // // TODO: complete this...
@@ -180,9 +183,7 @@ function loadDB() {
   }
 
   function insertDaysData(thisDay) {
-    client.query(`INSERT INTO days (day) VALUES ($1) ON CONFLICT DO NOTHING RETURNING *;`, [thisDay]).then(function() {
-      console.info('Insert days into table');
-    });
+    client.query(`INSERT INTO days (day) VALUES ($1) ON CONFLICT DO NOTHING RETURNING *;`, [thisDay]);
   }
 
   // create times table
@@ -199,13 +200,10 @@ function loadDB() {
   }
 
   function insertTimesData(thisTime) {
-    client.query(`INSERT INTO times (time) VALUES ($1) ON CONFLICT DO NOTHING RETURNING *;`, [thisTime]).then(function() {
-      console.info('Insert times into table');
-    });
+    client.query(`INSERT INTO times (time) VALUES ($1) ON CONFLICT DO NOTHING RETURNING *;`, [thisTime]);
   }
 }
 
-// user to times relation
 app.listen(PORT, function() {
   console.info('Listening on port: ' + PORT);
 })

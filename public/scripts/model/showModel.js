@@ -124,6 +124,18 @@ var app = app || {};
     }), (err) => console.error(err);
   }
 
+  DataModel.getPreferencesData = function(callback){
+    $.ajax({
+      url: '/getPreferences',
+      method: 'GET',
+    }).then(function(results){
+      console.log(results);
+      callback(results);
+    }, function(error){
+      console.log(error);
+    });
+  }
+  
   DataModel.getGenresData(function(results){
     module.showController.genreDataToHomeView(results);
   });
@@ -136,18 +148,6 @@ var app = app || {};
     module.showController.timesDataToHomeView(results);
   });
 
-  // // TODO: Get preferences data from genres, days, and times databasee
-  // DataModel.getPreferencesData = function(callback){
-  //   $.ajax({
-  //     url: '/getPreferences',
-  //     method: 'GET',
-  //   }).then(function(results){
-  //     console.log(results);
-  //     callback(results);
-  //   }, function(error){
-  //     console.log(error);
-  //   });
-  // }
 
   module.DataModel = DataModel;
 })(app);

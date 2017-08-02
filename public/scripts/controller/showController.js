@@ -7,17 +7,15 @@ var app = app || {};
   var showController = {};
 
 
-  // Function to pass homeview data
-  // TODO: Needs to change
-  showController.genreDataToHomeView = function(genres){
+  showController.genreDataToHomeView = (genres) => {
     module.populateGenres(genres);
   };
 
-  showController.daysDataToHomeView = function(days){
+  showController.daysDataToHomeView = (days) => {
     module.populateDays(days);
   };
 
-  showController.timesDataToHomeView = function(times) {
+  showController.timesDataToHomeView = (times) => {
     module.populateTimes(times);
   };
 
