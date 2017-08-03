@@ -5,7 +5,10 @@ var app = app || {};
 
 (function(module){
 
-  // var userController = {};
+  // On load, call module.getUsers to get a list of all users in database:
+  module.getUsers(function(users){
+    module.populateDropDown(users);
+  });
 
   $('#newUserButton').on('click', function(){
     // TODO: Call landingView function that packages up input into an object. For now, using test

@@ -64,12 +64,12 @@ var app = app || {};
   };
 
   // GET ALL users from database
-  User.prototype.getUsers = function() {
+  module.getUsers = function(callback) {
     $.ajax({
       url:'/getUsers',
       method: 'GET'
     }).then(function(results){
-      console.log(results);
+      callback([results]);
     }, function(error){
       console.error(error);
     });
