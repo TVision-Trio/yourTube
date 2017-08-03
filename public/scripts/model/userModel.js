@@ -29,7 +29,6 @@ var app = app || {};
     $.post('/newUser', {name: this.name, username: this.username}).then(function(results){
       this.user_id = results.user_id;
       module.currentUser = results;
-      localStorage.setItem('currentUser', JSON.stringify(module.currentUser));
     }, function(error){
       // TODO: Handle error duplicate usernames
       console.error(error);

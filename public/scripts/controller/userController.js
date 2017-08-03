@@ -21,7 +21,6 @@ var app = app || {};
     module.getUser(event.target.value, function(userData){
       var user = new module.User(userData);
       module.currentUser = user;
-      localStorage.setItem('currentUser', JSON.stringify(module.currentUser));
       user.getTimePreferences(function(timePref){
         timePref = JSON.parse(timePref.time_id);
         // TODO: call view function to send this information back to the view.
@@ -34,6 +33,7 @@ var app = app || {};
         dayPref = JSON.parse(dayPref.day_id);
         // TODO: call view function to send this information back to the view.
       });
+      
     });
   });
 

@@ -19,29 +19,29 @@ var app = app || {};
   };
 
   // On Submit, query API and get filtered show list based on preferences
-  $('#querySubmitButton').on('click', function(){
-    // module.DataModel.requestShows( (mappedData) => {
-    //   var user_id = 1;
-    //   module.getUser(user_id, function(user){
-    //     user = new module.User(user);
-    //     user.getGenrePreferences(function(results){
-    //       var genrePref = (JSON.parse(results.genre_id));
-    //       user.getDayPreferences(function(results){
-    //         var dayPref = (JSON.parse(results.day_id));
-    //         user.getTimePreferences(function(results){
-    //           var timePref = (JSON.parse(results.time_id));
-    //           module.DataModel.convertToWords(timePref, dayPref, genrePref, function([timePref, dayPref, genrePref]){
-    //             module.DataModel.filterShows(mappedData, genrePref, dayPref, timePref, function(filteredShows){
-    //               module.populateResults(filteredShows)
-    //             });
-    //           })
-    //         })
-    //       })
-    //     })
-    //   }
-    //   );
-    // });
-  });
+  module.getUserPreferences = function(){
+    module.DataModel.requestShows( (mappedData) => {
+      var user_id = 1;
+      module.getUser(user_id, function(user){
+        user = new module.User(user);
+        user.getGenrePreferences(function(results){
+          var genrePref = (JSON.parse(results.genre_id));
+          user.getDayPreferences(function(results){
+            var dayPref = (JSON.parse(results.day_id));
+            user.getTimePreferences(function(results){
+              var timePref = (JSON.parse(results.time_id));
+              module.DataModel.convertToWords(timePref, dayPref, genrePref, function([timePref, dayPref, genrePref]){
+                module.DataModel.filterShows(mappedData, genrePref, dayPref, timePref, function(filteredShows){
+                  module.populateResults(filteredShows)
+                });
+              })
+            })
+          })
+        })
+      }
+      );
+    });
+  };
 
   // On 'detail' click, pass show id to home view to display.
   $('.show-more').on('click', function(){
