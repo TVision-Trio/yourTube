@@ -22,10 +22,8 @@ var app = app || {};
     //call getTimePref to get preferences for the given user.
     module.getUser(event.target.value, function(userData){
       var user = new module.User(userData);
-      console.log(user);
       localStorage.setItem('currentUser', JSON.stringify(module.currentUser));
       user.getTimePreferences(function(timePref){
-        console.log(JSON.parse(timePref.time_id));
         timePref = JSON.parse(timePref.time_id);
         // TODO: call view function to send this information back to the view.
       });
