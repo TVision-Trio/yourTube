@@ -3,6 +3,7 @@
 var app = app || {};
 
 (function(module){
+
   module.populateDropDown = function(users) {
     users.forEach(function(user) {
       user.func = function(){
