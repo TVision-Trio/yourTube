@@ -88,14 +88,15 @@ var app = app || {};
   };
 
   // GET user time preferences from time_preference table
-  User.prototype.getTimePreferences = function(callback) {
+  User.prototype.getTimePreferences = function() {
     $.ajax({
       url:'/getTimePreferences',
       method: 'GET',
       data: {user_id: this.user_id}
     }).then(function(results){
       console.info('Successfully got time preferences');
-      callback(results);
+      console.log(results);
+      return results;
     }, function(error){
       console.log('Failed at getting time preferences');
       console.error(error);
@@ -122,7 +123,7 @@ var app = app || {};
       data: {user_id: this.user_id}
     }).then(function(results){
       console.info('Successfully got day preferences');
-      callback(results);
+      if (callback) callback(results);
     }, function(error){
       console.log('Failed at getting day preferences');
       console.error(error);
@@ -149,7 +150,7 @@ var app = app || {};
       data: {user_id: this.user_id}
     }).then(function(results){
       console.info('Successfully got genre preferences');
-      callback(results);
+      if (callback) callback(results);
     }, function(error){
       console.log('Failed at getting genre preferences');
       console.error(error);

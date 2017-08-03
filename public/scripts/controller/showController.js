@@ -21,9 +21,20 @@ var app = app || {};
   // On Submit, query API and get filtered show list based on preferences
   $('#querySubmitButton').on('click', function(){
     module.DataModel.requestShows( (mappedData) => {
-      var filteredShows = module.DataModel.filterShows(['Comedy','Drama'],['Monday', 'Tuesday'], ['Evening']);
-      module.populateResults(filteredShows);
-    })
+      var user_id = 1;
+      var filteredShows = module.getUser(user_id, function(user){
+        user = new module.User(user);
+        console.log(user);
+        var x = user.getGenrePreferences(function(genrePref){
+          var y = (JSON.parse(genrePref.genre_id));
+          return y;
+        });
+        console.log(x);
+        // module.DataModel.filterShows(JSON.parse(user.getGenrePreferences()), JSON.parse(user.getDayPreferences()), JSON.parse(user.getTimePreferences()))
+        // module.populateResults(filteredShows);
+      }
+      );
+    });
   });
 
   // On 'detail' click, pass show id to home view to display.
