@@ -55,6 +55,7 @@ var app = app || {};
       });
       return flag;
     });
+    console.log(filteredData);
     filteredData = filteredData.filter(function(show){
       var flag = false;
       genres.forEach(function(genre){
@@ -64,7 +65,7 @@ var app = app || {};
       });
       return flag;
     });
-
+    console.log(filteredData);
     filteredData = filteredData.filter(function(show){
       var flag = false;
       times.forEach(function(time){
@@ -74,8 +75,62 @@ var app = app || {};
       });
       return flag;
     });
+    console.log(filteredData);
     return filteredData;
   };
+
+  // Convert preferences from numbers to words
+  DataModel.convertToWords = function(timePref, dayPref, genrePref, callback){
+    var wordsArray = [];
+    // Get all info from time preference table
+    $.ajax({
+      url:'/getTimes',
+      method: 'GET'
+    }).then(function(timeResults){
+      // As a callback:
+      var times = toWordsHelp(timePref, 'time', timeResults);
+      $.ajax({
+        url:'/getDays',
+        method: 'GET'
+      }).then(function(dayResults){
+        var days = toWordsHelp(dayPref, 'day', dayResults);
+        $.ajax({
+          url:'/getGenres',
+          method: 'GET'
+        }).then(function(genreResults){
+          var genres = toWordsHelp(genrePref, 'genre', genreResults);
+          callback([times, days, genres]);
+          return [times, days, genres];
+        })
+      })
+    }, function(error){
+      console.log('Failed at getting Words from Database');
+      console.error(error);
+    });
+  }
+
+  function toWordsHelp(arrayOfPreferences, db_line, results) {
+    var wordsArray = [];
+    arrayOfPreferences.forEach(function(pref){
+    // For each thing in the stuff from tableName
+      results.forEach(function(result){
+        // construct the table_id and the column name for the table
+        var id = db_line + '_id';
+        // if there are the same:
+        if (pref === result[id]){
+          // add the thing from the tableName info to wordsArray
+          wordsArray.push(result[db_line]);
+        }
+      })
+    })
+    return wordsArray
+  }
+
+  DataModel.convertToWords([1,2],[3,4],[5,6], function(prefArray){
+    // coming in as [times, days, genres]
+    // send in as genres, days, times
+    DataModel.filterShows(prefArray[2], prefArray[1], prefArray[0]);
+  });
 
   // Get genres from JSON to include in passed data.
   DataModel.getGenres = function(shows){

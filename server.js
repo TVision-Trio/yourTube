@@ -137,10 +137,10 @@ app.get('/getTimes', (req, res) => {
 function loadDB() {
 
   //TODO: do this as a check
-  // client.query('DROP TABLE IF EXISTS users, genres, days, times, time_preferences, day_preferences, genre_preferences');
+  client.query('DROP TABLE IF EXISTS users, genres, days, times, time_preferences, day_preferences, genre_preferences');
 
-  const DAY_ARRAY = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-  const TIME_ARRAY = ['morning', 'afternoon', 'evening'];
+  const DAY_ARRAY = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  const TIME_ARRAY = ['Morning', 'Afternoon', 'Evening'];
 
   createUsersTable();
   createGenresTable();

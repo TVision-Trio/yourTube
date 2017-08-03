@@ -82,21 +82,21 @@ var app = app || {};
       method: 'PUT',
       data: {times: JSON.stringify(timePrefArray), user_id: this.user_id}
     }).then(function(results){
+      console.info(results);
     }, function(error){
       console.error(error);
     });
   };
 
   // GET user time preferences from time_preference table
-  User.prototype.getTimePreferences = function() {
+  User.prototype.getTimePreferences = function(callback) {
     $.ajax({
       url:'/getTimePreferences',
       method: 'GET',
       data: {user_id: this.user_id}
     }).then(function(results){
       console.info('Successfully got time preferences');
-      console.log(results);
-      return results;
+      if (callback) callback(results);
     }, function(error){
       console.log('Failed at getting time preferences');
       console.error(error);
@@ -110,6 +110,7 @@ var app = app || {};
       method: 'PUT',
       data: {days: JSON.stringify(dayPrefArray), user_id: this.user_id}
     }).then(function(results){
+      console.info(results);
     }, function(error){
       console.error(error);
     });
@@ -137,6 +138,7 @@ var app = app || {};
       method: 'PUT',
       data: {genres: JSON.stringify(genrePrefArray), user_id: this.user_id}
     }).then(function(results){
+      console.info(results);
     }, function(error){
       console.error(error);
     });
