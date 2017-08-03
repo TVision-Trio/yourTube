@@ -2,9 +2,32 @@
 
 var app = app || {};
 
+
+$(function() {
+
+  Handlebars.registerHelper('stringifyFunc', function(func) {
+       return new Handlebars.SafeString("(" +
+                  func.toString().replace(/\"/g,"'") + ")()");
+  });
+
+    var source = $('#day-cloud-template').html();
+    var template = Handlebars.compile(source);
+
+    var data = {
+      "text": "Click here",
+      "func": function(){
+        $(this.event.target).addClass('selected');
+      }
+    };
+    var res = template(data);
+
+    $('#dayCloud').append(template(data));
+});
+
 (function(module){
   // BEFORE SHOW QUERY
   // Populate cloud tags from database.
+
 
   module.populateGenres = (genres) => {
     genres.forEach((genre) => {
@@ -35,5 +58,4 @@ var app = app || {};
       $('#results ul').append(html);
     });
   }
-
 })(app);

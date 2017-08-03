@@ -10,15 +10,11 @@
     <link rel="stylesheet" href="styles/state.css">
     <script id="time-cloud-template" type="text/x-handlebars-template">
       <!-- for each thing from the database, create a cloud tag thing -->
-      <!-- ID supposed to be set by the database as we populate the handlebars template -->
-      <!-- selected class added as selected -->
-      <!-- use selected and specific data type. controller is array of id -->
-      <!-- views handle the click and get the data -->
       <li class="cloud time" value="{{time_id}}">{{time}}</li>
     </script>
     <script id="day-cloud-template" type="text/x-handlebars-template">
       <!-- for each thing from the database, create a cloud tag thing -->
-      <li class="cloud day" value="{{day_id}}">{{day}}</li>
+      <li onclick="{{stringifyFunc func}}" class="cloud day" value="">{{text}}</li>
     </script>
     <script id="genre-cloud-template" type="text/x-handlebars-template">
       <!-- for each thing from the database, create a cloud tag thing -->
