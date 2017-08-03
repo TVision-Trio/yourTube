@@ -46,7 +46,6 @@ var app = app || {};
         method: 'PUT',
         data: {name: this.name, user_id: this.user_id, genres: this.genres, days: this.days, times: this.times}
       }).then(function(results){
-        console.log(results);
       }, function(error){
         console.error(error);
       });
@@ -98,7 +97,6 @@ var app = app || {};
       method: 'GET',
       data: {user_id: this.user_id}
     }).then(function(results){
-      console.info(results);
       if (callback) callback(results);
     }, function(error){
       console.log('Failed at getting time preferences');
