@@ -24,6 +24,9 @@
       <!-- for each thing from the database, create a cloud tag thing -->
       <li>{{title}}</li>
     </script>
+    <script type="text/x-handlebars-template" id="dropdown-template">
+      <option value={{user_id}}>{{username}}</option>
+    </script>
   </head>
   <body>
     <header>
@@ -39,10 +42,9 @@
       <section id="landing">
         <select id="userDropDown" class="" name="">
           <option default>Select a User &#x25BC;</option>
-          <option value="65375">Test User</option>
-          <!-- Populated option tags go here -->
         </select>
-        <input id="input" type="text" placeholder="New User">
+        <input id="name" type="text" placeholder="Your Name">
+        <input id="username" type="text" placeholder="Username">
         <button id="newUserButton" type="button">Submit</button>
       </section>
       <section id="home">
