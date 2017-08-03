@@ -22,7 +22,7 @@ var app = app || {};
   $('#querySubmitButton').on('click', function(){
     module.DataModel.requestShows( (mappedData) => {
       var user_id = 1;
-      var filteredShows = module.getUser(user_id, function(user){
+      module.getUser(user_id, function(user){
         user = new module.User(user);
         user.getGenrePreferences(function(results){
           var genrePref = (JSON.parse(results.genre_id));
@@ -30,10 +30,11 @@ var app = app || {};
             var dayPref = (JSON.parse(results.day_id));
             user.getTimePreferences(function(results){
               var timePref = (JSON.parse(results.time_id));
-              console.log(dayPref, genrePref, timePref);
-              var filteredShows = module.DataModel.filterShows([2],[2],[2]);
-              console.log(filteredShows);
-              module.populateResults(filteredShows)
+              module.DataModel.convertToWords(timePref, dayPref, genrePref, function([timePref, dayPref, genrePref]){
+                module.DataModel.filterShows(genrePref, dayPref, timePref, function(filteredShows){
+                  module.populateResults(filteredShows)
+                });
+              })
             })
           })
         })

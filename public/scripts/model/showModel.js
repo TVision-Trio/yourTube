@@ -43,7 +43,7 @@ var app = app || {};
   };
 
 
-  DataModel.filterShows = function(genres, days, times){
+  DataModel.filterShows = function(genres, days, times, callback){
     var filteredData = [];
     // Filter to only shows that are on prefered days
     filteredData = DataModel.all.filter(function(show){
@@ -55,7 +55,6 @@ var app = app || {};
       });
       return flag;
     });
-    console.log(filteredData);
     filteredData = filteredData.filter(function(show){
       var flag = false;
       genres.forEach(function(genre){
@@ -65,7 +64,6 @@ var app = app || {};
       });
       return flag;
     });
-    console.log(filteredData);
     filteredData = filteredData.filter(function(show){
       var flag = false;
       times.forEach(function(time){
@@ -76,7 +74,7 @@ var app = app || {};
       return flag;
     });
     console.log(filteredData);
-    return filteredData;
+    callback(filteredData);
   };
 
   // Convert preferences from numbers to words
@@ -125,12 +123,6 @@ var app = app || {};
     })
     return wordsArray
   }
-
-  DataModel.convertToWords([1,2],[3,4],[5,6], function(prefArray){
-    // coming in as [times, days, genres]
-    // send in as genres, days, times
-    DataModel.filterShows(prefArray[2], prefArray[1], prefArray[0]);
-  });
 
   // Get genres from JSON to include in passed data.
   DataModel.getGenres = function(shows){

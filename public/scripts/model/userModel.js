@@ -82,7 +82,7 @@ var app = app || {};
       method: 'PUT',
       data: {times: JSON.stringify(timePrefArray), user_id: this.user_id}
     }).then(function(results){
-      console.info(results);
+      return results;
     }, function(error){
       console.error(error);
     });
@@ -110,7 +110,7 @@ var app = app || {};
       method: 'PUT',
       data: {days: JSON.stringify(dayPrefArray), user_id: this.user_id}
     }).then(function(results){
-      console.info(results);
+      return results;
     }, function(error){
       console.error(error);
     });
@@ -138,7 +138,7 @@ var app = app || {};
       method: 'PUT',
       data: {genres: JSON.stringify(genrePrefArray), user_id: this.user_id}
     }).then(function(results){
-      console.info(results);
+      return results
     }, function(error){
       console.error(error);
     });
