@@ -12,19 +12,15 @@ var app = app || {};
 
   $('#newUserButton').on('click', function(){
     // TODO: Call landingView function that packages up input into an object. For now, using test
-    var userName = $('input#username').val();
-    var name = $('input#name').val();
-    var newUser = new module.User({name: name, username: userName});
-    console.log(newUser);
+    var newUser = module.packageNewUser();
     newUser.createUser();
   });
 
-  $('#userDropDown').change(function(){
-    // TODO: Assuming I have the user_id from somewhere...
-    var user_id = 1;
+  $('#userDropDown').change(function(event){
     //call getTimePref to get preferences for the given user.
-    module.getUser(user_id, function(userData){
+    module.getUser(event.target.value, function(userData){
       var user = new module.User(userData);
+      module.currentUser = user;
       user.getTimePreferences(function(timePref){
         timePref = JSON.parse(timePref.time_id);
         // TODO: call view function to send this information back to the view.

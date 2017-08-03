@@ -88,7 +88,7 @@ app.get('/getUsers', function(req, res) {
       `SELECT * FROM users;`
     )
     .then(function(result) {
-      res.send(result.rows[0]);
+      res.send(result.rows);
     })
     .catch(function(err) {
       console.error(err);

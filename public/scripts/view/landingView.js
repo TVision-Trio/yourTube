@@ -12,4 +12,8 @@ var app = app || {};
       $('#userDropDown').append(userTemplate(user));
     });
   };
+
+  module.packageNewUser = function(){
+    return (new module.User({name: $('input#name').val(), username: $('input#username').val()}));
+  }
 })(app);

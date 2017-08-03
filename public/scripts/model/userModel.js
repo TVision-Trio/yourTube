@@ -3,6 +3,7 @@
 var app = app || {};
 
 (function(module){
+  module.currentUser = module.currentUser || {};
 
   function User(userData){
     this.name = userData.name;
@@ -26,6 +27,7 @@ var app = app || {};
   User.prototype.createUser = function() {
     $.post('/newUser', {name: this.name, username: this.username}).then(function(results){
       this.user_id = results.user_id;
+      module.currentUser = results;
     }, function(error){
       // TODO: Handle error duplicate usernames
       console.error(error);
@@ -69,7 +71,7 @@ var app = app || {};
       url:'/getUsers',
       method: 'GET'
     }).then(function(results){
-      callback([results]);
+      callback(results);
     }, function(error){
       console.error(error);
     });
@@ -95,7 +97,7 @@ var app = app || {};
       method: 'GET',
       data: {user_id: this.user_id}
     }).then(function(results){
-      console.info('Successfully got time preferences');
+      console.info(results);
       if (callback) callback(results);
     }, function(error){
       console.log('Failed at getting time preferences');
@@ -123,7 +125,7 @@ var app = app || {};
       method: 'GET',
       data: {user_id: this.user_id}
     }).then(function(results){
-      console.info('Successfully got day preferences');
+      console.info(results);
       if (callback) callback(results);
     }, function(error){
       console.log('Failed at getting day preferences');
@@ -151,7 +153,7 @@ var app = app || {};
       method: 'GET',
       data: {user_id: this.user_id}
     }).then(function(results){
-      console.info('Successfully got genre preferences');
+      console.info(results);
       if (callback) callback(results);
     }, function(error){
       console.log('Failed at getting genre preferences');
