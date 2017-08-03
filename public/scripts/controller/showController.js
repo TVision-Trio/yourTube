@@ -26,8 +26,7 @@ var app = app || {};
         user = new module.User(user);
         console.log(user);
         var x = user.getGenrePreferences(function(genrePref){
-          var y = (JSON.parse(genrePref.genre_id));
-          return y;
+          return JSON.parse(genrePref.genre_id);
         });
         console.log(x);
         // module.DataModel.filterShows(JSON.parse(user.getGenrePreferences()), JSON.parse(user.getDayPreferences()), JSON.parse(user.getTimePreferences()))

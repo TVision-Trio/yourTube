@@ -24,7 +24,8 @@ var app = app || {};
         // TODO: call view function to send this information back to the view.
       });
       user.getGenrePreferences(function(genrePref){
-        genrePref = JSON.parse(genrePref.genre_id);
+        console.log(genrePref.genre_id);
+        return JSON.parse(genrePref.genre_id);
         // TODO: call view function to send this information back to the view.
       });
       user.getDayPreferences(function(dayPref){

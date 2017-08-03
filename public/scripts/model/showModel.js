@@ -35,6 +35,7 @@ var app = app || {};
           timeframe: timeframe
         };
       });
+
       DataModel.all = mappedData;
       if(callback) callback(mappedData);
     }, function(err){
@@ -42,40 +43,69 @@ var app = app || {};
     });
   };
 
+// pass as callback
+  DataModel.requestShows((shows) => {
+    shows.forEach((show) => {
+      console.log(show.days);
+    });
+    var mapped = shows.map((show) => {
+      if (show.days[0] === 'Wednesday'){
+        return show;
+      }
+    }).reduce((accumulator, next) => {
+      if(next){
+        accumulator.push(next);
+      }
+      return accumulator;
+    }, [])
+    console.log(mapped);
+  });
 
-  DataModel.filterShows = function(genres, days, times){
-    var filteredData = [];
-    // Filter to only shows that are on prefered days
-    filteredData = DataModel.all.filter(function(show){
-      var flag = false;
-      days.forEach(function(day){
-        if(show.days.includes(day)){
-          flag = true;
-        }
-      });
-      return flag;
-    });
-    filteredData = filteredData.filter(function(show){
-      var flag = false;
-      genres.forEach(function(genre){
-        if(show.genres.includes(genre)){
-          flag = true;
-        }
-      });
-      return flag;
-    });
 
-    filteredData = filteredData.filter(function(show){
-      var flag = false;
-      times.forEach(function(time){
-        if(show.timeframe.includes(time)){
-          flag = true;
-        }
-      });
-      return flag;
-    });
-    return filteredData;
-  };
+
+    // return show.days.filter((day) => {
+    //   return days.map((el) => {
+    //     day === el;
+    //   })
+    // })
+
+    // shows.filter((show) => {
+    //   days.map((day) => {
+    //     show.days.reduce = (accumulator, next) => {
+    //       if(next === day){
+    //         return accumulator.push(next);
+    //       }
+    //     };
+    //   })
+    // });
+    //   days.forEach((day) => {
+    //     return show.days.includes(day);
+    //   })
+    // }).filter(function(show){
+    //   return show.genres === genres;
+    // })
+    // filteredData = filteredData.filter(function(show){
+    //   var flag = false;
+    //   genres.forEach(function(genre){
+    //     if(show.genres.includes(genre)){
+    //       flag = true;
+    //     }
+    //   });
+    //   return flag;
+    // });
+    //
+    // filteredData = filteredData.filter(function(show){
+    //   var flag = false;
+    //   times.forEach(function(time){
+    //     if(show.timeframe.includes(time)){
+    //       flag = true;
+    //     }
+    //   });
+    //   return flag;
+    // });
+    // return filteredData;
+
+
 
   // Get genres from JSON to include in passed data.
   DataModel.getGenres = function(shows){

@@ -152,7 +152,7 @@ var app = app || {};
       console.info('Successfully got genre preferences');
       if (callback) callback(results);
     }, function(error){
-      console.log('Failed at getting genre preferences');
+      console.info('Failed at getting genre preferences');
       console.error(error);
     });
   };
