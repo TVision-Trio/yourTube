@@ -32,8 +32,6 @@ var app = app || {};
     // TODO: call view function to show all show data;
   });
 
-  $('.cloud')
-
   module.showController = showController;
 
 })(app);
