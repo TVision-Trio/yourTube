@@ -12,7 +12,10 @@ var app = app || {};
 
   $('#newUserButton').on('click', function(){
     // TODO: Call landingView function that packages up input into an object. For now, using test
-    var newUser = new module.User({name: 'Alana3', username: 'alanafrankly3'});
+    var userName = $('input#username').val();
+    var name = $('input#name').val();
+    var newUser = new module.User({name: name, username: userName});
+    console.log(newUser);
     newUser.createUser();
   });
 
