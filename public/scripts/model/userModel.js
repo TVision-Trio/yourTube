@@ -97,7 +97,8 @@ var app = app || {};
       method: 'GET',
       data: {user_id: this.user_id}
     }).then(function(results){
-      if (callback) callback(results);
+
+      callback(results);
     }, function(error){
       console.log('Failed at getting time preferences');
       console.error(error);
@@ -124,7 +125,6 @@ var app = app || {};
       method: 'GET',
       data: {user_id: this.user_id}
     }).then(function(results){
-      console.info(results);
       if (callback) callback(results);
     }, function(error){
       console.log('Failed at getting day preferences');
@@ -153,7 +153,6 @@ var app = app || {};
       method: 'GET',
       data: {user_id: user_id}
     }).then(function(results){
-      console.log(results);
       callback(results);
     }, function(error){
       console.log('Failed at getting genre preferences');
