@@ -5,20 +5,22 @@ var app = app || {};
 
 (function(module){
 
-  // var userController = {};
+  // On load, call module.getUsers to get a list of all users in database:
+  module.getUsers(function(users){
+    module.populateDropDown(users);
+  });
 
   $('#newUserButton').on('click', function(){
     // TODO: Call landingView function that packages up input into an object. For now, using test
-    var newUser = new module.User({name: 'Alana3', username: 'alanafrankly3'});
+    var newUser = module.packageNewUser();
     newUser.createUser();
   });
 
-  $('#userDropDown').change(function(){
-    // TODO: Assuming I have the user_id from somewhere...
-    var user_id = 1;
+  $('#userDropDown').change(function(event){
     //call getTimePref to get preferences for the given user.
-    module.getUser(user_id, function(userData){
+    module.getUser(event.target.value, function(userData){
       var user = new module.User(userData);
+      module.currentUser = user;
       user.getTimePreferences(function(timePref){
         timePref = JSON.parse(timePref.time_id);
         // TODO: call view function to send this information back to the view.

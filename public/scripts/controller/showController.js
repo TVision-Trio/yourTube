@@ -22,16 +22,22 @@ var app = app || {};
   $('#querySubmitButton').on('click', function(){
     module.DataModel.requestShows( (mappedData) => {
       var user_id = 1;
-      var filteredShows = module.getUser(user_id, function(user){
+      module.getUser(user_id, function(user){
         user = new module.User(user);
-        console.log(user);
-        var x = user.getGenrePreferences(function(genrePref){
-          var y = (JSON.parse(genrePref.genre_id));
-          return y;
-        });
-        console.log(x);
-        // module.DataModel.filterShows(JSON.parse(user.getGenrePreferences()), JSON.parse(user.getDayPreferences()), JSON.parse(user.getTimePreferences()))
-        // module.populateResults(filteredShows);
+        user.getGenrePreferences(function(results){
+          var genrePref = (JSON.parse(results.genre_id));
+          user.getDayPreferences(function(results){
+            var dayPref = (JSON.parse(results.day_id));
+            user.getTimePreferences(function(results){
+              var timePref = (JSON.parse(results.time_id));
+              module.DataModel.convertToWords(timePref, dayPref, genrePref, function([timePref, dayPref, genrePref]){
+                module.DataModel.filterShows(genrePref, dayPref, timePref, function(filteredShows){
+                  module.populateResults(filteredShows)
+                });
+              })
+            })
+          })
+        })
       }
       );
     });
