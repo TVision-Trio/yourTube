@@ -43,10 +43,11 @@ var app = app || {};
   };
 
 
-  DataModel.filterShows = function(genres, days, times, callback){
-    var filteredData = [];
+  DataModel.filterShows = function(showData, genres, days, times, callback){
     // Filter to only shows that are on prefered days
-    filteredData = DataModel.all.filter(function(show){
+    var filteredData = [];
+    console.log(showData);
+    filteredData = showData.filter(function(show){
       var flag = false;
       days.forEach(function(day){
         if(show.days.includes(day)){
@@ -55,15 +56,24 @@ var app = app || {};
       });
       return flag;
     });
+    console.log('Filtered out days');
+    console.log(filteredData);
     filteredData = filteredData.filter(function(show){
+      console.log(show);
       var flag = false;
       genres.forEach(function(genre){
-        if(show.genres.includes(genre)){
+        console.log(genre);
+        console.log('inside for each');
+        console.log(show.genres);
+        if(show.genres.includes(genre) || show.type === genre){
+          console.log('inside if');
           flag = true;
         }
       });
       return flag;
     });
+    console.log('Filtered out genre');
+    console.log(filteredData);
     filteredData = filteredData.filter(function(show){
       var flag = false;
       times.forEach(function(time){
@@ -73,6 +83,7 @@ var app = app || {};
       });
       return flag;
     });
+    console.log('Filtered out times');
     console.log(filteredData);
     callback(filteredData);
   };
