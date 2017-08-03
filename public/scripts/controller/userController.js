@@ -37,7 +37,7 @@ var app = app || {};
   // On submit of pref,
   $('#querySubmitButton').on('click', function(){
     // TODO: get pref object from homeView function. For now, using test pref. These preferences should somehow include a user_id.
-    var userPreferences = {user_id: 1, genres:[25,27], days:[1,2], times:[2, 3]};
+    var userPreferences = module.packagePreferences();
     // Get the user that coresponds to the user_id
     module.getUser(userPreferences.user_id, function(userData){
       var user = new module.User(userData);

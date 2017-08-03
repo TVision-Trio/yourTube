@@ -100,7 +100,7 @@ app.get('/getUsers', function(req, res) {
 
 app.get('/getGenres', (req, res) => {
   client.query(
-      `SELECT genre FROM genres;`
+      `SELECT genre, genre_id FROM genres;`
     )
     .then( (result) => {
       res.send(result.rows);
@@ -112,7 +112,7 @@ app.get('/getGenres', (req, res) => {
 
 app.get('/getDays', (req, res) => {
   client.query(
-      `SELECT day FROM days;`
+      `SELECT day, day_id FROM days;`
     )
     .then( (result) => {
       res.send(result.rows);
@@ -124,7 +124,7 @@ app.get('/getDays', (req, res) => {
 
 app.get('/getTimes', (req, res) => {
   client.query(
-      `SELECT time FROM times;`
+      `SELECT time, time_id FROM times;`
     )
     .then((result) => {
       res.send(result.rows);

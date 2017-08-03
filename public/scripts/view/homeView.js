@@ -43,6 +43,23 @@ var app = app || {};
     });
   }
 
+  module.packagePreferences = function(){
+    var genreArray = [];
+    var timeArray = [];
+    var dayArray = [];
+    // console.log($('li.selected.genre'));
+    $.each($('li.selected.genre'), function(index, genre){
+      genreArray.push(genre.value);
+    });
+    $.each($('li.selected.time'), function(index, time){
+      timeArray.push(time.value);
+    });
+    $.each($('li.selected.day'), function(index, day){
+      dayArray.push(day.value);
+    });
+    return {user_id: 1, days: dayArray, times: timeArray, genres: genreArray};
+  }
+
   // After submit, show data in homeview template.
   module.populateResults = function(shows){
     shows.forEach(function(show){
