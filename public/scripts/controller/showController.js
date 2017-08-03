@@ -32,6 +32,19 @@ var app = app || {};
               var timePref = (JSON.parse(results.time_id));
               module.DataModel.convertToWords(timePref, dayPref, genrePref, function([timePref, dayPref, genrePref]){
                 module.DataModel.filterShows(mappedData, genrePref, dayPref, timePref, function(filteredShows){
+                  // for each of the user pref arrays
+                  // for each pref within that array
+                  genrePref.forEach(function(genre){
+                    // for each li item in that type of preference cloud
+                    $('li.genre').each(function(index, li){
+                      // console.log($(li).text());
+                      // if they are the same
+                      if ($(li).text() === genre){
+                      //   // add selected class to that li
+                        ($(li)).addClass('selected');
+                      }
+                    })
+                  })
                   module.populateResults(filteredShows)
                 });
               })

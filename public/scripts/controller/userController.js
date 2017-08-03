@@ -21,19 +21,20 @@ var app = app || {};
     module.getUser(event.target.value, function(userData){
       var user = new module.User(userData);
       module.currentUser = user;
-      user.getTimePreferences(function(timePref){
-        timePref = JSON.parse(timePref.time_id);
-        // TODO: call view function to send this information back to the view.
-      });
-      user.getGenrePreferences(function(genrePref){
-        genrePref = JSON.parse(genrePref.genre_id);
-        // TODO: call view function to send this information back to the view.
-      });
-      user.getDayPreferences(function(dayPref){
-        dayPref = JSON.parse(dayPref.day_id);
-        // TODO: call view function to send this information back to the view.
-      });
-      
+      module.getUserPreferences();
+      // user.getTimePreferences(function(timePref){
+      //   timePref = JSON.parse(timePref.time_id);
+      //   // TODO: call view function to send this information back to the view.
+      // });
+      // user.getGenrePreferences(function(genrePref){
+      //   genrePref = JSON.parse(genrePref.genre_id);
+      //   // TODO: call view function to send this information back to the view.
+      // });
+      // user.getDayPreferences(function(dayPref){
+      //   dayPref = JSON.parse(dayPref.day_id);
+      //   // TODO: call view function to send this information back to the view.
+      // });
+
     });
   });
 
