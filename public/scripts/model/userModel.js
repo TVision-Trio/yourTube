@@ -50,7 +50,7 @@ var app = app || {};
     }
   };
 
-  // TODO: GET data from database by user_id
+  // GET data from database by user_id
   module.getUser = function(user_id, callback) {
     $.ajax({
       url:'/getUser',
@@ -63,7 +63,7 @@ var app = app || {};
     });
   };
 
-  // TODO: GET ALL users from database
+  // GET ALL users from database
   User.prototype.getUsers = function() {
     $.ajax({
       url:'/getUsers',
@@ -75,56 +75,83 @@ var app = app || {};
     });
   };
 
-  // TODO: GET ALL users from database
+  // SET user preferences in time_preference table
   User.prototype.setTimePreferences = function(timePrefArray) {
     $.ajax({
       url:'/setTimePreferences',
       method: 'PUT',
       data: {times: JSON.stringify(timePrefArray), user_id: this.user_id}
     }).then(function(results){
-      console.log('Inside model success');
-      console.log(results);
     }, function(error){
-      console.log('Inside model error');
       console.error(error);
     });
   };
 
-  User.prototype.setTimePreferences = function(timePrefArray) {
+  // GET user time preferences from time_preference table
+  User.prototype.getTimePreferences = function(callback) {
     $.ajax({
-      url:'/setTimePreferences',
-      method: 'PUT',
-      data: {times: JSON.stringify(timePrefArray), user_id: this.user_id}
+      url:'/getTimePreferences',
+      method: 'GET',
+      data: {user_id: this.user_id}
     }).then(function(results){
-      console.info('Successfully set time preferences');
+      console.info('Successfully got time preferences');
+      callback(results);
     }, function(error){
+      console.log('Failed at getting time preferences');
       console.error(error);
     });
   };
 
+  // SET user preferences in day_preference table
   User.prototype.setDayPreferences = function(dayPrefArray) {
     $.ajax({
       url:'/setDayPreferences',
       method: 'PUT',
       data: {days: JSON.stringify(dayPrefArray), user_id: this.user_id}
     }).then(function(results){
-      console.info('Successfully set day preferences');
     }, function(error){
       console.error(error);
     });
   };
 
+  // GET user day preferences from day_preference table
+  User.prototype.getDayPreferences = function(callback) {
+    $.ajax({
+      url:'/getDayPreferences',
+      method: 'GET',
+      data: {user_id: this.user_id}
+    }).then(function(results){
+      console.info('Successfully got day preferences');
+      callback(results);
+    }, function(error){
+      console.log('Failed at getting day preferences');
+      console.error(error);
+    });
+  };
+
+  // SET user preferences in genre_preference table
   User.prototype.setGenrePreferences = function(genrePrefArray) {
     $.ajax({
       url:'/setGenrePreferences',
       method: 'PUT',
       data: {genres: JSON.stringify(genrePrefArray), user_id: this.user_id}
     }).then(function(results){
-      console.log('Inside model success');
-      console.info('Successfully set genre preferences');
-      console.log(results);
     }, function(error){
-      console.log('Inside model error');
+      console.error(error);
+    });
+  };
+
+  // GET user genre preferences from genre_preference table
+  User.prototype.getGenrePreferences = function(callback) {
+    $.ajax({
+      url:'/getGenrePreferences',
+      method: 'GET',
+      data: {user_id: this.user_id}
+    }).then(function(results){
+      console.info('Successfully got genre preferences');
+      callback(results);
+    }, function(error){
+      console.log('Failed at getting genre preferences');
       console.error(error);
     });
   };

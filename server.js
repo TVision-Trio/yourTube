@@ -258,6 +258,19 @@ app.put('/setTimePreferences', function(req, res) {
     });
 });
 
+app.get('/getTimePreferences', function(req, res) {
+  client.query(
+      `SELECT time_id FROM time_preferences WHERE user_id=$1;`, [req.query.user_id]
+    )
+    .then(function(result) {
+      res.send(result.rows[0]);
+    })
+    .catch(function(err) {
+      console.error(err);
+      res.send(err);
+    });
+});
+
 app.put('/setDayPreferences', function(req, res) {
   client.query(
       `UPDATE day_preferences SET day_id=$2 WHERE day_preferences.user_id=$1 RETURNING *;`, [
@@ -274,6 +287,19 @@ app.put('/setDayPreferences', function(req, res) {
     });
 });
 
+app.get('/getDayPreferences', function(req, res) {
+  client.query(
+      `SELECT day_id FROM day_preferences WHERE user_id=$1;`, [req.query.user_id]
+    )
+    .then(function(result) {
+      res.send(result.rows[0]);
+    })
+    .catch(function(err) {
+      console.error(err);
+      res.send(err);
+    });
+});
+
 app.put('/setGenrePreferences', function(req, res) {
   client.query(
       `UPDATE genre_preferences SET genre_id=$2 WHERE genre_preferences.user_id=$1 RETURNING *;`, [
@@ -286,6 +312,19 @@ app.put('/setGenrePreferences', function(req, res) {
     })
     .catch(function(err) {
       console.error(err)
+      res.send(err);
+    });
+});
+
+app.get('/getGenrePreferences', function(req, res) {
+  client.query(
+      `SELECT genre_id FROM genre_preferences WHERE user_id=$1;`, [req.query.user_id]
+    )
+    .then(function(result) {
+      res.send(result.rows[0]);
+    })
+    .catch(function(err) {
+      console.error(err);
       res.send(err);
     });
 });
