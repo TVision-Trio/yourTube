@@ -1,11 +1,11 @@
 'use strict';
 
 //add handler for landing page
-var app = app ||{};
+var app = app || {};
 
 (function(module){
 
-  var userController = {};
+  // var userController = {};
 
   $('#newUserButton').on('click', function(){
     // TODO: Call landingView function that packages up input into an object. For now, using test
@@ -13,18 +13,26 @@ var app = app ||{};
     newUser.createUser();
   });
 
-      $('#userDropDown').change(function(e){
-        // TODO: Assuming I have the user_id from somewhere...
-        var user_id = 1;
-
-        module.getUser(user_id, function(userData){
-          var user = new module.User(userData);
-          var userTimePref = user.getTimePreferences(function(timePref){
-            console.log(timePref);
-          });
-        });
-        // TODO: call userModel function to get preferences for the given user.
+  $('#userDropDown').change(function(){
+    // TODO: Assuming I have the user_id from somewhere...
+    var user_id = 1;
+    //call getTimePref to get preferences for the given user.
+    module.getUser(user_id, function(userData){
+      var user = new module.User(userData);
+      user.getTimePreferences(function(timePref){
+        timePref = JSON.parse(timePref.time_id);
+        // TODO: call view function to send this information back to the view.
       });
+      user.getGenrePreferences(function(genrePref){
+        genrePref = JSON.parse(genrePref.genre_id);
+        // TODO: call view function to send this information back to the view.
+      });
+      user.getDayPreferences(function(dayPref){
+        dayPref = JSON.parse(dayPref.day_id);
+        // TODO: call view function to send this information back to the view.
+      });
+    });
+  });
 
   // On submit of pref,
   $('#querySubmitButton').on('click', function(){

@@ -82,22 +82,22 @@ var app = app || {};
       method: 'PUT',
       data: {times: JSON.stringify(timePrefArray), user_id: this.user_id}
     }).then(function(results){
-      console.info('Successfully set time preferences');
     }, function(error){
       console.error(error);
     });
   };
 
   // GET user time preferences from time_preference table
-  User.prototype.getTimePreferences = function() {
+  User.prototype.getTimePreferences = function(callback) {
     $.ajax({
       url:'/getTimePreferences',
       method: 'GET',
       data: {user_id: this.user_id}
     }).then(function(results){
       console.info('Successfully got time preferences');
-      console.log(results);
+      callback(results);
     }, function(error){
+      console.log('Failed at getting time preferences');
       console.error(error);
     });
   };
@@ -109,8 +109,22 @@ var app = app || {};
       method: 'PUT',
       data: {days: JSON.stringify(dayPrefArray), user_id: this.user_id}
     }).then(function(results){
-      console.info('Successfully set day preferences');
     }, function(error){
+      console.error(error);
+    });
+  };
+
+  // GET user day preferences from day_preference table
+  User.prototype.getDayPreferences = function(callback) {
+    $.ajax({
+      url:'/getDayPreferences',
+      method: 'GET',
+      data: {user_id: this.user_id}
+    }).then(function(results){
+      console.info('Successfully got day preferences');
+      callback(results);
+    }, function(error){
+      console.log('Failed at getting day preferences');
       console.error(error);
     });
   };
@@ -122,11 +136,22 @@ var app = app || {};
       method: 'PUT',
       data: {genres: JSON.stringify(genrePrefArray), user_id: this.user_id}
     }).then(function(results){
-      console.log('Inside model success');
-      console.info('Successfully set genre preferences');
-      console.log(results);
     }, function(error){
-      console.log('Inside model error');
+      console.error(error);
+    });
+  };
+
+  // GET user genre preferences from genre_preference table
+  User.prototype.getGenrePreferences = function(callback) {
+    $.ajax({
+      url:'/getGenrePreferences',
+      method: 'GET',
+      data: {user_id: this.user_id}
+    }).then(function(results){
+      console.info('Successfully got genre preferences');
+      callback(results);
+    }, function(error){
+      console.log('Failed at getting genre preferences');
       console.error(error);
     });
   };
