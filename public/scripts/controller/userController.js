@@ -39,6 +39,7 @@ var app = app || {};
 
   // On submit of pref,
   $('#querySubmitButton').on('click', function(){
+    $('#results ul').empty();
     // TODO: get pref object from homeView function. For now, using test pref. These preferences should somehow include a user_id.
     var userPreferences = module.packagePreferences();
     // Get the user that coresponds to the user_id
@@ -48,8 +49,28 @@ var app = app || {};
       user.setDayPreferences(userPreferences.days);
       user.setGenrePreferences(userPreferences.genres);
     });
-    // TODO: update each preference table with these preferences
 
+    module.DataModel.requestShows( (mappedData) => {
+      var user_id = 1;
+      module.getUser(user_id, function(user){
+        user = new module.User(user);
+        user.getGenrePreferences(function(results){
+          var genrePref = (JSON.parse(results.genre_id));
+          user.getDayPreferences(function(results){
+            var dayPref = (JSON.parse(results.day_id));
+            user.getTimePreferences(function(results){
+              var timePref = (JSON.parse(results.time_id));
+              module.DataModel.convertToWords(timePref, dayPref, genrePref, function([timePref, dayPref, genrePref]){
+                module.DataModel.filterShows(mappedData, genrePref, dayPref, timePref, function(filteredShows){
+                  module.populateResults(filteredShows)
+                });
+              })
+            })
+          })
+        })
+      }
+      );
+    });
   });
 
 
