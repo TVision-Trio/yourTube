@@ -47,7 +47,6 @@ var app = app || {};
     var genreArray = [];
     var timeArray = [];
     var dayArray = [];
-    // console.log($('li.selected.genre'));
     $.each($('li.selected.genre'), function(index, genre){
       genreArray.push(genre.value);
     });
@@ -58,12 +57,15 @@ var app = app || {};
       dayArray.push(day.value);
     });
     // TODO: DON'T hardcode this userid
-    localStorage.setItem('currentUser', JSON.stringify({user_id: 1, days: dayArray, times: timeArray, genres: genreArray}));
+    var user_id = JSON.parse(localStorage.getItem('currentUser'));
+    console.log(user_id);
+    localStorage.setItem('currentUser', JSON.stringify({user_id: user_id, days: dayArray, times: timeArray, genres: genreArray}));
     return {user_id: 1, days: dayArray, times: timeArray, genres: genreArray};
   }
 
   // After submit, show data in homeview template.
   module.populateResults = function(shows){
+    $('#results ul').empty();
     shows.forEach(function(show){
       var resultsTemplate = Handlebars.compile($('#results-template').html());
       var html = resultsTemplate(show);
