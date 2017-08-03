@@ -11,18 +11,21 @@ var app = app || {};
   });
 
   $('#newUserButton').on('click', function(){
+    $('#results ul').empty();
     // TODO: Call landingView function that packages up input into an object. For now, using test
     var newUser = module.packageNewUser();
     newUser.createUser();
   });
 
   $('#userDropDown').change(function(event){
+    $('#results ul').empty();
     //call getTimePref to get preferences for the given user.
     module.getUser(event.target.value, function(userData){
       var user = new module.User(userData);
-      module.currentUser = user;
+      console.log(user);
       localStorage.setItem('currentUser', JSON.stringify(module.currentUser));
       user.getTimePreferences(function(timePref){
+        console.log(JSON.parse(timePref.time_id));
         timePref = JSON.parse(timePref.time_id);
         // TODO: call view function to send this information back to the view.
       });
@@ -39,6 +42,7 @@ var app = app || {};
 
   // On submit of pref,
   $('#querySubmitButton').on('click', function(){
+    $('#results ul').empty();
     // TODO: get pref object from homeView function. For now, using test pref. These preferences should somehow include a user_id.
     var userPreferences = module.packagePreferences();
     // Get the user that coresponds to the user_id

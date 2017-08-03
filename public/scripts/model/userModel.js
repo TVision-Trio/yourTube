@@ -100,7 +100,7 @@ var app = app || {};
       data: {user_id: this.user_id}
     }).then(function(results){
       console.info(results);
-      if (callback) callback(results);
+      callback(results);
     }, function(error){
       console.log('Failed at getting time preferences');
       console.error(error);
