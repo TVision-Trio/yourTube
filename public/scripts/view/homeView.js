@@ -16,7 +16,7 @@ var app = app || {};
   module.populateGenres = (genres) => {
     genres.forEach((genre) => {
       genre.func = function(){
-        $(this.event.target).addClass('selected');
+        $(this.event.target).toggleClass('selected');
       }
       var genreTemplate = Handlebars.compile($('#genre-cloud-template').html());
       $('#genreCloud').append(genreTemplate(genre));
@@ -26,7 +26,7 @@ var app = app || {};
   module.populateDays = (days) => {
     days.forEach((day) => {
       day.func = function(){
-        $(this.event.target).addClass('selected');
+        $(this.event.target).toggleClass('selected');
       }
       var dayTemplate = Handlebars.compile($('#day-cloud-template').html());
       $('#dayCloud').append(dayTemplate(day));
@@ -36,7 +36,7 @@ var app = app || {};
   module.populateTimes = (times) => {
     times.forEach((time) => {
       time.func = function(){
-        $(this.event.target).addClass('selected');
+        $(this.event.target).toggleClass('selected');
       }
       var timeTemplate = Handlebars.compile($('#time-cloud-template').html());
       $('#timeCloud').append(timeTemplate(time));

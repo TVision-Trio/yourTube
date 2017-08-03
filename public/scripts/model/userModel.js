@@ -22,12 +22,14 @@ var app = app || {};
     }
   }
 
+
   // CREATE user in database based on user input
   // TODO: handle user input error
   User.prototype.createUser = function() {
     $.post('/newUser', {name: this.name, username: this.username}).then(function(results){
       this.user_id = results.user_id;
       module.currentUser = results;
+      localStorage.setItem('currentUser', JSON.stringify(module.currentUser));
     }, function(error){
       // TODO: Handle error duplicate usernames
       console.error(error);
