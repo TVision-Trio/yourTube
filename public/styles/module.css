@@ -37,5 +37,9 @@
   background-color: rgba(0, 113, 188, 0.79);
 }
 
+.selected {
+  opacity: .75;
+}
+
 
 /* About */

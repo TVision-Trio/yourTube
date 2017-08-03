@@ -31,7 +31,7 @@ var app = app || {};
             user.getTimePreferences(function(results){
               var timePref = (JSON.parse(results.time_id));
               module.DataModel.convertToWords(timePref, dayPref, genrePref, function([timePref, dayPref, genrePref]){
-                module.DataModel.filterShows(genrePref, dayPref, timePref, function(filteredShows){
+                module.DataModel.filterShows(mappedData, genrePref, dayPref, timePref, function(filteredShows){
                   module.populateResults(filteredShows)
                 });
               })
