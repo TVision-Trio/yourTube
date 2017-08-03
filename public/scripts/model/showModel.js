@@ -43,7 +43,6 @@ var app = app || {};
     });
   };
 
-// pass as callback
   DataModel.requestShows((shows) => {
     shows.forEach((show) => {
       console.log(show.days);
@@ -61,51 +60,86 @@ var app = app || {};
     console.log(mapped);
   });
 
+  DataModel.filterShows = function(genres, days, times, callback){
+    var filteredData = [];
+    // Filter to only shows that are on prefered days
+    filteredData = DataModel.all.filter(function(show){
+      var flag = false;
+      days.forEach(function(day){
+        if(show.days.includes(day)){
+          flag = true;
+        }
+      });
+      return flag;
+    });
+    filteredData = filteredData.filter(function(show){
+      var flag = false;
+      genres.forEach(function(genre){
+        if(show.genres.includes(genre)){
+          flag = true;
+        }
+      });
+      return flag;
+    });
+    filteredData = filteredData.filter(function(show){
+      var flag = false;
+      times.forEach(function(time){
+        if(show.timeframe.includes(time)){
+          flag = true;
+        }
+      });
+      return flag;
+    });
+    console.log(filteredData);
+    callback(filteredData);
+  };
 
+  // Convert preferences from numbers to words
+  DataModel.convertToWords = function(timePref, dayPref, genrePref, callback){
+    var wordsArray = [];
+    // Get all info from time preference table
+    $.ajax({
+      url:'/getTimes',
+      method: 'GET'
+    }).then(function(timeResults){
+      // As a callback:
+      var times = toWordsHelp(timePref, 'time', timeResults);
+      $.ajax({
+        url:'/getDays',
+        method: 'GET'
+      }).then(function(dayResults){
+        var days = toWordsHelp(dayPref, 'day', dayResults);
+        $.ajax({
+          url:'/getGenres',
+          method: 'GET'
+        }).then(function(genreResults){
+          var genres = toWordsHelp(genrePref, 'genre', genreResults);
+          callback([times, days, genres]);
+          return [times, days, genres];
+        })
+      })
+    }, function(error){
+      console.log('Failed at getting Words from Database');
+      console.error(error);
+    });
+  }
 
-    // return show.days.filter((day) => {
-    //   return days.map((el) => {
-    //     day === el;
-    //   })
-    // })
-
-    // shows.filter((show) => {
-    //   days.map((day) => {
-    //     show.days.reduce = (accumulator, next) => {
-    //       if(next === day){
-    //         return accumulator.push(next);
-    //       }
-    //     };
-    //   })
-    // });
-    //   days.forEach((day) => {
-    //     return show.days.includes(day);
-    //   })
-    // }).filter(function(show){
-    //   return show.genres === genres;
-    // })
-    // filteredData = filteredData.filter(function(show){
-    //   var flag = false;
-    //   genres.forEach(function(genre){
-    //     if(show.genres.includes(genre)){
-    //       flag = true;
-    //     }
-    //   });
-    //   return flag;
-    // });
-    //
-    // filteredData = filteredData.filter(function(show){
-    //   var flag = false;
-    //   times.forEach(function(time){
-    //     if(show.timeframe.includes(time)){
-    //       flag = true;
-    //     }
-    //   });
-    //   return flag;
-    // });
-    // return filteredData;
-
-
+  function toWordsHelp(arrayOfPreferences, db_line, results) {
+    var wordsArray = [];
+    arrayOfPreferences.forEach(function(pref){
+    // For each thing in the stuff from tableName
+      results.forEach(function(result){
+        // construct the table_id and the column name for the table
+        var id = db_line + '_id';
+        // if there are the same:
+        if (pref === result[id]){
+          // add the thing from the tableName info to wordsArray
+          wordsArray.push(result[db_line]);
+        }
+      })
+    })
+    return wordsArray
+  }
 
   // Get genres from JSON to include in passed data.
   DataModel.getGenres = function(shows){
