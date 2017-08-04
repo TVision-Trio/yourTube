@@ -71,4 +71,10 @@ var app = app || {};
       $('#results ul').append(html);
     });
   }
+
+  module.initAbout = () => {
+    $('section').hide();
+    $('#about').show();
+  }
+  
 })(app);

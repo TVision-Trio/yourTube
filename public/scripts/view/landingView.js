@@ -3,7 +3,8 @@
 var app = app || {};
 
 (function(module){
-
+  $('section').hide();
+  $('#landing').show();
   module.populateDropDown = function(users) {
     users.forEach(function(user) {
       user.func = function(){
