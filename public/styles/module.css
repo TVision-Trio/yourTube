@@ -56,6 +56,7 @@
 
 .selected {
   opacity: .55;
+  border: 6px solid #3cb0fd;
 }
 
 #about {
