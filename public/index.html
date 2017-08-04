@@ -22,7 +22,13 @@
     </script>
     <script id="results-template" type="text/x-handlebars-template">
       <!-- for each thing from the database, create a cloud tag thing -->
-      <li>{{title}}</li>
+      <li>{{title}}
+        <p>Shown on: {{network}}</p>
+        <p>Days: {{days}}</p>
+        <p>Time Showing: {{times}}</p>
+        <p>{{{summary}}}</p>
+      </li>
+
     </script>
     <script type="text/x-handlebars-template" id="dropdown-template">
       <option value={{user_id}}>{{username}}</option>
@@ -84,12 +90,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
-    <script type="text/javascript" src="scripts/model/showModel.js"></script>
-    <script type="text/javascript" src="scripts/model/userModel.js"></script>
-    <script type="text/javascript" src="scripts/view/homeView.js"></script>
-    <script type="text/javascript" src="scripts/view/landingView.js"></script>
-    <script type="text/javascript" src="scripts/controller/showController.js"></script>
-    <script type="text/javascript" src="scripts/controller/userController.js"></script>
-    <script type="text/javascript" src="scripts/controller/routes.js"></script>
+    <script type="text/javascript" src="/scripts/model/showModel.js"></script>
+    <script type="text/javascript" src="/scripts/model/userModel.js"></script>
+    <script type="text/javascript" src="/scripts/view/homeView.js"></script>
+    <script type="text/javascript" src="/scripts/view/landingView.js"></script>
+    <script type="text/javascript" src="/scripts/controller/showController.js"></script>
+    <script type="text/javascript" src="/scripts/controller/userController.js"></script>
+    <script type="text/javascript" src="/scripts/controller/routes.js"></script>
   </body>
 </html>

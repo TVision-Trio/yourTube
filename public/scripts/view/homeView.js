@@ -72,8 +72,6 @@ var app = app || {};
     });
   }
 
-  
-
   module.initAbout = () => {
     $('section').hide();
     $('#about').show();
