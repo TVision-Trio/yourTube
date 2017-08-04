@@ -3,9 +3,9 @@
 var app = app || {};
 
 page('/', 'index.html');
-page('/main', app.initMain);
+page('/main', app.showController.initMain);
 page('/about', app.initAbout);
-// page('/results', )
+// page('/results', app.initResults);
 page();
 
 

@@ -10,19 +10,21 @@ var app = app || {};
     module.populateDropDown(users);
   });
 
-  module.initMain = () => {
-    $('section').hide();
-    $('#home').show();
-  }
-
   $('#newUserButton').on('click', function() {
     $('#results ul').empty();
     // TODO: Call landingView function that packages up input into an object. For now, using test
     var newUser = module.packageNewUser();
     newUser.createUser();
+    $('#userDropDown').empty();
+    $('#userDropDown').append('<option default>Select a User &#x25BC;</option>');
+    $('#name, #username').val('');
+    module.getUsers(function(users) {
+      module.populateDropDown(users);
+    });
   });
 
   $('#userDropDown').change(function(event) {
+    module.showController.initMain();
     $('#results ul').empty();
     //call getTimePref to get preferences for the given user.
     $('#results ul').empty();
@@ -62,40 +64,6 @@ var app = app || {};
     // TODO: get pref object from homeView function. For now, using test pref. These preferences should somehow include a user_id.
     var userPreferences = module.packagePreferences();
     module.getUserPreferences(userPreferences);
-    // user.setTimePreferences(userPreferences.times);
-    // user.setDayPreferences(userPreferences.days);
-    // user.setGenrePreferences(userPreferences.genres);
-    // Get the user that coresponds to the user_id
-    // module.getUser(userPreferences.user_id, function(userData){
-    //   var user = new module.User(userData);
-    //   user.setTimePreferences(userPreferences.times);
-    //   user.setDayPreferences(userPreferences.days);
-    //   user.setGenrePreferences(userPreferences.genres);
-    //   console.log(userPreferences.user_id);
-    //   module.DataModel.requestShows( (mappedData) => {
-    //     module.getUser(userPreferences.user_id, function(user){
-    //       user = new module.User(user);
-    //       user.getGenrePreferences(function(results){
-    //         console.log(results);
-    //         var genrePref = (JSON.parse(results.genre_id));
-    //         user.getDayPreferences(function(results){
-    //           var dayPref = (JSON.parse(results.day_id));
-    //           user.getTimePreferences(function(results){
-    //             var timePref = (JSON.parse(results.time_id));
-    //             module.DataModel.convertToWords(timePref, dayPref, genrePref, function([timePref, dayPref, genrePref]){
-    //               module.DataModel.filterShows(mappedData, genrePref, dayPref, timePref, function(filteredShows){
-    //                 module.populateResults(filteredShows)
-    //               });
-    //             })
-    //           })
-    //         })
-    //       })
-    //     }
-    //   );
-    // });
-    // });
   });
-
-
 
 })(app);

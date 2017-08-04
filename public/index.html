@@ -33,7 +33,7 @@
       <h1>YourTube</h1>
       <nav>
         <ul>
-          <li><a href="/landing">Change User</a></li>
+          <li><a href="/">Change User</a></li>
           <li><a href="/about">About</a></li>
         </ul>
       </nav>
@@ -45,7 +45,8 @@
         </select>
         <input id="name" type="text" placeholder="Your Name">
         <input id="username" type="text" placeholder="Username">
-        <button id="newUserButton" type="button">Submit</button>
+        <!-- onclick="window.location.href='/main';" -->
+        <a href="/main"><button id="newUserButton" type="button">Submit</button></a>
       </section>
       <section id="home">
         <section id="search">
@@ -58,7 +59,7 @@
           <ul id="genreCloud">
             <!-- Genre cloud tags go here -->
           </ul>
-          <a href="/main"><button id="querySubmitButton" type="button">Submit</button></a>
+          <button id="querySubmitButton" type="submit">Submit</button>
         </section>
       </section>
       <section id="results">

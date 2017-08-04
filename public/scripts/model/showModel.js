@@ -201,23 +201,7 @@ var app = app || {};
     });
   }
 
-  DataModel.requestShows((shows) => {
-    return DataModel.getGenres(shows).forEach((genre) => {
-      DataModel.setGenresData(genre);
-    })
-  });
-
-  DataModel.getGenresData((results) => {
-    module.showController.genreDataToHomeView(results);
-  });
-
-  DataModel.getDaysData((results) => {
-    module.showController.daysDataToHomeView(results);
-  });
-
-  DataModel.getTimesData((results) => {
-    module.showController.timesDataToHomeView(results);
-  });
+  
 
   module.DataModel = DataModel;
 })(app);
