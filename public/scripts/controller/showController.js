@@ -23,10 +23,6 @@ var app = app || {};
     module.DataModel.requestShows( (mappedData) => {
       var user = JSON.parse(localStorage.getItem('currentUser'));
       var user_id = user.user_id;
-<<<<<<< HEAD
-      console.log(user_id);
-=======
->>>>>>> 6e08de7fb0a225d57e362ac001bf251246b814d5
       module.getUser(user_id, function(user){
         user = new module.User(user);
         user.getGenrePreferences(JSON.stringify(user.user_id), function(results){
