@@ -1,5 +1,6 @@
 /******* MODULE *******/
 
+
 /* Landing Page */
 
 #landing {
@@ -11,7 +12,9 @@
   text-align: center;
 }
 
-#landing input, #landing select, #landing option {
+#landing input,
+#landing select,
+#landing option {
   display: block;
   margin: 0px auto 30px auto;
   width: 200px;
@@ -19,7 +22,7 @@
   padding: 10px 20px;
   background-color: white;
   border: 2px solid lightgray;
-  color: rgba(0,0,0,.60);
+  color: rgba(0, 0, 0, .60);
 }
 
 #landing select {
@@ -32,7 +35,9 @@
   background-color: rgba(255, 0, 0, 0.79);
 }
 
+
 /* Cloud Tags Search */
+
 #search {
   padding: 10px;
   text-align: center;
@@ -46,5 +51,15 @@
   opacity: .55;
 }
 
+#about {
+  display: flex;
+  margin: 1em;
+  padding: 2em;
+  flex: row;
+  justify-content: space-around;
 
-/* About */
+}
+
+.bio {
+  padding: 2em;
+}

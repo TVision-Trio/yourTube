@@ -38,3 +38,12 @@ nav {
 nav a {
   color: rgba(255, 0, 0, 0.79);
 }
+
+article h2 {
+  text-align: center;
+}
+
+img {
+  margin: 1em;
+  padding: .8em;
+}
