@@ -4,7 +4,6 @@
 /* Header */
 header {
   background: rgba(255, 0, 0, 0.79);
-
 }
 
 header h1 {
@@ -32,10 +31,21 @@ header li {
 nav {
   background-color: white;
   margin: 0px;
-  padding: 30px;
+  padding: 20px;
   text-align: center;
 }
 
-nav a {
+ nav a {
   color: rgba(255, 0, 0, 0.79);
+} 
+
+article h2 {
+  text-align: center;
 }
+
+img {
+  /* margin: 2em;
+  padding: .8em; */
+}
+
+

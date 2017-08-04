@@ -7,7 +7,7 @@ var app = app || {};
   DataModel.all = [];
 
   DataModel.requestShows = (callback) => {
-    $.get('http://api.tvmaze.com/schedule')
+    $.get('https://api.tvmaze.com/schedule')
     .then(function(data){
       var mappedData = data.map(function(showObject){
 
@@ -43,10 +43,14 @@ var app = app || {};
   };
 
 
-  DataModel.filterShows = function(genres, days, times){
-    var filteredData = [];
+  DataModel.filterShows = function(showData, genres, days, times, callback){
+    console.log(showData);
+    console.log(genres);
+    console.log(days);
+    console.log(times);
     // Filter to only shows that are on prefered days
-    filteredData = DataModel.all.filter(function(show){
+    var filteredData = [];
+    filteredData = showData.filter(function(show){
       var flag = false;
       days.forEach(function(day){
         if(show.days.includes(day)){
@@ -58,13 +62,12 @@ var app = app || {};
     filteredData = filteredData.filter(function(show){
       var flag = false;
       genres.forEach(function(genre){
-        if(show.genres.includes(genre)){
+        if(show.genres.includes(genre) || show.type === genre){
           flag = true;
         }
       });
       return flag;
     });
-
     filteredData = filteredData.filter(function(show){
       var flag = false;
       times.forEach(function(time){
@@ -74,8 +77,57 @@ var app = app || {};
       });
       return flag;
     });
-    return filteredData;
+    callback(filteredData);
   };
+
+  // Convert preferences from numbers to words
+  DataModel.convertToWords = function(timePref, dayPref, genrePref, callback){
+    var wordsArray = [];
+    // Get all info from time preference table
+    $.ajax({
+      url:'/getTimes',
+      method: 'GET'
+    }).then(function(timeResults){
+      // As a callback:
+      console.log(timePref);
+      var times = toWordsHelp(timePref, 'time', timeResults);
+      $.ajax({
+        url:'/getDays',
+        method: 'GET'
+      }).then(function(dayResults){
+        var days = toWordsHelp(dayPref, 'day', dayResults);
+        $.ajax({
+          url:'/getGenres',
+          method: 'GET'
+        }).then(function(genreResults){
+          var genres = toWordsHelp(genrePref, 'genre', genreResults);
+          callback(times, days, genres);
+          return (times, days, genres);
+        })
+      })
+    }, function(error){
+      console.log('Failed at getting Words from Database');
+      console.error(error);
+    });
+  }
+
+  function toWordsHelp(arrayOfPreferences, db_line, results) {
+    console.log(arrayOfPreferences);
+    var wordsArray = [];
+    arrayOfPreferences.forEach(function(pref){
+    // For each thing in the stuff from tableName
+      results.forEach(function(result){
+        // construct the table_id and the column name for the table
+        var id = db_line + '_id';
+        // if there are the same:
+        if (pref === result[id]){
+          // add the thing from the tableName info to wordsArray
+          wordsArray.push(result[db_line]);
+        }
+      })
+    })
+    return wordsArray
+  }
 
   // Get genres from JSON to include in passed data.
   DataModel.getGenres = function(shows){
@@ -103,7 +155,6 @@ var app = app || {};
       }
     })
     .then((data) => {
-      console.log(data);
     });
   };
 
@@ -150,24 +201,7 @@ var app = app || {};
     });
   }
 
-  DataModel.requestShows((shows) => {
-    return DataModel.getGenres(shows).forEach((genre) => {
-      console.log(genre);
-      DataModel.setGenresData(genre);
-    })
-  });
-
-  DataModel.getGenresData((results) => {
-    module.showController.genreDataToHomeView(results);
-  });
-
-  DataModel.getDaysData((results) => {
-    module.showController.daysDataToHomeView(results);
-  });
-
-  DataModel.getTimesData((results) => {
-    module.showController.timesDataToHomeView(results);
-  });
+  
 
   module.DataModel = DataModel;
 })(app);

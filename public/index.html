@@ -10,19 +10,28 @@
     <link rel="stylesheet" href="styles/state.css">
     <script id="time-cloud-template" type="text/x-handlebars-template">
       <!-- for each thing from the database, create a cloud tag thing -->
-      <li class="cloud time" value="{{time_id}}">{{time}}</li>
+      <li onclick="{{stringifyFunc func}}" class="cloud time" value="{{time_id}}">{{time}}</li>
     </script>
     <script id="day-cloud-template" type="text/x-handlebars-template">
       <!-- for each thing from the database, create a cloud tag thing -->
-      <li class="cloud day" value="{{day_id}}">{{day}}</li>
+      <li onclick="{{stringifyFunc func}}" class="cloud day" value="{{day_id}}">{{day}}</li>
     </script>
     <script id="genre-cloud-template" type="text/x-handlebars-template">
       <!-- for each thing from the database, create a cloud tag thing -->
-      <li class="cloud genre" value="{{genre_id}}">{{genre}}</li>
+      <li onclick="{{stringifyFunc func}}" class="cloud genre" value="{{genre_id}}">{{genre}}</li>
     </script>
     <script id="results-template" type="text/x-handlebars-template">
       <!-- for each thing from the database, create a cloud tag thing -->
-      <li>{{title}}</li>
+      <li>{{title}}
+        <p>Shown on: {{network}}</p>
+        <p>Days: {{days}}</p>
+        <p>Time Showing: {{times}}</p>
+        <p>{{{summary}}}</p>
+      </li>
+
+    </script>
+    <script type="text/x-handlebars-template" id="dropdown-template">
+      <option value={{user_id}}>{{username}}</option>
     </script>
   </head>
   <body>
@@ -30,33 +39,33 @@
       <h1>YourTube</h1>
       <nav>
         <ul>
-          <li><a href="/landing">Change User</a></li>
+          <li><a href="/">Change User</a></li>
           <li><a href="/about">About</a></li>
         </ul>
       </nav>
     </header>
     <main>
       <section id="landing">
-        <select class="" name="">
+        <select id="userDropDown" class="" name="">
           <option default>Select a User &#x25BC;</option>
-          <option value="65375">Test User</option>
-          <!-- Populated option tags go here -->
         </select>
-        <input id="input" type="text" placeholder="New User">
-        <button id="newUserButton" type="button">Submit</button>
+        <input id="name" type="text" placeholder="Your Name">
+        <input id="username" type="text" placeholder="Username">
+        <!-- onclick="window.location.href='/main';" -->
+        <a id="landingLink" href="/main"><button id="newUserButton" type="button">Submit</button></a>
       </section>
       <section id="home">
         <section id="search">
-          <ul id="genreCloud">
-            <!-- Genre cloud tags go here -->
-          </ul>
           <ul id="timeCloud">
             <!-- Time cloud tags go here -->
           </ul>
           <ul id="dayCloud">
             <!-- Days cloud tags go here -->
           </ul>
-          <button id="querySubmitButton" type="button">Submit</button>
+          <ul id="genreCloud">
+            <!-- Genre cloud tags go here -->
+          </ul>
+          <button id="querySubmitButton" type="submit">Submit</button>
         </section>
       </section>
       <section id="results">
@@ -65,14 +74,20 @@
         </ul>
       </section>
       <section id="about">
-        <article class="Aeone">
-          <h2>Aeone</h2>
+        <article class="Aeone bio">
+          <h2><img src="images/aeone.png" alt="Not to be toyed with" width="200px" height="200px">Aeone
+          <p class="tree">Aeone Singson has an Associate of Science Degree in computer science and is currently working on the Apprenti program software development apprentice training track. Her hobbies include reading, thinking about robots, and drawing. Her passions include spreading technology access and education and volunteering in the community.</p>
+          </h2>
         </article>
-        <article class="Alana">
-          <h2>Alana</h2>
+        <article class="Alana bio">
+          <h2><img src="images/alana.png" alt="Picture of a bad-ass coder" width="200px" height="200px">Alana
+          <p class="tree">Alana Franklin has a Bachelor of Music in Vocal Performance. Over the five years as she worked administrative jobs for local tech companies including Headsprout, SpaceCurve, and Amazon. She is currently going through apprentice training with the Apprenti program for software development. Outside of work, Alana enjoys traveling, Crossfit, and watching an impressive amount of tv.</p>
+          </h2>
         </article>
-        <article class="JP">
-          <h2>JP</h2>
+        <article class="JP bio">
+          <h2><img src="images/jp.png" alt="What you talkin' 'bout Willis?!?" width="200px" height="200px">Jp
+          <p class="tree">John Gaines is starting a career in tech after a 25 year career at sea. He is a part of the software development apprentice training program at Apprenti. He enjoys working on various technological projects and playing the guitar.</p>
+          </h2>
         </article>
       </section>
     </main>
@@ -81,12 +96,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
-    <script type="text/javascript" src="scripts/model/showModel.js"></script>
-    <script type="text/javascript" src="scripts/model/userModel.js"></script>
-    <script type="text/javascript" src="scripts/view/homeView.js"></script>
-    <script type="text/javascript" src="scripts/view/landingView.js"></script>
-    <script type="text/javascript" src="scripts/controller/showController.js"></script>
-    <script type="text/javascript" src="scripts/controller/userController.js"></script>
-
+    <script type="text/javascript" src="/scripts/model/showModel.js"></script>
+    <script type="text/javascript" src="/scripts/model/userModel.js"></script>
+    <script type="text/javascript" src="/scripts/view/homeView.js"></script>
+    <script type="text/javascript" src="/scripts/view/landingView.js"></script>
+    <script type="text/javascript" src="/scripts/controller/showController.js"></script>
+    <script type="text/javascript" src="/scripts/controller/userController.js"></script>
+    <script type="text/javascript" src="/scripts/controller/routes.js"></script>
   </body>
 </html>

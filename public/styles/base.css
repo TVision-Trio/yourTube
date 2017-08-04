@@ -5,9 +5,11 @@
 }
 
 html, body {
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
   background-color: white;
   padding: 0px;
-  margin: 0px;
 }
 
 a {
@@ -15,12 +17,20 @@ a {
 }
 
 ul {
-  border: 0px;
+  /*border: 0px;
   margin: 0px;
-  padding: 0px;
+  padding: 0px;*/
 }
 
 section {
-  display: block;
-  padding: 30px;
+  /*display: block;*/
+  padding: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+}
+footer{
+  padding: 1em;
 }
