@@ -63,3 +63,9 @@
 .bio {
   padding: 2em;
 }
+
+.bio {
+  width: 100%;
+  margin: 0 auto;  
+  box-sizing: border-box;
+}
