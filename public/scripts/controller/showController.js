@@ -37,13 +37,13 @@ var app = app || {};
             user.getTimePreferences(function(results){
               // var timePref = (JSON.parse(results.time_id));
               var timePref = userPref.times;
+              console.log(timePref);
               var dayPref = userPref.days;
               var genrePref = userPref.genres;
               module.DataModel.convertToWords(timePref, dayPref, genrePref, function(timePref, dayPref, genrePref){
 
                 module.DataModel.filterShows(mappedData, genrePref, dayPref, timePref, function(filteredShows){
                   console.log(filteredShows);
-                  console.log(genrePref);
                   // for each of the user pref arrays
                   // for each pref within that array
                   genrePref.forEach(function(genre){
