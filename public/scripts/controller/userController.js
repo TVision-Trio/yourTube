@@ -27,9 +27,8 @@ var app = app || {};
       localStorage.setItem('currentUser', JSON.stringify(user));
       var timePref = user.getTimePreferences(function(timePref){
         // timePref.push()
-        var timePrefId = timePref.time_id;
-        console.log(timePrefId);
-        console.log(JSON.parse(timePrefId));
+        console.log(timePref);
+        // console.log(JSON.parse(timePrefId));
         // var sliced = timePref.time_id.slice(1,-1).split(',');
 
         user.getGenrePreferences(function(genrePref){
