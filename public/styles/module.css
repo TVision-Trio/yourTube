@@ -1,12 +1,20 @@
 /******* MODULE *******/
 
+
 /* Landing Page */
 
 #landing {
+  max-width: 16em;
+  margin: 0 auto;
+  padding-top: 5em;
+  border-radius: 10px;
+  background-color: gainsboro;
   text-align: center;
 }
 
-#landing input, #landing select, #landing option {
+#landing input,
+#landing select,
+#landing option {
   display: block;
   margin: 0px auto 30px auto;
   width: 200px;
@@ -14,22 +22,24 @@
   padding: 10px 20px;
   background-color: white;
   border: 2px solid lightgray;
-  color: rgba(0,0,0,.60);
+  color: rgba(0, 0, 0, .60);
 }
 
 #landing select {
   -webkit-appearance: none;
-  -moz-appearance: none;*/
-  appearance: none;
+  -moz-appearance: none;
+  -appearance: none;
 }
 
 #landing button {
   background-color: rgba(255, 0, 0, 0.79);
 }
 
+
 /* Cloud Tags Search */
+
 #search {
-  padding: 20px;
+  padding: 10px;
   text-align: center;
 }
 
@@ -41,5 +51,27 @@
   opacity: .55;
 }
 
+#about {
+  display: flex;
+  margin: 1em;
+  padding: 2em;
 
-/* About */
+  justify-content: space-around;
+
+}
+
+article {
+  display: flex;
+}
+
+.bio {
+  width: 100%;
+  margin: 0 auto;  
+  box-sizing: border-box;
+  padding: 2em;
+}
+
+.bio img {
+  margin: 2em;
+  padding: .8em;
+}
