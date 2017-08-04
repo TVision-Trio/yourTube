@@ -52,7 +52,6 @@ var app = app || {};
         user.setTimePreferences(userPref.times);
         user.setDayPreferences(userPref.days);
         user.setGenrePreferences(userPref.genres);
-        console.log(user);
         user.getGenrePreferences(function(results){
           // var genrePref = (JSON.parse(results.genre_id));
           user.getDayPreferences(function(results){
@@ -60,11 +59,9 @@ var app = app || {};
             user.getTimePreferences(function(results){
               // var timePref = (JSON.parse(results.time_id));
               var timePref = userPref.times;
-              console.log(timePref);
               var dayPref = userPref.days;
               var genrePref = userPref.genres;
               module.DataModel.convertToWords(timePref, dayPref, genrePref, function(timePref, dayPref, genrePref){
-
                 module.DataModel.filterShows(mappedData, genrePref, dayPref, timePref, function(filteredShows){
                   console.log(filteredShows);
                   // for each of the user pref arrays

@@ -152,7 +152,7 @@ var app = app || {};
       method: 'GET',
       data: {user_id: this.user_id}
     }).then(function(results){
-      if(callback) callback(JSON.parse(results.genre_id));
+      if (callback) callback(JSON.parse(results.genre_id));
     }, function(error){
       console.log('Failed at getting genre preferences');
       console.error(error);

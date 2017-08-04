@@ -61,9 +61,9 @@ var app = app || {};
   // On submit of pref,
   $('#querySubmitButton').on('click', function() {
     $('#results ul').empty();
-    // TODO: get pref object from homeView function. For now, using test pref. These preferences should somehow include a user_id.
     var userPreferences = module.packagePreferences();
     module.getUserPreferences(userPreferences);
+    console.log(userPreferences);
   });
 
 })(app);
