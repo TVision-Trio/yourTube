@@ -1,10 +1,13 @@
 /******* STATE *******/
 
 .cloud {
-  border-radius: 10px;
+  border-radius: 12px;
   background: rgba(255, 0, 0, 0.79);
   text-align: center;
   list-style: none;
+  color: #ffffff;
+  font-size: 20px;
+  width: 200px;
   margin: 5px;
   padding: 10px 20px 10px 20px;
   display: inline-block;
@@ -84,10 +87,4 @@
   margin: 0 auto;
   padding: 2em;
   background-color: paleturquoise;
-}
-
-.genre {
-  background-color: rgba(255, 0, 0, 0.79);
-  width: 200px;
-  text-align: center;
 }
