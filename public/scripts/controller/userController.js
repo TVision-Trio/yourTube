@@ -23,6 +23,7 @@ var app = app || {};
     $('#results ul').empty();
     module.getUser(event.target.value, function(userData){
       var user = new module.User(userData);
+      console.log(user);
       localStorage.setItem('currentUser', JSON.stringify(user));
       user.getTimePreferences(function(timePref){
         timePref = JSON.parse(timePref.time_id);

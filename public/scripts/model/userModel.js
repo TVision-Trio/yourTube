@@ -27,6 +27,7 @@ var app = app || {};
   // TODO: handle user input error
   User.prototype.createUser = function() {
     $.post('/newUser', {name: this.name, username: this.username}).then(function(results){
+      console.log(results);
       localStorage.setItem('currentUser', JSON.stringify(results));
       return results.user_id;
     }, function(error){
