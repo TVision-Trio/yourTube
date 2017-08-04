@@ -6,8 +6,18 @@ var app = app || {};
   // BEFORE SHOW QUERY
   // Populate cloud tags from database.
 
+  // Helped Function to make onlclick event work for Handlebar populated li's
+  // Referenced from: http://jsfiddle.net/fHycd/
+  Handlebars.registerHelper('stringifyFunc', function(func) {
+       return new Handlebars.SafeString("(" +
+                  func.toString().replace(/\"/g,"'") + ")()");
+  });
+
   module.populateGenres = (genres) => {
     genres.forEach((genre) => {
+      genre.func = function(){
+        $(this.event.target).toggleClass('selected');
+      }
       var genreTemplate = Handlebars.compile($('#genre-cloud-template').html());
       $('#genreCloud').append(genreTemplate(genre));
     });
@@ -15,6 +25,9 @@ var app = app || {};
 
   module.populateDays = (days) => {
     days.forEach((day) => {
+      day.func = function(){
+        $(this.event.target).toggleClass('selected');
+      }
       var dayTemplate = Handlebars.compile($('#day-cloud-template').html());
       $('#dayCloud').append(dayTemplate(day));
     });
@@ -22,34 +35,36 @@ var app = app || {};
 
   module.populateTimes = (times) => {
     times.forEach((time) => {
+      time.func = function(){
+        $(this.event.target).toggleClass('selected');
+      }
       var timeTemplate = Handlebars.compile($('#time-cloud-template').html());
       $('#timeCloud').append(timeTemplate(time));
     });
   }
 
-  // module.populateClouds = function(results){
-  //   var times = [{time: 'Morning'}, {time: 'Afternoon'}, {time: 'Evening'}];
-  //   times.forEach(function(time){
-  //     var timeTemplate = Handlebars.compile($('#time-cloud-template').html());
-  //     var html = timeTemplate(time);
-  //     $('#timeCloud').append(html);
-  //   });
-  //   var days = [{day: 'Monday'}, {day: 'Tuesday'}, {day: 'Wednesday'}, {day: 'Thursday'}, {day: 'Friday'}, {day: 'Saturday'}, {day: 'Sunday'}];
-  //   days.forEach(function(day){
-  //     var dayTemplate = Handlebars.compile($('#day-cloud-template').html());
-  //     var html = dayTemplate(day);
-  //     $('#dayCloud').append(html);
-  //   });
-  //   var genres = results;
-  //   genres.forEach(function(genre){
-  //     var genreTemplate = Handlebars.compile($('#genre-cloud-template').html());
-  //     var html = genreTemplate(genre);
-  //     $('#genreCloud').append(html);
-  //   });
-  // };
+  module.packagePreferences = function(){
+    var genreArray = [];
+    var timeArray = [];
+    var dayArray = [];
+    $.each($('li.selected.genre'), function(index, genre){
+      genreArray.push(genre.value);
+    });
+    $.each($('li.selected.time'), function(index, time){
+      timeArray.push(time.value);
+    });
+    $.each($('li.selected.day'), function(index, day){
+      dayArray.push(day.value);
+    });
+    var user = JSON.parse(localStorage.getItem('currentUser'));
+    var user_id = user.user_id;
+    console.log({user_id: user_id, days: dayArray, times: timeArray, genres: genreArray});
+    return {user_id: user_id, days: dayArray, times: timeArray, genres: genreArray};
+  }
 
   // After submit, show data in homeview template.
   module.populateResults = function(shows){
+    $('#results ul').empty();
     shows.forEach(function(show){
       var resultsTemplate = Handlebars.compile($('#results-template').html());
       var html = resultsTemplate(show);

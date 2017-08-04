@@ -10,19 +10,22 @@
     <link rel="stylesheet" href="styles/state.css">
     <script id="time-cloud-template" type="text/x-handlebars-template">
       <!-- for each thing from the database, create a cloud tag thing -->
-      <li class="cloud time" value="{{time_id}}">{{time}}</li>
+      <li onclick="{{stringifyFunc func}}" class="cloud time" value="{{time_id}}">{{time}}</li>
     </script>
     <script id="day-cloud-template" type="text/x-handlebars-template">
       <!-- for each thing from the database, create a cloud tag thing -->
-      <li class="cloud day" value="{{day_id}}">{{day}}</li>
+      <li onclick="{{stringifyFunc func}}" class="cloud day" value="{{day_id}}">{{day}}</li>
     </script>
     <script id="genre-cloud-template" type="text/x-handlebars-template">
       <!-- for each thing from the database, create a cloud tag thing -->
-      <li class="cloud genre" value="{{genre_id}}">{{genre}}</li>
+      <li onclick="{{stringifyFunc func}}" class="cloud genre" value="{{genre_id}}">{{genre}}</li>
     </script>
     <script id="results-template" type="text/x-handlebars-template">
       <!-- for each thing from the database, create a cloud tag thing -->
       <li>{{title}}</li>
+    </script>
+    <script type="text/x-handlebars-template" id="dropdown-template">
+      <option value={{user_id}}>{{username}}</option>
     </script>
   </head>
   <body>
@@ -37,24 +40,23 @@
     </header>
     <main>
       <section id="landing">
-        <select class="" name="">
+        <select id="userDropDown" class="" name="">
           <option default>Select a User &#x25BC;</option>
-          <option value="65375">Test User</option>
-          <!-- Populated option tags go here -->
         </select>
-        <input id="input" type="text" placeholder="New User">
+        <input id="name" type="text" placeholder="Your Name">
+        <input id="username" type="text" placeholder="Username">
         <button id="newUserButton" type="button">Submit</button>
       </section>
       <section id="home">
         <section id="search">
-          <ul id="genreCloud">
-            <!-- Genre cloud tags go here -->
-          </ul>
           <ul id="timeCloud">
             <!-- Time cloud tags go here -->
           </ul>
           <ul id="dayCloud">
             <!-- Days cloud tags go here -->
+          </ul>
+          <ul id="genreCloud">
+            <!-- Genre cloud tags go here -->
           </ul>
           <button id="querySubmitButton" type="button">Submit</button>
         </section>
@@ -87,6 +89,5 @@
     <script type="text/javascript" src="scripts/view/landingView.js"></script>
     <script type="text/javascript" src="scripts/controller/showController.js"></script>
     <script type="text/javascript" src="scripts/controller/userController.js"></script>
-
   </body>
 </html>

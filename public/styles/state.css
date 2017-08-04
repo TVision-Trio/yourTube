@@ -1,1 +1,29 @@
 /******* STATE *******/
+
+.cloud {
+  border-radius: 10px;
+  background: rgba(255, 0, 0, 0.79);
+  text-align: center;
+  list-style: none;
+  margin: 5px;
+  padding: 8px;
+  display: inline-block;
+}
+
+.time {
+  background-color: rgba(0, 113, 188, 0.79);
+  width: 200px;
+  text-align: center;
+}
+
+.day {
+  background-color: rgba(0, 146, 69, 0.79);
+  width: 200px;
+  text-align: center;
+}
+
+.genre {
+  background-color: rgba(255, 0, 0, 0.79);
+  width: 200px;
+  text-align: center;
+}
