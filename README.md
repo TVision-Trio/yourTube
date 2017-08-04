@@ -20,3 +20,5 @@ Aeone Singson has an Associate of Science Degree in computer science and is curr
 ## Technical
 
 YourTube utilizes jQuery and Handlebars (HTML templating) to create a single-page application on the client side, along with a mobile-first, responsive UI. A Node.js server interacts with the TVMaze API to retrieve television schedule data. The server also interacts with a PostgreSQL database, where we hold data about our users and their preferences, in order to populate our page when the user selects their name. The site is deployed on Heroku, and was planned using Agile methodologies during a weeklong sprint.
+
+https://tvision-yourtube.herokuapp.com/
