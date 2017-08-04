@@ -331,6 +331,8 @@ app.get('/getGenrePreferences', function(req, res) {
     });
 });
 
+app.get('/*', (req, res) => res.sendFile('index.html', {root: './public'}));
+
 app.listen(PORT, function() {
   console.info('Listening on port: ' + PORT);
 })
