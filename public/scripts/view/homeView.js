@@ -56,8 +56,9 @@ var app = app || {};
     $.each($('li.selected.day'), function(index, day){
       dayArray.push(day.value);
     });
-    // TODO: DON'T hardcode this userid
-    var user_id = JSON.parse(localStorage.getItem('currentUser'));
+    var user = JSON.parse(localStorage.getItem('currentUser'));
+    var user_id = user.user_id;
+    console.log({user_id: user_id, days: dayArray, times: timeArray, genres: genreArray});
     return {user_id: user_id, days: dayArray, times: timeArray, genres: genreArray};
   }
 
