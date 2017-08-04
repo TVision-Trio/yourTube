@@ -21,7 +21,8 @@ var app = app || {};
   // On Submit, query API and get filtered show list based on preferences
   $('#querySubmitButton').on('click', function(){
     module.DataModel.requestShows( (mappedData) => {
-      var user_id = 1;
+      var user_id = JSON.parse(localStorage.getItem('currentUser'));
+      console.log(user_id);
       module.getUser(user_id, function(user){
         user = new module.User(user);
         user.getGenrePreferences(function(results){
