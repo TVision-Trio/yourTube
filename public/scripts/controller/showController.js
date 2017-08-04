@@ -6,6 +6,29 @@ var app = app || {};
   // Pass possible preference option data to the homeview to populate clouds
   var showController = {};
 
+  showController.initMain = () => {
+    $('section').hide();
+    $('#home, #search, #results').show();
+
+    module.DataModel.requestShows((shows) => {
+      return module.DataModel.getGenres(shows).forEach((genre) => {
+        module.DataModel.setGenresData(genre);
+      })
+    });
+
+    module.DataModel.getGenresData((results) => {
+      showController.genreDataToHomeView(results);
+    });
+
+    module.DataModel.getDaysData((results) => {
+      showController.daysDataToHomeView(results);
+    });
+
+    module.DataModel.getTimesData((results) => {
+      showController.timesDataToHomeView(results);
+    });
+  }
+
   showController.genreDataToHomeView = (genres) => {
     module.populateGenres(genres);
   };
