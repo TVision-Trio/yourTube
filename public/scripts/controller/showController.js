@@ -26,19 +26,24 @@ var app = app || {};
       var user_id = userPref.user_id;
       module.getUser(user_id, function(user){
         user = new module.User(user);
+        user.setTimePreferences(userPref.times);
+        user.setDayPreferences(userPref.days);
+        user.setGenrePreferences(userPref.genres);
         console.log(user);
-        user.getGenrePreferences(user_id, function(results){
-          console.log(results);
-          var genrePref = (JSON.parse(results.genre_id));
+        user.getGenrePreferences(function(results){
+          // var genrePref = (JSON.parse(results.genre_id));
           user.getDayPreferences(function(results){
-            var dayPref = (JSON.parse(results.day_id));
+            // var dayPref = (JSON.parse(results.day_id));
             user.getTimePreferences(function(results){
-              var timePref = (JSON.parse(results.time_id));
+              // var timePref = (JSON.parse(results.time_id));
               var timePref = userPref.times;
               var dayPref = userPref.days;
               var genrePref = userPref.genres;
-              module.DataModel.convertToWords(timePref, dayPref, genrePref, function([timePref, dayPref, genrePref]){
+              module.DataModel.convertToWords(timePref, dayPref, genrePref, function(timePref, dayPref, genrePref){
+
                 module.DataModel.filterShows(mappedData, genrePref, dayPref, timePref, function(filteredShows){
+                  console.log(filteredShows);
+                  console.log(genrePref);
                   // for each of the user pref arrays
                   // for each pref within that array
                   genrePref.forEach(function(genre){
