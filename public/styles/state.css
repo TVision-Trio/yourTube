@@ -16,9 +16,6 @@
 } 
 
 .time {
-  /* background-color: rgba(0, 113, 188, 0.79);
-  width: 200px;
-  text-align: center; */
   background: #rgba(0, 113, 188, 0.79);
   background-image: -webkit-linear-gradient(top, #rgba(0, 113, 188, 0.79), #2980b9);
   background-image: -moz-linear-gradient(top, #rgba(0, 113, 188, 0.79), #2980b9);
