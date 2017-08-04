@@ -64,11 +64,11 @@ var app = app || {};
 
   // After submit, show data in homeview template.
   module.populateResults = function(shows){
-    $('#results').empty();
+    $('#results ul').empty();
     shows.forEach(function(show){
       var resultsTemplate = Handlebars.compile($('#results-template').html());
       var html = resultsTemplate(show);
-      $('#results').append(html);
+      $('#results ul').append(html);
     });
   }
 
