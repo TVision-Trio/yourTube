@@ -3,6 +3,11 @@
 /* Landing Page */
 
 #landing {
+  max-width: 16em;
+  margin: 0 auto;
+  padding-top: 5em;
+  border-radius: 10px;
+  background-color: red;
   text-align: center;
 }
 
@@ -19,8 +24,8 @@
 
 #landing select {
   -webkit-appearance: none;
-  -moz-appearance: none;*/
-  appearance: none;
+  -moz-appearance: none;
+  -appearance: none;
 }
 
 #landing button {
@@ -29,7 +34,7 @@
 
 /* Cloud Tags Search */
 #search {
-  padding: 20px;
+  padding: 10px;
   text-align: center;
 }
 
