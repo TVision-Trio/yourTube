@@ -98,7 +98,6 @@ var app = app || {};
       method: 'GET',
       data: {user_id: this.user_id}
     }).then(function(results){
-      console.log(results);
       callback(results);
     }, function(error){
       console.log('Failed at getting time preferences');
@@ -147,13 +146,13 @@ var app = app || {};
   };
 
   // GET user genre preferences from genre_preference table
-  User.prototype.getGenrePreferences = function(user_id, callback) {
+  User.prototype.getGenrePreferences = function(callback) {
     $.ajax({
       url:'/getGenrePreferences',
       method: 'GET',
-      data: {user_id: user_id}
+      data: {user_id: this.user_id}
     }).then(function(results){
-      callback(results);
+      if(callback) callback(results);
     }, function(error){
       console.log('Failed at getting genre preferences');
       console.error(error);

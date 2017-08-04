@@ -30,7 +30,7 @@ var app = app || {};
         user.setDayPreferences(userPref.days);
         user.setGenrePreferences(userPref.genres);
         console.log(user);
-        user.getGenrePreferences(user_id, function(results){
+        user.getGenrePreferences(function(results){
           // var genrePref = (JSON.parse(results.genre_id));
           user.getDayPreferences(function(results){
             // var dayPref = (JSON.parse(results.day_id));
@@ -39,8 +39,11 @@ var app = app || {};
               var timePref = userPref.times;
               var dayPref = userPref.days;
               var genrePref = userPref.genres;
-              module.DataModel.convertToWords(timePref, dayPref, genrePref, function([timePref, dayPref, genrePref]){
+              module.DataModel.convertToWords(timePref, dayPref, genrePref, function(timePref, dayPref, genrePref){
+
                 module.DataModel.filterShows(mappedData, genrePref, dayPref, timePref, function(filteredShows){
+                  console.log(filteredShows);
+                  console.log(genrePref);
                   // for each of the user pref arrays
                   // for each pref within that array
                   genrePref.forEach(function(genre){

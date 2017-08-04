@@ -259,10 +259,12 @@ app.put('/setTimePreferences', function(req, res) {
 });
 
 app.get('/getTimePreferences', function(req, res) {
+  console.log(req.query);
   client.query(
       `SELECT time_id FROM time_preferences WHERE user_id=$1;`, [req.query.user_id]
     )
     .then(function(result) {
+      console.log(result.rows[0]);
       res.send(result.rows[0]);
     })
     .catch(function(err) {

@@ -44,6 +44,10 @@ var app = app || {};
 
 
   DataModel.filterShows = function(showData, genres, days, times, callback){
+    console.log(showData);
+    console.log(genres);
+    console.log(days);
+    console.log(times);
     // Filter to only shows that are on prefered days
     var filteredData = [];
     filteredData = showData.filter(function(show){
@@ -85,6 +89,7 @@ var app = app || {};
       method: 'GET'
     }).then(function(timeResults){
       // As a callback:
+      console.log(timePref);
       var times = toWordsHelp(timePref, 'time', timeResults);
       $.ajax({
         url:'/getDays',
@@ -96,8 +101,8 @@ var app = app || {};
           method: 'GET'
         }).then(function(genreResults){
           var genres = toWordsHelp(genrePref, 'genre', genreResults);
-          callback([times, days, genres]);
-          return [times, days, genres];
+          callback(times, days, genres);
+          return (times, days, genres);
         })
       })
     }, function(error){
@@ -107,6 +112,7 @@ var app = app || {};
   }
 
   function toWordsHelp(arrayOfPreferences, db_line, results) {
+    console.log(arrayOfPreferences);
     var wordsArray = [];
     arrayOfPreferences.forEach(function(pref){
     // For each thing in the stuff from tableName
