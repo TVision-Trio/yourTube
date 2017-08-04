@@ -23,11 +23,12 @@ var app = app || {};
     $('#results ul').empty();
     module.getUser(event.target.value, function(userData){
       var user = new module.User(userData);
+      console.log(user);
       localStorage.setItem('currentUser', JSON.stringify(user));
       user.getTimePreferences(function(timePref){
+        console.log(timePref);
         timePref = JSON.parse(timePref.time_id);
         // TODO: call view function to send this information back to the view.
-
       });
       user.getGenrePreferences(function(genrePref){
         genrePref = JSON.parse(genrePref.genre_id);
