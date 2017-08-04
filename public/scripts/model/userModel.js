@@ -27,9 +27,8 @@ var app = app || {};
   // TODO: handle user input error
   User.prototype.createUser = function() {
     $.post('/newUser', {name: this.name, username: this.username}).then(function(results){
-      this.user_id = results.user_id;
-      module.currentUser = results;
-      localStorage.setItem('currentUser', JSON.stringify(module.currentUser));
+      localStorage.setItem('currentUser', JSON.stringify(results));
+      return results.user_id;
     }, function(error){
       // TODO: Handle error duplicate usernames
       console.error(error);
@@ -47,7 +46,6 @@ var app = app || {};
         method: 'PUT',
         data: {name: this.name, user_id: this.user_id, genres: this.genres, days: this.days, times: this.times}
       }).then(function(results){
-        console.log(results);
       }, function(error){
         console.error(error);
       });
@@ -99,6 +97,7 @@ var app = app || {};
       method: 'GET',
       data: {user_id: this.user_id}
     }).then(function(results){
+
       callback(results);
     }, function(error){
       console.log('Failed at getting time preferences');
@@ -147,13 +146,14 @@ var app = app || {};
   };
 
   // GET user genre preferences from genre_preference table
-  User.prototype.getGenrePreferences = function(callback) {
+  User.prototype.getGenrePreferences = function(user_id, callback) {
+    console.log(user_id);
     $.ajax({
       url:'/getGenrePreferences',
       method: 'GET',
-      data: {user_id: this.user_id}
+      data: {user_id: user_id}
     }).then(function(results){
-      if (callback) callback(results);
+      callback(results);
     }, function(error){
       console.log('Failed at getting genre preferences');
       console.error(error);
