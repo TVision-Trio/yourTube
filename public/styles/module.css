@@ -35,6 +35,11 @@
   background-color: rgba(255, 0, 0, 0.79);
 }
 
+#landingLink {
+  color: #ffff;
+  text-decoration: none;
+}
+
 
 /* Cloud Tags Search */
 
