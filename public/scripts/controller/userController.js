@@ -26,7 +26,7 @@ var app = app || {};
       console.log(user);
       localStorage.setItem('currentUser', JSON.stringify(user));
       user.getTimePreferences(function(timePref){
-        console.log(timePref);
+        // console.log(timePref);
         timePref = JSON.parse(timePref.time_id);
         // TODO: call view function to send this information back to the view.
       });
@@ -47,6 +47,9 @@ var app = app || {};
     // TODO: get pref object from homeView function. For now, using test pref. These preferences should somehow include a user_id.
     var userPreferences = module.packagePreferences();
     module.getUserPreferences(userPreferences);
+    // user.setTimePreferences(userPreferences.times);
+    // user.setDayPreferences(userPreferences.days);
+    // user.setGenrePreferences(userPreferences.genres);
     // Get the user that coresponds to the user_id
     // module.getUser(userPreferences.user_id, function(userData){
     //   var user = new module.User(userData);
