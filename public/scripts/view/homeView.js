@@ -56,11 +56,10 @@ var app = app || {};
     $.each($('li.selected.day'), function(index, day){
       dayArray.push(day.value);
     });
-    // TODO: DON'T hardcode this userid
-    var user_id = JSON.parse(localStorage.getItem('currentUser'));
-    console.log(user_id);
-    localStorage.setItem('currentUser', JSON.stringify({user_id: user_id, days: dayArray, times: timeArray, genres: genreArray}));
-    return {user_id: 1, days: dayArray, times: timeArray, genres: genreArray};
+    var user = JSON.parse(localStorage.getItem('currentUser'));
+    var user_id = user.user_id;
+    console.log({user_id: user_id, days: dayArray, times: timeArray, genres: genreArray});
+    return {user_id: user_id, days: dayArray, times: timeArray, genres: genreArray};
   }
 
   // After submit, show data in homeview template.

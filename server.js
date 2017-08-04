@@ -40,9 +40,9 @@ app.post('/newUser', function(req, res) {
       ]
     )
     .then(function(result) {
-      client.query(`INSERT INTO genre_preferences (user_id) VALUES ($1) RETURNING *;`,[result.rows[0].user_id]);
-      client.query(`INSERT INTO time_preferences (user_id) VALUES ($1) RETURNING *;`,[result.rows[0].user_id]);
-      client.query(`INSERT INTO day_preferences (user_id) VALUES ($1) RETURNING *;`,[result.rows[0].user_id]);
+      client.query(`INSERT INTO genre_preferences (user_id, genre_id) VALUES ($1, '[]') RETURNING *;`,[result.rows[0].user_id]);
+      client.query(`INSERT INTO time_preferences (user_id, time_id) VALUES ($1, '[]') RETURNING *;`,[result.rows[0].user_id]);
+      client.query(`INSERT INTO day_preferences (user_id, day_id) VALUES ($1, '[]') RETURNING *;`,[result.rows[0].user_id]);
       res.send(result.rows[0]);
     })
     .catch(function(err) {
